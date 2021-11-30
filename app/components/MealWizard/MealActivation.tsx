@@ -27,9 +27,10 @@ function MealActivation() {
 					data: JSON.stringify({...meal, profile: {...meal['profile'], active: true}})
 				}
 			);
-
+			setIsActivating(false);
 			updateMeal({meal});
 		} catch (e) {
+			console.log(e)
 		}
 	}
 
@@ -47,7 +48,6 @@ function MealActivation() {
 					data: JSON.stringify({phone: meal?.profile?.phone, ...data})
 				}
 			);
-			setIsActivating(false);
 			saveMeal();
 		} catch (e) {
 			console.log(e)
