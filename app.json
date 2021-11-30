@@ -4,12 +4,21 @@
     "slug": "mobile-leganda",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#30698C"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Autorisez LE GANDA à accéder à votre caméra",
+          "photosPermission": "Autorisez LE GANDA à accéder à vos photos"
+        }
+      ]
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -21,12 +30,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/splash.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/favicon.png"
     }
   }
 }
