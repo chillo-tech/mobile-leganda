@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile-leganda",
-    "slug": "mobile-leganda",
+    "name": "Le GANDA",
+    "slug": "leganda",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -29,9 +29,11 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.ams.leganda",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#30698C"
       }
     },
     "web": {
