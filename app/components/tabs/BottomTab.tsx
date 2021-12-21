@@ -8,23 +8,6 @@ import {Feather} from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 function BottomTab({state, descriptors, navigation}) {
-
-	/*
-		screenOptions={({route}) => ({
-				tabBarShowLabel: true,
-				tabBarLabel: `${LABELS[route.name]}`,
-
-				tabBarActiveTintColor: colors.warning,
-				tabBarInactiveTintColor: colors.primary,
-				tabBarButton: [
-					"MealDetail"
-				].includes(route.name)
-					? () => {
-						return null;
-					}
-					: undefined,
-			})}
-	 */
 	return (
 		<View style={{flexDirection: 'row'}}>
 			{state.routes.map((route, index) => {
@@ -40,6 +23,7 @@ function BottomTab({state, descriptors, navigation}) {
 					if (!isFocused && !event.defaultPrevented) {
 						// The `merge: true` option makes sure that the params inside the tab screen are preserved
 						if (name === 'NewMeal') {
+							//navigation.navigate({name: 'Signin', merge: true});
 							navigation.navigate({name: 'MealCreation', merge: true});
 						} else {
 							navigation.navigate({name: route.name, merge: true});

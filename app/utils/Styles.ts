@@ -4,19 +4,20 @@ export const colors = {
 	success: '#146608',
 	primary: '#30698C',
 	error: '#F22727',
-	gray: "#333333",
+	darkgray: "#545454FF",
+	lightgray: "#cccccc",
+	black: "#000000",
 	warning: "#F2785C",
 	white: "#ffffff",
 }
 
 export const globalStyles = StyleSheet.create({
 	container: {
-		width: '100%',
 		marginTop: 0,
 		backgroundColor: "#f6ece7",
 		flex: 1,
-		flexDirection: 'column',
-		fontFamily: 'roboto'
+		justifyContent: 'center',
+		alignContent: 'center'
 	},
 	error: {
 		color: colors.error,
@@ -47,7 +48,7 @@ export const globalStyles = StyleSheet.create({
 		padding: 10,
 		width: 40,
 		height: 40,
-		backgroundColor: colors.gray,
+		backgroundColor: colors.lightgray,
 		borderTopLeftRadius: 11,
 		borderBottomLeftRadius: 11,
 		display: 'none'
@@ -93,7 +94,7 @@ export const globalStyles = StyleSheet.create({
 		paddingVertical: 60
 	},
 	creationBodyFieldGroup: {
-		borderColor: "#cccccc",
+		borderColor: colors.lightgray,
 		borderRadius: 5,
 		marginVertical: 10,
 		borderWidth: 2,
@@ -110,11 +111,16 @@ export const globalStyles = StyleSheet.create({
 	fieldFont: {
 		fontStyle: 'normal',
 		fontSize: 20,
-		color: "#000000",
+		color: colors.black,
+	},
+	placaholderFieldFont: {
+		fontStyle: 'normal',
+		fontSize: 20,
+		color: colors.lightgray,
 	},
 	fieldIcon: {
 		fontSize: 20,
-		color: "#000000",
+		color: colors.black,
 		paddingHorizontal: 10
 	},
 })

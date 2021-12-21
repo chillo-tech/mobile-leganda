@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 
 function MealWizard({children}) {
-	const {stepIndex, updateNumberOfChildren} = useContext(ApplicationContext);
+	const {state: {creationWizard: {stepIndex}}, updateNumberOfChildren} = useContext(ApplicationContext);
 	useEffect(() => {
 		updateNumberOfChildren(children.length)
 	}, []);

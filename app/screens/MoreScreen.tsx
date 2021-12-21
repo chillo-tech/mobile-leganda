@@ -1,53 +1,59 @@
 import React from 'react';
-import {Alert, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {colors, globalStyles} from '../utils/Styles';
-import {EMAIL, PHONE, smsDivider} from '../utils/providers';
+import { Alert, FlatList, Linking, SafeAreaView, Share, StyleSheet } from 'react-native';
+import ListCategoryComponent from '../components/more-screen/ListCategoryComponent';
+import ListHeaderComponent from '../components/more-screen/ListHeaderComponent';
+import { HELP_LINK, MORESCREEN_DATA } from '../utils/Data';
+import { colors } from '../utils/Styles';
 
 const MoreScreen = () => {
-	const handleContactPressed = async ({name}) => {
-		let phoneNumber = null;
-		if (name === 'sms') {
-			phoneNumber = `sms:${PHONE}${smsDivider()}body=''`;
-		}
-		if (name === 'email') {
-			phoneNumber = `mailto:${EMAIL}`;
-		}
-		try {
-			const supported = await Linking.openURL(phoneNumber);
-			if (!supported) {
-				Alert.alert('Phone number is not available');
-			} else {
-				return Linking.openURL(phoneNumber);
-			}
-		} catch (e) {
-		}
-	}
-	return (
-		<View style={globalStyles.container}>
-			<View style={styles.container}>
-				<View>
-					<View style={styles.item}>
-						<Text style={styles.itemTitle}>
-							Vous avez une question
-						</Text>
-						<Text style={styles.itemDescription}>Nous répondons 7J/7</Text>
-						<TouchableOpacity onPress={() => handleContactPressed({name: 'sms'})}>
-							<Text style={styles.itemPhone}>(+33) 07 61 70 57 45</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={() => handleContactPressed({name: 'email'})}>
-							<Text style={styles.itemEmail}>achille.mbougueng@yahoo.fr</Text>
-						</TouchableOpacity>
-					</View>
 
-					<View style={styles.item}>
-						<Text style={styles.itemTitle}>
-							Recommandez
-						</Text>
-						<Text style={styles.itemEmail}>LE GANDA</Text>
-					</View>
-				</View>
-			</View>
-		</View>
+  const askHelp = async (item) => {
+		const {name} = item;
+		const link: string = HELP_LINK[name];
+    const supported = await Linking.openURL(link);
+   
+    try {
+      if (!supported) {
+        Alert.alert('Phone number is not available');
+      } else {
+        return Linking.openURL(link);
+      }
+    } catch (error) {}
+	}
+
+  const share = async (item) => {
+		const {name} = item;
+    try {
+      await Share.share({
+        message:
+          "Bonjour, j'ai découvert cette application qui permet de bien manger et moins cher. Je te la recommande",
+      });
+    } catch (error) {}
+	}
+
+
+	const handleContactPressed = async (item) => {
+		const {name, action} = item;
+    if (action === 'help') {
+        await askHelp(item)
+    }
+    
+    if (action === 'recommend') {
+      await share(item);
+    }
+	}
+
+	return (
+		<SafeAreaView style={styles.container}>
+			<FlatList
+				style={styles.listStyle}
+				data={MORESCREEN_DATA}
+				ListHeaderComponent={ListHeaderComponent}
+				renderItem={({item}) => <ListCategoryComponent category={item}
+															   onContactPressed={handleContactPressed}/>}
+				keyExtractor={item => item.id}
+			/>
+		</SafeAreaView>
 	)
 }
 
@@ -57,47 +63,18 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: "space-around",
-		paddingHorizontal: 10
-	},
-	item: {
-		marginVertical: 15,
-		borderRadius: 10,
-		backgroundColor: colors.white,
 		paddingHorizontal: 10,
+		backgroundColor: colors.white
+	},
+	listStyle: {
+		marginHorizontal: 5
+	},
+	sectionTitle: {
+		marginTop: 25,
+		color: colors.black,
+		paddingHorizontal: 5,
+		fontSize: 24,
 		paddingVertical: 10,
-		alignContent: "center",
-		alignItems: "center",
-		shadowColor: colors.gray,
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 3.84,
-		elevation: 5,
-	},
-	itemTitle: {
-		color: colors.primary,
-		fontWeight: "bold",
-		fontSize: 20,
-		marginBottom: 5
-	},
-	itemDescription: {
-		color: colors.primary,
-		fontWeight: "normal",
-		fontSize: 18,
-		marginVertical: 5,
-	},
-	itemPhone: {
-		color: colors.success,
-		fontWeight: "normal",
-		fontSize: 18,
-		marginVertical: 5,
-	},
-	itemEmail: {
-		color: colors.warning,
-		fontWeight: "normal",
-		fontSize: 18,
-		marginVertical: 5,
+		fontWeight: 'bold',
 	}
 })

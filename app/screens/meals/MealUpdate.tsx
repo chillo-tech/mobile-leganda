@@ -59,8 +59,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		marginTop: 0,
 		flex: 1,
-		flexDirection: 'column',
-		fontFamily: 'roboto'
+		flexDirection: 'column'
 	}
 
 });

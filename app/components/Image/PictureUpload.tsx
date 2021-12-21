@@ -1,15 +1,14 @@
 import {AntDesign} from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import React, {useContext, useEffect} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {NB_MAX_IMAGES} from '../../utils/options';
+import React, {useEffect, useRef} from 'react';
+import {Platform, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {IMAGES_CONFIG, NB_MAX_IMAGES} from '../../utils/options';
 import {colors} from '../../utils/Styles';
+import PicturePicker from './PicturePicker';
 
 
-const PictureUpload = () => {
-	const {updateMeal, meal: {pictures = []}} = useContext<any>(ApplicationContext);
-
+const PictureUpload = ({pictures, handleSelectedImage}) => {
+	const ref = useRef({current: {}});
 	useEffect(() => {
 		(async () => {
 			if (Platform.OS !== 'web') {
@@ -21,43 +20,44 @@ const PictureUpload = () => {
 		})();
 	}, []);
 
-	const pickImage = async () => {
-		const result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.Images,
-			allowsEditing: true,
-			aspect: [4, 3],
-			quality: 1,
-		});
+	const openModal = () => {
+		ref.current.open();
+	}
 
+	const handleSelectedItem = async (item) => {
+		ref.current.close();
+		const result = item === "CAMERA" ? await ImagePicker.launchCameraAsync(IMAGES_CONFIG) : await ImagePicker.launchImageLibraryAsync(IMAGES_CONFIG);
 		if (!result.cancelled) {
-			updateMeal({
-				goToNextStep: false,
-				data: {
-					pictures: [...pictures, {
-						id: Date.now(),
-						name: Date.now(),
-						uri: result.uri,
-						type: 'image/jpg'
-					}]
-				}
-			})
+			const selectedImageData = {
+				...result,
+				id: Date.now(),
+				name: Date.now()
+			}
+			handleSelectedImage(selectedImageData);
 		}
-	};
+	}
+
 	return (
 		<View style={[styles.container]}>
-			<TouchableOpacity
+			<TouchableHighlight
+				underlayColor={'trabsparent'}
 				style={[styles.button, pictures.length === NB_MAX_IMAGES ? styles.disabled : styles.active]}
-				onPress={pickImage} disabled={pictures.length === NB_MAX_IMAGES}>
-				<AntDesign name="camera" size={48}
-						   color={pictures.length === NB_MAX_IMAGES ? colors.gray : colors.warning}/>
-				<Text style={[styles.buttonText, pictures.length === NB_MAX_IMAGES ? styles.disabled : styles.active]}>Ajouter
-					une image</Text>
-			</TouchableOpacity>
+				onPress={openModal} disabled={pictures.length === NB_MAX_IMAGES}>
+				<>
+					<AntDesign name="camera" size={48}
+							   color={pictures.length === NB_MAX_IMAGES ? colors.lightgray : colors.warning}/>
+					<Text
+						style={[styles.buttonText, pictures.length === NB_MAX_IMAGES ? styles.disabled : styles.active]}>
+						Ajouter une image
+					</Text>
+				</>
+			</TouchableHighlight>
+			<PicturePicker ref={ref} onItemSelected={handleSelectedItem}/>
 		</View>
 	)
 }
 
-export default PictureUpload
+export default PictureUpload;
 
 const styles = StyleSheet.create({
 	container: {
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
 		color: `${colors.warning}`,
 	},
 	disabled: {
-		borderColor: `${colors.gray}`,
-		color: `${colors.gray}`
+		borderColor: `${colors.lightgray}`,
+		color: `${colors.lightgray}`
 	},
 	buttonText: {
 		fontWeight: 'bold'

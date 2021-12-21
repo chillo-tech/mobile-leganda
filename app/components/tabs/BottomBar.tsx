@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
 		color: colors.white
 	},
 	nextButtonInActiveLabel: {
-		color: "#000000"
+		color: colors.black
 	},
 	previousButtonLabel: {
 		fontSize: 18,
-		color: colors.gray,
+		color: colors.black,
 		borderBottomWidth: 1
 	}
 })

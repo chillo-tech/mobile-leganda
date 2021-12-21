@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Text, TextInput, View} from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
 import {globalStyles} from '../../utils/Styles';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import BottomBar from '../tabs/BottomBar';
 
 function MealPrice() {
-	const {stepIndex, previousStep, updateMeal, meal} = useContext(ApplicationContext);
+	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange',});
 	const onSubmit = data => updateMeal({data});
 	return (
@@ -53,5 +53,4 @@ function MealPrice() {
 	);
 }
 
-const styles = StyleSheet.create({})
 export default MealPrice;

@@ -1,17 +1,17 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {colors} from '../../utils/Styles';
+import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { colors } from '../../utils/Styles';
 
-const getUri = (picture) => {
+const getUri = (picture: Picture) => {  
 	if (picture && picture.uri)
-		return picture.uri;
+		return picture.uri.replace("http://localhost:27191/images", "http://192.168.1.11:27191/images");
 
 	if (picture && picture.base64)
 		return `data:image/png;base64,${picture.base64}`;
 }
 
 function PictureDisplay({picture = null, editable = false, onDeletePressed = () => null}) {
-	const source = picture ? {uri: `${getUri(picture)}`} : require('../../../assets/images/food.jpeg');
+	const source = {uri: `${getUri(picture)}`};
 	return (
 		<View style={styles.container}>
 			<Image style={styles.picture} resizeMode="cover" source={source}/>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 		top: 0,
 		right: 0,
 		bottom: 0,
-		backgroundColor: "red",
+		backgroundColor: colors.error,
 		zIndex: 3
 	}
 })

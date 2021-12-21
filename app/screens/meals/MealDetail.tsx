@@ -2,27 +2,40 @@ import React, {useContext, useState} from 'react'
 import {Alert, Linking, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View} from 'react-native'
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {colors, globalStyles} from '../../utils/Styles';
-import {Feather, FontAwesome, FontAwesome5} from '@expo/vector-icons';
+import {AntDesign, Feather, FontAwesome, FontAwesome5} from '@expo/vector-icons';
 import {phonePrefix, smsDivider} from '../../utils/providers';
 import PictureDisplay from '../../components/Image/PictureDisplay';
 import {useFocusEffect} from '@react-navigation/native';
 import BackButton from '../../components/buttons/BackButton';
+import {getDisplayedDate, getFormattedTime} from '../../utils/DateFormat';
+import axios from 'axios';
+import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../../utils/Endpoints';
 
 const MealDetail = ({route, navigation}) => {
 	const selectedId = route.params?.selectedId;
-	const {meals,} = useContext(ApplicationContext);
+	const {state: {meals}} = useContext(ApplicationContext);
 	const [meal, setMeal] = useState();
-	const getMeal = () => {
+	const getMeal = async () => {
 		setMeal(meals.find(({id}) => id === selectedId))
+		const {data} = await axios(
+			`${BACKOFFICE_URL}/${MEALS_ENDPOINT}/${selectedId}`,
+			{
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				}
+			}
+		);
+		setMeal(data);
 	}
 
 	const navigate = ({street, coordinates: {coordinates: [lat, long]}}) => {
 		const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
-		const url = scheme + `${lat},${long}`;
+		const url = `http://maps.google.com/maps?q=${long},${lat}&z=7&t=h`;
 		Linking.openURL(url);
-
-
 	}
+
 	const handleContactPressed = async ({name, phone}) => {
 		let phoneNumber = `${phonePrefix()}:${phone}`;
 		if (name === 'sms') {
@@ -74,41 +87,71 @@ const MealDetail = ({route, navigation}) => {
 									{meal?.profile?.firstName}&nbsp; {meal?.profile?.lastName[0]}.
 								</Text>
 								<View style={styles.iconLabel}>
-									<Text style={styles.label}>4.3</Text>
+									<View style={styles.label}>
+										<AntDesign name="eye" size={20} color={colors.darkgray}/>
+										<Text>{meal.views ? meal.views : 0}</Text>
+									</View>
 								</View>
 							</View>
 							<View style={styles.row}>
 								<Text style={styles.name}>{meal.name}</Text>
 								<Text style={styles.price}>{meal.price} €</Text>
 							</View>
-
+							{
+								meal?.validity?.date ?
+									(
+										<View style={styles.row}>
+											<Text
+												style={styles.profile}>
+												{getDisplayedDate(meal?.validity?.date)}
+											</Text>
+											<Text
+												style={styles.profile}>
+												{getFormattedTime(new Date(meal?.validity?.start))}
+											</Text>
+										</View>
+									) : null
+							}
 							<Text style={styles.description}>
 								{meal?.description}
 							</Text>
 						</ScrollView>
-						<View style={styles.contact}>
-							<View style={[styles.contactItem, {alignItems: 'flex-start'}]}>
-								<TouchableHighlight underlayColor={'transparent'} onPress={() => handleContactPressed({
-									name: 'phone',
-									phone: meal?.profile?.phone
-								})}>
-									<Feather name="phone" size={32} color={colors.warning}/>
-								</TouchableHighlight>
+						<View>
+							<View style={styles.row}>
 
-							</View>
-							<View style={[styles.contactItem]}>
-								<TouchableHighlight underlayColor={'transparent'} onPress={() => handleContactPressed({
-									name: 'sms',
-									phone: meal?.profile?.phone
-								})}>
-									<FontAwesome5 name="sms" size={32} color={colors.primary}/>
-								</TouchableHighlight>
-							</View>
-							<View style={[styles.contactItem, {alignItems: 'flex-end'}]}>
 								<TouchableHighlight underlayColor={'transparent'}
 													onPress={() => navigate(meal?.address)}>
-									<FontAwesome name="map-marker" size={32} color={colors.success}/>
+									<Text style={[styles.profile]}>
+										{meal?.address?.street}
+									</Text>
 								</TouchableHighlight>
+							</View>
+							<View style={styles.contact}>
+								<View style={[styles.contactItem, {alignItems: 'flex-start'}]}>
+									<TouchableHighlight underlayColor={'transparent'}
+														onPress={() => handleContactPressed({
+															name: 'phone',
+															phone: meal?.profile?.phone
+														})}>
+										<Feather name="phone" size={32} color={colors.warning}/>
+									</TouchableHighlight>
+
+								</View>
+								<View style={[styles.contactItem]}>
+									<TouchableHighlight underlayColor={'transparent'}
+														onPress={() => handleContactPressed({
+															name: 'sms',
+															phone: meal?.profile?.phone
+														})}>
+										<FontAwesome5 name="sms" size={32} color={colors.primary}/>
+									</TouchableHighlight>
+								</View>
+								<View style={[styles.contactItem, {alignItems: 'flex-end'}]}>
+									<TouchableHighlight underlayColor={'transparent'}
+														onPress={() => navigate(meal?.address)}>
+										<FontAwesome name="map-marker" size={32} color={colors.success}/>
+									</TouchableHighlight>
+								</View>
 							</View>
 						</View>
 					</View>
@@ -119,11 +162,12 @@ const MealDetail = ({route, navigation}) => {
 	)
 }
 
-export default MealDetail
+export default MealDetail;
 
 const styles = StyleSheet.create({
 	gallery: {
-		height: 400,
+		backgroundColor: colors.primary,
+		height: 450,
 		marginBottom: 20
 	},
 	container: {
@@ -131,10 +175,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'space-between'
 	},
-	containerInner: {
-		borderColor: 'red',
-		borderWidth: 1
-	},
+	containerInner: {},
 	contact: {
 		paddingHorizontal: 10,
 		flexDirection: 'row',
@@ -166,34 +207,33 @@ const styles = StyleSheet.create({
 
 	},
 	profile: {
-		color: colors.gray,
+		color: colors.darkgray,
 		fontSize: 16,
 		fontWeight: "normal",
 		textTransform: 'capitalize'
 	},
 	iconLabel: {
 		textAlign: "center",
-		backgroundColor: "#dddddd",
-		borderRadius: 50,
 		alignItems: 'center',
-		justifyContent: 'center',
-		width: 30,
-		height: 30,
+		justifyContent: 'center'
 	},
 	label: {
-		fontSize: 16,
-		color: "#000000",
-		textAlign: "center"
+		fontSize: 14,
+		color: colors.darkgray,
+		textAlign: "center",
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		minWidth: 35,
+		paddingHorizontal: 0
 	},
 	name: {
-		paddingVertical: 5,
 		fontSize: 24,
 		fontWeight: "bold",
 		textTransform: 'capitalize',
 		color: colors.primary
 	},
 	price: {
-		paddingVertical: 5,
 		fontSize: 24,
 		fontWeight: "bold",
 		color: colors.warning,
@@ -201,7 +241,7 @@ const styles = StyleSheet.create({
 	description: {
 		fontSize: 18,
 		paddingHorizontal: 10,
-		paddingBottom: 20,
-		color: colors.gray
+		paddingVertical: 30,
+		color: colors.black
 	},
 })

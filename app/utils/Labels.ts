@@ -1,6 +1,6 @@
 export const LABELS = {
 	MealsHome: 'Accueil',
-	MealsList: 'Rechercher',
+	MealsList: 'Parcourir',
 	NewMeal: 'Créer',
 	More: 'Plus',
 }

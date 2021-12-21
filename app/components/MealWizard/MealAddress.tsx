@@ -8,8 +8,9 @@ import BottomBar from '../tabs/BottomBar';
 
 function MealAddress() {
 	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
+	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+
 	const [searchResults, setSearchResults] = useState([]);
-	const {updateMeal, meal, stepIndex, previousStep} = useContext<any>(ApplicationContext);
 	const [query, setQuery] = useState("");
 	const [errors, setErrors] = useState({});
 	const [address, setAddress] = useState();
@@ -43,11 +44,7 @@ function MealAddress() {
 							Accept: "application/json"
 						},
 					});
-				if (data.length) {
-					setSearchResults(data);
-				} else {
-					setSearchResults([]);
-				}
+				setSearchResults(data);
 			} catch (error) {
 				console.error(error);
 			}
@@ -92,6 +89,7 @@ function MealAddress() {
 								data={searchResults}
 								renderItem={({item}) =>
 									<TouchableOpacity
+										key={item.id}
 										style={styles.resultItem}
 										onPress={() => setSelectedAddress(item)}>
 
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
 	resultItemSecondText: {
 		padding: 0,
 		margin: 0,
-		color: colors.gray,
+		color: colors.lightgray,
 		fontSize: 14,
 		fontWeight: '400',
 		lineHeight: 18,

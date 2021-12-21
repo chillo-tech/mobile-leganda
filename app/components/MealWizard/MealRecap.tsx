@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {colors, globalStyles} from '../../utils/Styles';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import Button from '../Components/Button';
+import Button from '../buttons/Button';
 import {Image, StyleSheet, Text, View} from 'react-native';
 
 function MealRecap({navigation}) {

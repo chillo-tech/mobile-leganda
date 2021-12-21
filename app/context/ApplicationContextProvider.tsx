@@ -1,59 +1,44 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useReducer} from 'react';
+import {ApplicationReducer} from './ApplicationReducer';
+import {
+	INITIAL_STATE,
+	RESET_MEAL,
+	SET_MEALS,
+	SET_NUMBER_OF_CHILDREN,
+	SET_SELECTED_ITEM_ID,
+	SET_STEP_INDEX,
+	UPDATE_MEAL,
+	UPDATE_SEARCH_CRITERIA
+} from '../utils/Data';
 
 export const ApplicationContext = createContext(null);
 
 function ApplicationContextProvider({children}) {
-	const [selectedId, setSelectedId] = useState([]);
-	const [meals, setMeals] = useState([]);
-	const [numberOfChildren, setNumberOfChildren] = useState(0);
-	const [meal, setMeal] = useState({});
-	const [stepIndex, setStepIndex] = useState(0);
-	const deleteMealImage = (id) => {
-		let currentMeal = meal;
-		if (currentMeal.pictures && currentMeal.pictures.length) {
-			currentMeal = {...currentMeal, pictures: currentMeal.pictures.filter(item => item.id !== id)}
-			setMeal(currentMeal);
-		}
-	}
-	const nextStep = () => {
-		if (stepIndex !== numberOfChildren - 1) {
-			const newStepIndex = stepIndex + 1;
-			setStepIndex(newStepIndex);
-		}
-	}
-	const previousStep = () => {
-		if (stepIndex !== 0) {
-			const newStepIndex = stepIndex - 1;
-			setStepIndex(newStepIndex);
-		}
-	}
-	const updateMeal = ({data, goToNextStep = true}) => {
-		setMeal({...meal, ...data});
-		if (goToNextStep) {
-			nextStep();
-		}
-	}
-	const resetMeal = () => {
-		setMeal({});
-		setStepIndex(0);
-	}
-	const updateMeals = (meals) => setMeals(meals);
-	const updateNumberOfChildren = (number) => setNumberOfChildren(number);
+	const [state, dispatch] = useReducer(ApplicationReducer, INITIAL_STATE);
+	const {creationWizard: {stepIndex}} = state;
+	const goToStep = (stepIndex: number) => dispatch({type: SET_STEP_INDEX, data: stepIndex});
+	const resetMeal = () => dispatch({type: RESET_MEAL});
+	const previousStep = () => dispatch({type: SET_STEP_INDEX, data: stepIndex <= 0 ? 0 : stepIndex - 1});
+	const updateNumberOfChildren = (data: number) => dispatch({type: SET_NUMBER_OF_CHILDREN, data});
+	const updateSelectedItemId = (data: number) => dispatch({type: SET_SELECTED_ITEM_ID, data});
+	const updateMeal = ({data = {}, goToNextStep = true}) => dispatch({
+		type: UPDATE_MEAL,
+		data: {meal: data, stepIndex: goToNextStep ? stepIndex + 1 : stepIndex}
+	});
+	const updateMeals = (meals: []) => dispatch({type: SET_MEALS, data: meals});
+	const updateSearchCriteria = (data: {}) => dispatch({type: UPDATE_SEARCH_CRITERIA, data});
 	return (
 		<ApplicationContext.Provider
 			value={{
-				meals,
-				meal,
-				stepIndex,
-				selectedId,
-				numberOfChildren,
-				deleteMealImage,
+				state,
+				goToStep,
+				previousStep,
 				resetMeal,
-				setSelectedId,
+				updateSelectedItemId,
+				updateSearchCriteria,
 				updateNumberOfChildren,
 				updateMeal,
-				updateMeals,
-				previousStep
+				updateMeals
 			}}>
 			{children}
 		</ApplicationContext.Provider>

@@ -2,40 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0380e207-fd0d-4e8b-a01b-b232eacc53b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/components/Components/Message.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealActivation.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealAddress.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealDescription.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealName.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealPictures.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealPrice.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealRecap.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealWizard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/mealItem/MealItem.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/context/ApplicationContextProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/HomeScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/meals/MealCreation.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/meals/MealDetail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/meals/MealsHomeScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/meals/MealsListScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/meals/MealsNavigationScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/meals/NewMealScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/DateFormat.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/Endpoints.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/Labels.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/Styles.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/isValidPhoneNumber.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/providers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/Image/PicturePicker.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/MealWizard/MealSearch.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/context/ApplicationReducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/entities/State.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/screens/AddressSearchScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/screens/signin/LoginScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/screens/signin/NewPasswordScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/screens/signin/SignUpScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/screens/signin/ValidationScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/utils/Data.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/adaptive-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Components/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/buttons/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Components/Message.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/messages/Message.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Image/PictureDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Image/PictureDisplay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Image/PictureUpload.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Image/PictureUpload.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealActivation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealActivation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealAddress.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealAddress.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealDates.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealDates.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealDescription.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealDescription.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealName.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealName.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealPictures.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealPictures.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealPrice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealPrice.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealRecap.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealRecap.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealWizard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/MealWizard/MealWizard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/mealItem/EmptyMeal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/mealItem/EmptyMeal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/mealItem/MealItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/mealItem/MealItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/tabs/BottomBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/tabs/BottomBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/tabs/BottomTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/tabs/BottomTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/ApplicationContextProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/ApplicationContextProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/MoreScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/MoreScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/SearchScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/SearchScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/meals/MealDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/meals/MealDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/meals/MealUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/meals/MealUpdate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/DateFormat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/DateFormat.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/Endpoints.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Endpoints.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/options.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/options.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/ v.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/food.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/logo.old.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,5 +88,9 @@
     </state>
     <state x="100" y="125" width="1240" height="602" key="AVDManager/0.25.1440.802/-2560.-413.2560.1415@0.25.1440.802" timestamp="1636445869915" />
     <state x="100" y="125" width="1240" height="602" key="AVDManager/0.25.1440.802@0.25.1440.802" timestamp="1636298016855" />
+    <state x="508" y="171" key="FileChooserDialogImpl" timestamp="1639456579500">
+      <screen x="0" y="25" width="1920" height="975" />
+    </state>
+    <state x="508" y="171" key="FileChooserDialogImpl/0.25.1920.975@0.25.1920.975" timestamp="1639456579500" />
   </component>
 </project>

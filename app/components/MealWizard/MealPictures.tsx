@@ -3,30 +3,26 @@ import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {colors, globalStyles} from '../../utils/Styles';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import BottomBar from '../tabs/BottomBar';
-import * as FileSystem from 'expo-file-system';
 import PictureUpload from '../Image/PictureUpload';
 import PictureDisplay from '../Image/PictureDisplay';
 
 function MealPictures() {
-	const {stepIndex, previousStep, updateMeal, meal, deleteMealImage} = useContext(ApplicationContext);
-	const [isCOnverting, setIsConverting] = useState(false);
+	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+	const [pictures, setPictures] = useState(meal.pictures);
 	const [error, setError] = useState(null);
 	const onSubmit = async () => {
-		if (meal.pictures && meal.pictures.length) {
-			setIsConverting(true);
-			const {pictures} = meal;
-			const mappedPictures = await Promise.all(pictures.map(async (picture) => {
-				const base64 = await FileSystem.readAsStringAsync(picture.uri, {encoding: 'base64'});
-				return {...picture, base64};
-			}));
-			setError(null);
-			updateMeal({data: {pictures: mappedPictures}, goToNextStep: true});
-			return () => setIsConverting(false);
+		if (pictures && pictures.length) {
+			updateMeal({data: {pictures}})
 		} else {
 			setError("Veuilez ajouter des images de votre plat");
 		}
 	}
-
+	const onImageSelected = (picture) => {
+		setPictures(current => ([...current, picture]));
+	}
+	const deleteMealImage = (id: number) => {
+		setPictures(pictures.filter(item => item.id !== id))
+	}
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
@@ -36,11 +32,11 @@ function MealPictures() {
 			<View style={globalStyles.creationBody}>
 				<View
 					style={[globalStyles.creationBodyContent, {paddingVertical: 30}]}>
-					{(meal.pictures && meal.pictures.length)
+					{(pictures && pictures.length)
 						? (<SafeAreaView style={styles.pictures}>
 							<FlatList
 								keyExtractor={image => image.id}
-								data={meal.pictures}
+								data={pictures}
 								horizontal={false}
 								numColumns={1}
 								renderItem={({item, index, separators}) => (
@@ -51,14 +47,14 @@ function MealPictures() {
 								)}
 							/>
 						</SafeAreaView>)
-						: (<PictureUpload/>)
+						: (<PictureUpload pictures={pictures} handleSelectedImage={onImageSelected}/>)
 					}
-					{error && !(meal.pictures && meal.pictures.length) ? (
+					{error && !(pictures && pictures.length) ? (
 						<Text style={styles.errorsText}>{error}</Text>) : null}
 				</View>
 				<BottomBar
 					stepIndex={stepIndex}
-					nextDisabled={!(meal.pictures && meal.pictures.length)}
+					nextDisabled={!(pictures && pictures.length)}
 					previousStep={previousStep}
 					nextStep={onSubmit}
 				/>

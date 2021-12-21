@@ -10,6 +10,7 @@ export const getFormattedTime = (entry: Date) => {
 	const minutes = `0${entry.getMinutes()}`.slice(-2);
 	return `${hours}:${minutes}`;
 };
+
 const getWeekNumber = (entry: Date) => {
 	// Copy date so don't modify original
 	const date = new Date(Date.UTC(entry.getFullYear(), entry.getMonth(), entry.getDate()));
@@ -31,6 +32,7 @@ export const getDayAndMonthLabel = (entry: Date) => {
 	];
 	return [days[entry.getDay()], months[entry.getMonth()]];
 }
+
 export const getDisplayedDate = (entry: string = "") => {
 	if (!entry.trim().length) {
 		return entry;
@@ -40,7 +42,7 @@ export const getDisplayedDate = (entry: string = "") => {
 	if ((mealWeekNo - todayWeekNo) > 1) {
 		const [dayOfDate, month, year] = getFormattedDate(new Date(entry)).split('/');
 		const [dayOfWeekLabel, monthLabel] = getDayAndMonthLabel(new Date(entry));
-		return `${dayOfWeekLabel}, ${dayOfDate} ${monthLabel} ${year}`;
+		return `${dayOfWeekLabel}, ${dayOfDate} ${monthLabel}`;
 	} else {
 		const [dayOfWeekLabel] = getDayAndMonthLabel(new Date(entry));
 		return dayOfWeekLabel;

@@ -7,42 +7,33 @@ import BottomBar from '../tabs/BottomBar';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 function MealDates() {
-	const {stepIndex, previousStep, updateMeal, meal} = useContext(ApplicationContext);
+	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+	const [now, setNow] = useState<Date>(new Date());
 	const [date, setDate] = useState<Date>();
-	const [errors, setErrors] = useState({});
 	const [start, setStart] = useState<Date>();
+	const [errors, setErrors] = useState({});
 	const [mode, setMode] = useState('date');
 	const [show, setShow] = useState(false);
-	useEffect(() => {
-		const selectedDate = meal?.validity?.date;
-		const selectedStart = meal?.validity?.start;
-		if (selectedDate) {
-			setDate(selectedDate)
-		}
-
-		if (selectedStart) {
-			const [hours, minutes] = selectedStart.split(":");
-			const now = new Date();
-			now.setHours(hours, minutes);
-			setStart(now);
-		}
-	}, []);
-
 	const onChange = ({type}, selectedDate) => {
+		setShow(false);
 		if (type !== "dismissed") {
 			const currentDate = selectedDate;
 			setShow(Platform.OS === 'ios');
 			if (mode === 'date') {
-				setDate(currentDate);
-				const udatedErrors = delete errors["date"];
-				setErrors(udatedErrors);
+				if (currentDate.getTime() < now.getTime()) {
+					setErrors({...errors, date: true})
+					setDate(null);
+				} else {
+					setDate(currentDate);
+					const udatedErrors = delete errors["date"];
+					setErrors(udatedErrors);
+				}
 			} else {
 				setStart(currentDate);
 				const udatedErrors = delete errors["start"];
 				setErrors(udatedErrors);
 			}
 		}
-		console.log({errors})
 	};
 
 	const showMode = (currentMode: string) => {
@@ -59,8 +50,23 @@ function MealDates() {
 			setErrors({...errors, start: true});
 			return;
 		}
-		updateMeal({data: {validity: {date, start: getFormattedTime(start)}}});
+		updateMeal({data: {validity: {date, start}}});
 	};
+	
+	useEffect(() => {
+		const selectedDate = meal?.validity?.date;
+		const selectedStart = meal?.validity?.start;
+		if (selectedDate) {
+			setDate(selectedDate)
+		}
+
+		if (selectedStart) {
+			const currentDate = new Date(selectedStart);
+			setStart(currentDate);
+		}
+		setNow(new Date());
+	}, []);
+
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
@@ -76,7 +82,7 @@ function MealDates() {
 										  activeOpacity={1}
 										  style={[
 											  globalStyles.creationBodyFieldGroup,
-											  errors.hasOwnProperty('start') ?
+											  errors.hasOwnProperty('date') ?
 												  globalStyles.inputGroupError :
 												  globalStyles.inputGroupDefault
 										  ]}
@@ -89,14 +95,13 @@ function MealDates() {
 									</Text>
 								)
 								: (
-									<Text style={[globalStyles.fieldFont, globalStyles.creationBodyField]}>
+									<Text style={[globalStyles.placaholderFieldFont, globalStyles.creationBodyField]}>
 										{`Exemple ${getFormattedDate(new Date())}`}
 									</Text>
 								)
 							}
 							{show && (
 								<DateTimePicker
-									testID="dateTimePicker"
 									minimumDate={new Date()}
 									value={date ? date : new Date()}
 									mode={mode}
@@ -107,7 +112,7 @@ function MealDates() {
 							)}
 						</TouchableOpacity>
 						{errors.hasOwnProperty('date') &&
-                        <Text style={globalStyles.error}>Cette donnée est requise</Text>}
+                        <Text style={globalStyles.error}>La date sasie est incorrecte</Text>}
 					</View>
 					<View>
 						<Text style={globalStyles.fieldFont}>Heure</Text>
@@ -127,7 +132,7 @@ function MealDates() {
 									</Text>
 								)
 								: (
-									<Text style={[globalStyles.fieldFont, globalStyles.creationBodyField]}>
+									<Text style={[globalStyles.placaholderFieldFont, globalStyles.creationBodyField]}>
 										{`Exemple 12:00`}
 									</Text>
 								)
@@ -135,6 +140,7 @@ function MealDates() {
 							{show && (
 								<DateTimePicker
 									testID="TimePicker"
+									minimumDate={new Date()}
 									value={date ? date : new Date()}
 									mode={mode}
 									is24Hour={true}
@@ -149,7 +155,7 @@ function MealDates() {
 				</View>
 				<BottomBar
 					stepIndex={stepIndex}
-					nextDisabled={!start && !date}
+					nextDisabled={!start || !date}
 					previousStep={previousStep}
 					nextStep={onSubmit}
 				/>

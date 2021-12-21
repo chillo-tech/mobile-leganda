@@ -5,10 +5,11 @@ import {colors} from '../utils/Styles';
 function HomeScreen({navigation}) {
 	return (
 		<View style={[styles.container]}>
-			<ImageBackground source={require('../../assets/images/poulet.jpeg')} resizeMode="stretch"
+			<ImageBackground source={require('../../assets/images/poulet.jpeg')} resizeMode="cover"
 							 style={styles.image}>
 				<View style={[styles.buttonsContainer, styles.alignment]}>
 					<TouchableOpacity style={[styles.button, styles.listButton]}
+									  underlayColor={'transparent'}
 									  onPress={() => navigation.navigate('MealsList')}>
 						<Text style={[styles.text, styles.primaryText]}>
 							Découvrir et réserver
@@ -18,7 +19,8 @@ function HomeScreen({navigation}) {
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={[styles.button, styles.createButton]}
-									  onPress={() => navigation.navigate('NewMeal')}>
+									  underlayColor={'transparent'}
+									  onPress={() => navigation.navigate('MealCreation')}>
 						<Text style={[styles.text, styles.whiteText]}>Proposer mon</Text>
 						<Text style={[styles.text, styles.whiteText]}>délicieux repas</Text>
 					</TouchableOpacity>
@@ -39,8 +41,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		paddingVertical: 10,
 		flex: 1,
-		flexDirection: 'column',
-		fontFamily: 'roboto'
+		flexDirection: 'column'
 	},
 	image: {
 		flex: 1,

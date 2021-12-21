@@ -1,56 +1,50 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Text, TextInput, View} from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
 import {globalStyles} from '../../utils/Styles';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import Button from '../Components/Button';
 import axios from 'axios';
-import {ACCOUNT_ENDPOINT, BACKOFFICE_URL, MEALS_ENDPOINT} from '../../utils/Endpoints';
-import Message from '../Components/Message';
+import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../../utils/Endpoints';
+import Message from '../messages/Message';
 import BottomBar from '../tabs/BottomBar';
 
 function MealActivation() {
-	const {stepIndex, previousStep, updateMeal, meal} = useContext(ApplicationContext);
+	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange'});
 	const [isActivating, setIsActivating] = useState(false);
 
-	const saveMeal = async () => {
-		try {
-			await axios(
-				`${BACKOFFICE_URL}/${MEALS_ENDPOINT}`,
-				{
-					method: 'POST',
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json'
-					},
-					data: JSON.stringify({...meal, profile: {...meal['profile'], active: true}})
-				}
-			);
-			setIsActivating(false);
-			updateMeal({meal});
-		} catch (e) {
-			console.log(e)
-		}
+	const handleAlertAction = (button) => {
 	}
-
 	const onSubmit = async (data) => {
 		setIsActivating(true);
 		try {
-			const {status} = await axios(
-				`${BACKOFFICE_URL}/${ACCOUNT_ENDPOINT}/activate`,
+			await axios(
+				`${BACKOFFICE_URL}/${MEALS_ENDPOINT}/activate`,
 				{
 					method: 'POST',
 					headers: {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json'
 					},
-					data: JSON.stringify({phone: meal?.profile?.phone, ...data})
+					data: JSON.stringify({phone: meal?.profile?.phone, itemId: meal.id, ...data})
 				}
 			);
-			saveMeal();
-		} catch (e) {
-			console.log(e)
+			updateMeal({});
+			setIsActivating(false);
+		} catch (error) {
+			Alert.alert(
+				"Une erreur est survenue",
+				error?.response?.data?.message,
+				[
+					{
+						text: "Cancel",
+						onPress: () => handleAlertAction("CANCEL"),
+						style: "cancel"
+					},
+					{text: "OK", onPress: () => handleAlertAction("OK")}
+				]
+			);
+
 			setIsActivating(false);
 		}
 	}
@@ -110,56 +104,6 @@ function MealActivation() {
 			</View>
 		</View>
 	);
-	return (
-		isActivating ? (<Message firstText="Un instant nous vérifions votre numéro"/>) :
-			(
-				<View style={styles.container}>
-					<View style={{marginBottom: 20}}>
-						<Text style={[globalStyles.inputTitle, {textAlign: 'center'}]}>
-							Confirmez votre numéro de téléphone</Text>
-						<Text style={[globalStyles.textBlue, {fontSize: 15, marginVertical: 5, textAlign: 'center'}]}>
-							Nous vous avons transmis un code par sms
-						</Text>
-						<Text style={[globalStyles.textBlue, {fontSize: 15, textAlign: 'center'}]}>
-							Veuillez saisir ce code dans le champ ci dessous
-						</Text>
-					</View>
-					<View>
-						<View
-							style={[globalStyles.inputGroup, errors.token ? globalStyles.inputGroupError : globalStyles.inputGroupDefault]}>
-							<Controller
-								name="token"
-								control={control}
-								rules={{
-									required: true,
-									pattern: /\d{6}/
-								}}
-								render={({field: {onChange, onBlur, value}}) => (
-									<TextInput
-										style={[globalStyles.fieldFont, globalStyles.inputField]}
-										onBlur={onBlur}
-										onChangeText={onChange}
-										value={value || ''}
-										keyboardType="numeric"
-										maxLength={6}
-										placeholder="Exemple: 615066"
-									/>
-								)}
-							/>
-						</View>
-						{errors.token && <Text style={globalStyles.error}>Le code sasi est invalide</Text>}
-					</View>
-					<Button onPress={handleSubmit(onSubmit)}/>
-				</View>)
-
-	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		display: 'flex',
-		height: '100%',
-		justifyContent: 'space-between'
-	}
-})
 export default MealActivation;

@@ -1,15 +1,14 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Text, TextInput, View} from 'react-native';
 import {globalStyles} from '../../utils/Styles';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {Controller, useForm} from 'react-hook-form';
 import BottomBar from '../tabs/BottomBar';
 
 function MealDescription() {
-	const {stepIndex, previousStep, updateMeal, meal} = useContext(ApplicationContext);
+	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange',});
 	const onSubmit = data => updateMeal({data});
-
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
@@ -58,11 +57,4 @@ function MealDescription() {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		display: 'flex',
-		height: '100%',
-		justifyContent: 'space-between'
-	}
-})
 export default MealDescription;
