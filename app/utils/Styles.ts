@@ -13,6 +13,7 @@ export const colors = {
 
 export const globalStyles = StyleSheet.create({
 	container: {
+
 		marginTop: 0,
 		backgroundColor: "#f6ece7",
 		flex: 1,

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Le GANDA",
     "slug": "leganda",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "com.ams.leganda",
-      "versionCode": 21,
+      "versionCode": 22,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash.png",
         "backgroundColor": "#30698C"

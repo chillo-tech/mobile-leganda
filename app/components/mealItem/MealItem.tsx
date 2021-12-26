@@ -3,10 +3,9 @@ import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {colors} from '../../utils/Styles';
 import PictureDisplay from '../Image/PictureDisplay';
 import {getDisplayedDate, getFormattedTime} from '../../utils/DateFormat';
-import {AntDesign} from '@expo/vector-icons';
+import {AntDesign, FontAwesome5} from '@expo/vector-icons';
 
 function MealItem({meal, displayMeal}) {
-	console.log(meal.name)
 	return (
 		<TouchableHighlight style={styles.item} underlayColor={'transparent'}
 							onPress={() => displayMeal(meal.id)}>
@@ -23,7 +22,7 @@ function MealItem({meal, displayMeal}) {
 							<View style={styles.iconLabel}>
 								<View style={styles.label}>
 									<AntDesign name="eye" size={20} color={colors.black}/>
-									<Text>{meal.views ? meal.views : 0}</Text>
+									<Text>&nbsp;{meal.views ? meal.views : 0}</Text>
 								</View>
 							</View>
 						</View>
@@ -37,6 +36,10 @@ function MealItem({meal, displayMeal}) {
 									<View style={styles.datesData}>
 										<Text
 											style={styles.dateItem}>
+
+											<FontAwesome5 name="clock" color={colors.darkgray}
+														  size={14}/>
+											&nbsp;
 											{getDisplayedDate(meal?.validity?.date)}
 										</Text>
 										<Text

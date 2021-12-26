@@ -18,7 +18,7 @@ function SearchScreen({route, navigation}) {
 	const [pushMeals, setPushMeals] = useState(false);
 	const [refreshing, setRefreshing] = React.useState(false);
 	const {query, address: {coordinates: {coordinates}}} = searchCriteria;
-	
+
 	const onRefresh = React.useCallback(() => {
 		setPushMeals(false);
 		setRefreshing(true);
@@ -67,6 +67,7 @@ function SearchScreen({route, navigation}) {
 	}
 	useFocusEffect(
 		React.useCallback(() => {
+			console.log(searchCriteria)
 			search();
 		}, [searchCriteria])
 	);
@@ -109,9 +110,7 @@ function SearchScreen({route, navigation}) {
 const styles = StyleSheet.create({
 	searchResultsContainer: {
 		paddingHorizontal: 10,
-		paddingVertical: 5,
-		flex: 1,
-		justifyContent: 'center'
+		paddingVertical: 10
 	}
 });
 export default SearchScreen;

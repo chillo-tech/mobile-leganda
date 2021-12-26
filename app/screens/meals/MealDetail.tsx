@@ -89,7 +89,7 @@ const MealDetail = ({route, navigation}) => {
 								<View style={styles.iconLabel}>
 									<View style={styles.label}>
 										<AntDesign name="eye" size={20} color={colors.darkgray}/>
-										<Text>{meal.views ? meal.views : 0}</Text>
+										<Text>&nbsp;{meal.views ? meal.views : 0}</Text>
 									</View>
 								</View>
 							</View>
@@ -103,6 +103,9 @@ const MealDetail = ({route, navigation}) => {
 										<View style={styles.row}>
 											<Text
 												style={styles.profile}>
+												<FontAwesome5 name="clock" color={colors.darkgray}
+															  size={14}/>
+												&nbsp;
 												{getDisplayedDate(meal?.validity?.date)}
 											</Text>
 											<Text
@@ -112,46 +115,49 @@ const MealDetail = ({route, navigation}) => {
 										</View>
 									) : null
 							}
-							<Text style={styles.description}>
-								{meal?.description}
-							</Text>
+							<View style={styles.description}>
+								<Text style={styles.descriptionTitle}>Description</Text>
+								<Text style={styles.descriptionBody}>{meal?.description}</Text>
+							</View>
 						</ScrollView>
-						<View>
-							<View style={styles.row}>
-
-								<TouchableHighlight underlayColor={'transparent'}
-													onPress={() => navigate(meal?.address)}>
-									<Text style={[styles.profile]}>
+						<TouchableHighlight underlayColor={'transparent'} onPress={() => navigate(meal?.address)}>
+							<View style={styles.address}>
+								<View style={styles.addressmarker}>
+									<FontAwesome name="map-marker" size={18} color={colors.primary}
+												 style={styles.addressicon}/>
+									<Text style={styles.addresslabel}>
 										{meal?.address?.street}
 									</Text>
+								</View>
+								<AntDesign name="right" size={16} color={colors.primary}/>
+							</View>
+						</TouchableHighlight>
+
+						<View style={styles.contact}>
+							<View style={[styles.contactItem]}>
+								<TouchableHighlight underlayColor={'transparent'}
+													onPress={() => handleContactPressed({
+														name: 'phone',
+														phone: meal?.profile?.phone
+													})}>
+									<Feather name="phone" size={32} color={colors.warning}/>
+								</TouchableHighlight>
+
+							</View>
+							<View style={[styles.contactItem]}>
+								<TouchableHighlight underlayColor={'transparent'}
+													onPress={() => handleContactPressed({
+														name: 'sms',
+														phone: meal?.profile?.phone
+													})}>
+									<FontAwesome5 name="sms" size={32} color={colors.primary}/>
 								</TouchableHighlight>
 							</View>
-							<View style={styles.contact}>
-								<View style={[styles.contactItem, {alignItems: 'flex-start'}]}>
-									<TouchableHighlight underlayColor={'transparent'}
-														onPress={() => handleContactPressed({
-															name: 'phone',
-															phone: meal?.profile?.phone
-														})}>
-										<Feather name="phone" size={32} color={colors.warning}/>
-									</TouchableHighlight>
-
-								</View>
-								<View style={[styles.contactItem]}>
-									<TouchableHighlight underlayColor={'transparent'}
-														onPress={() => handleContactPressed({
-															name: 'sms',
-															phone: meal?.profile?.phone
-														})}>
-										<FontAwesome5 name="sms" size={32} color={colors.primary}/>
-									</TouchableHighlight>
-								</View>
-								<View style={[styles.contactItem, {alignItems: 'flex-end'}]}>
-									<TouchableHighlight underlayColor={'transparent'}
-														onPress={() => navigate(meal?.address)}>
-										<FontAwesome name="map-marker" size={32} color={colors.success}/>
-									</TouchableHighlight>
-								</View>
+							<View style={[styles.contactItem]}>
+								<TouchableHighlight underlayColor={'transparent'}
+													onPress={() => navigate(meal?.address)}>
+									<FontAwesome name="map-marker" size={32} color={colors.success}/>
+								</TouchableHighlight>
 							</View>
 						</View>
 					</View>
@@ -165,9 +171,40 @@ const MealDetail = ({route, navigation}) => {
 export default MealDetail;
 
 const styles = StyleSheet.create({
+	address: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		alignContent: 'center',
+		justifyContent: 'space-between',
+		paddingHorizontal: 10,
+		paddingVertical: 20,
+		borderTopWidth: 1,
+		borderBottomWidth: 1,
+		borderTopColor: colors.lightgray,
+		borderBottomColor: colors.lightgray
+	},
+
+	contact: {
+		paddingHorizontal: 10,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		borderBottomWidth: 1,
+		borderBottomColor: colors.lightgray
+	},
+	addressicon: {
+		marginRight: 10
+	},
+	addressmarker: {
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
+	addresslabel: {
+		color: colors.primary,
+		fontSize: 16
+	},
 	gallery: {
 		backgroundColor: colors.primary,
-		height: 450,
+		height: 370,
 		marginBottom: 20
 	},
 	container: {
@@ -176,14 +213,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between'
 	},
 	containerInner: {},
-	contact: {
-		paddingHorizontal: 10,
-		flexDirection: 'row',
-		color: colors.white,
-		alignContent: 'center',
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
+
 	contactItem: {
 		flexGrow: 1,
 		flexBasis: 0,
@@ -195,16 +225,11 @@ const styles = StyleSheet.create({
 		paddingBottom: 0,
 	},
 	row: {
-		paddingVertical: 0,
 		marginVertical: 0,
 		paddingHorizontal: 10,
-		display: "flex",
-		width: "100%",
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignContent: "center",
-		alignItems: 'center'
-
+		alignContent: "center"
 	},
 	profile: {
 		color: colors.darkgray,
@@ -228,20 +253,34 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 0
 	},
 	name: {
-		fontSize: 24,
+		fontSize: 22,
 		fontWeight: "bold",
 		textTransform: 'capitalize',
 		color: colors.primary
 	},
 	price: {
-		fontSize: 24,
+		fontSize: 22,
 		fontWeight: "bold",
 		color: colors.warning,
 	},
 	description: {
+		borderTopWidth: 1,
+		borderTopColor: colors.lightgray,
 		fontSize: 18,
 		paddingHorizontal: 10,
-		paddingVertical: 30,
-		color: colors.black
+		color: colors.black,
+		paddingVertical: 5,
+		marginVertical: 10
 	},
+	descriptionTitle: {
+		color: colors.black,
+		fontWeight: 'bold',
+		fontSize: 20,
+		marginBottom: 10
+	},
+	descriptionBody: {
+		fontSize: 18,
+		color: colors.darkgray,
+		paddingHorizontal: 10
+	}
 })

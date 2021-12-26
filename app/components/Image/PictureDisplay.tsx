@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { colors } from '../../utils/Styles';
+import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {colors} from '../../utils/Styles';
+import {IMAGES_URL} from '../../utils/Endpoints';
 
-const getUri = (picture: Picture) => {  
+const getUri = (picture: Picture) => {
 	if (picture && picture.uri)
-		return picture.uri.replace("http://localhost:27191/images", "http://192.168.1.11:27191/images");
+		return picture.uri.replace("http://localhost:27191/images", IMAGES_URL);
 
 	if (picture && picture.base64)
 		return `data:image/png;base64,${picture.base64}`;
