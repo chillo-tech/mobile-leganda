@@ -28,7 +28,7 @@ const MealSearch = ({navigation}) => {
 		const updatedValue = text || '';
 		setDisplayCancelButton(false);
 		setQuery(updatedValue);
-		updateSearchCriteria({query: updatedValue})
+		updateSearchCriteria({pushResults: false, query: updatedValue, page: 0})
 		Keyboard.dismiss();
 	}
 
@@ -52,9 +52,11 @@ const MealSearch = ({navigation}) => {
 					<FontAwesome5 name="map-marker-alt" size={18} color={colors.primary}/>
 					<View style={styles.selectedCityDescription}>
 						<Text style={styles.selectedCityLabel} numberOfLines={1}>
-							{selectedcity.length < 32
-								? `${selectedcity}`
-								: `${selectedcity.substring(0, 30)}...`}
+							{
+								selectedcity.length > 32
+								? `${selectedcity.substring(0, 30)}...`
+								: selectedcity
+							}
 						</Text>
 						<Text style={styles.selectedCityDistance}>A moins de 30 Km</Text>
 					</View>

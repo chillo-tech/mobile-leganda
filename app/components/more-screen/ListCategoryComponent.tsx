@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.white
 	},
 	listStyle: {
-		marginHorizontal: 5
+		marginHorizontal: 5,
+		borderRadius: 10,
+		overflow: 'hidden'
 	},
 	sectionTitle: {
 		textTransform: 'capitalize',
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
 		color: colors.primary,
 		paddingHorizontal: 5,
 		fontSize: 24,
-		paddingVertical: 10,
+		paddingVertical: 5,
 		fontWeight: 'bold',
 	}
 })

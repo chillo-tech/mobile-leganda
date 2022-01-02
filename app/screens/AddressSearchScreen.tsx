@@ -1,5 +1,15 @@
 import React, {useContext, useState} from 'react';
-import {Alert, FlatList, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import {
+	ActivityIndicator,
+	Alert,
+	FlatList,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableHighlight,
+	TouchableOpacity,
+	View
+} from 'react-native';
 import {colors, globalStyles} from '../utils/Styles';
 import axios from 'axios';
 import {ADDRESS_ENDPOINT, BACKOFFICE_URL} from '../utils/Endpoints';
@@ -13,6 +23,7 @@ function AddressSearchScreen({navigation}) {
 	const {state: {searchCriteria}, updateSearchCriteria} = useContext<any>(ApplicationContext);
 	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
 	const [searchButtonVisible, setSearchButtonVisible] = useState(true);
+	const [locationVisible, setLocationVisible] = useState(true);
 	const [searchResults, setSearchResults] = useState([]);
 	const [query, setQuery] = useState(searchCriteria?.address?.street);
 
@@ -23,6 +34,8 @@ function AddressSearchScreen({navigation}) {
 	const setSelectedAddress = (selectedAddress: any) => {
 		setQuery(cleanString(selectedAddress.street.split(/,(.+)/)[0]));
 		updateSearchCriteria({
+			pushResults: false,
+			page: 0,
 			address: selectedAddress
 		})
 		setSearchResults([]);
@@ -68,33 +81,42 @@ function AddressSearchScreen({navigation}) {
 			return;
 		}
 
-		let {coords} = await Location.getCurrentPositionAsync({});
-
-		if (coords) {
-			const {latitude, longitude} = coords;
-			const response = await Location.reverseGeocodeAsync({latitude, longitude});
-			for (let item of response) {
-				setQuery(item.city);
-				updateSearchCriteria({
-					address: {
-						street: item.city,
-						coordinates: {
-							coordinates: [longitude, latitude],
-							type: "Point"
+		try {
+			setLocationVisible(false);
+			const {coords} = await Location.getCurrentPositionAsync({accuracy: 6});
+			if (coords) {
+				const {latitude, longitude} = coords;
+				const response = await Location.reverseGeocodeAsync({latitude, longitude});
+				for (let item of response) {
+					setQuery(item.city);
+					updateSearchCriteria({
+						pushResults: false,
+						page: 0,
+						address: {
+							street: item.city,
+							coordinates: {
+								coordinates: [longitude, latitude],
+								type: "Point"
+							}
 						}
-					}
-				})
+					})
+				}
 			}
-		}
 
-		setSearchResults([]);
-		setSearchButtonVisible(true)
+			setLocationVisible(true);
+			setSearchResults([]);
+			setSearchButtonVisible(true)
+		} catch (error) {
+			setLocationVisible(true);
+		}
 	}
 
-	const startSearch = () => navigation.navigate({
-		name: 'MealsList',
-		merge: true,
-	});
+	const startSearch = () => {
+		navigation.navigate({
+			name: 'MealsList',
+			merge: true,
+		});
+	}
 
 	React.useLayoutEffect(() => {
 		setQuery('');
@@ -128,13 +150,26 @@ function AddressSearchScreen({navigation}) {
 								placeholder="Choisir par ville"
 							/>
 						</View>
-						<TouchableHighlight underlayColor={colors.white} style={styles.searchFormUserPosition}
-											onPress={getUserLocation}>
-							<>
-								<MaterialIcons name="my-location" size={16} color={colors.primary}/>
-								<Text style={styles.searchFormUserPositionText}>Utiliser ma position actuelle</Text>
-							</>
-						</TouchableHighlight>
+						{
+							locationVisible ? (
+									<TouchableHighlight underlayColor={colors.white}
+														style={styles.searchFormUserPosition}
+														onPress={getUserLocation}>
+										<>
+											<MaterialIcons name="my-location" size={16} color={colors.primary}/>
+											<Text style={styles.searchFormUserPositionText}>Utiliser ma position
+												actuelle</Text>
+										</>
+									</TouchableHighlight>
+								) :
+								(
+									<View
+										style={styles.searchFormUserPosition}>
+										<ActivityIndicator color={colors.primary}/>
+									</View>
+								)
+						}
+
 						{searchButtonVisible ?
 							<TouchableHighlight underlayColor={colors.warning} style={styles.searchFormSearch}
 												onPress={startSearch}>

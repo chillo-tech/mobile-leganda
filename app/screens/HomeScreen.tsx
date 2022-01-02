@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {colors} from '../utils/Styles';
 
 function HomeScreen({navigation}) {
@@ -8,22 +8,26 @@ function HomeScreen({navigation}) {
 			<ImageBackground source={require('../../assets/images/poulet.jpeg')} resizeMode="cover"
 							 style={styles.image}>
 				<View style={[styles.buttonsContainer, styles.alignment]}>
-					<TouchableOpacity style={[styles.button, styles.listButton]}
-									  underlayColor={'transparent'}
-									  onPress={() => navigation.navigate('MealsList')}>
-						<Text style={[styles.text, styles.primaryText]}>
-							Découvrir et réserver
-						</Text>
-						<Text style={[styles.text, styles.primaryText]}>
-							un repas fait maison
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={[styles.button, styles.createButton]}
-									  underlayColor={'transparent'}
-									  onPress={() => navigation.navigate('MealCreation')}>
-						<Text style={[styles.text, styles.whiteText]}>Proposer mon</Text>
-						<Text style={[styles.text, styles.whiteText]}>délicieux repas</Text>
-					</TouchableOpacity>
+					<TouchableHighlight style={[styles.button, styles.listButton]}
+										underlayColor={colors.white}
+										onPress={() => navigation.navigate('MealsList')}>
+						<>
+							<Text style={[styles.text, styles.primaryText]}>
+								Découvrir et réserver
+							</Text>
+							<Text style={[styles.text, styles.primaryText]}>
+								un repas fait maison
+							</Text>
+						</>
+					</TouchableHighlight>
+					<TouchableHighlight style={[styles.button, styles.createButton]}
+										underlayColor={colors.primary}
+										onPress={() => navigation.navigate('MealCreation')}>
+						<>
+							<Text style={[styles.text, styles.whiteText]}>Proposer mon</Text>
+							<Text style={[styles.text, styles.whiteText]}>délicieux repas</Text>
+						</>
+					</TouchableHighlight>
 				</View>
 			</ImageBackground>
 		</View>
@@ -64,12 +68,12 @@ const styles = StyleSheet.create({
 		elevation: 5,
 	},
 	createButton: {
-		backgroundColor: `${colors.primary}`,
-		shadowColor: `${colors.white}`,
+		backgroundColor: colors.primary,
+		shadowColor: colors.white,
 
 	},
 	listButton: {
-		backgroundColor: `${colors.white}`,
+		backgroundColor: colors.white,
 	},
 	text: {
 		fontWeight: 'normal',
@@ -78,10 +82,10 @@ const styles = StyleSheet.create({
 		lineHeight: 40
 	},
 	whiteText: {
-		color: `${colors.white}`,
+		color: colors.white,
 	},
 	primaryText: {
-		color: `${colors.primary}`,
+		color: colors.primary,
 	}
 })
 export default HomeScreen;

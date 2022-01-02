@@ -32,7 +32,7 @@
       "package": "com.ams.leganda",
       "versionCode": 22,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splash.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#30698C"
       }
     },

@@ -8,14 +8,14 @@ export const colors = {
 	lightgray: "#cccccc",
 	black: "#000000",
 	warning: "#F2785C",
+	warningLight: "#f6ece7",
 	white: "#ffffff",
 }
 
 export const globalStyles = StyleSheet.create({
 	container: {
-
 		marginTop: 0,
-		backgroundColor: "#f6ece7",
+		backgroundColor: colors.warningLight,
 		flex: 1,
 		justifyContent: 'center',
 		alignContent: 'center'

@@ -12,27 +12,24 @@ import SearchEmpty from './meals/SearchEmpty';
 
 function SearchScreen({route, navigation}) {
 	const url = `${BACKOFFICE_URL}/${MEALS_ENDPOINT}/search`;
-	const {state: {searchCriteria, meals}, updateMeals, updateSelectedItemId} = useContext(ApplicationContext);
-	const [page, setPage] = useState(0);
+	const {state: {searchCriteria, meals}, updateMeals, updateSelectedItemId, updateSearchCriteria} = useContext(ApplicationContext);
+	const {query, pushResults, page, size, address: {coordinates: {coordinates}}} = searchCriteria;
 	const [isLoading, setIsloading] = useState(true);
-	const [pushMeals, setPushMeals] = useState(false);
 	const [refreshing, setRefreshing] = React.useState(false);
-	const {query, address: {coordinates: {coordinates}}} = searchCriteria;
 
-	const onRefresh = React.useCallback(() => {
-		setPushMeals(false);
+	const onRefresh =() => {
+		updateSearchCriteria({pushResults: false});
 		setRefreshing(true);
-		setPage(0);
-		search();
-	}, []);
+	};
 
 	const displayMeal = (id: string) => {
 		updateSelectedItemId(id);
 		navigation.push("MealDetail", {selectedId: id});
 	}
 
-	const search = async () => {
+	const search =  React.useCallback(async(caller) => {
 		try {
+			console.log({caller, searchCriteria})
 			const {data: searchResult = []} = await axios(
 				url,
 				{
@@ -43,34 +40,34 @@ function SearchScreen({route, navigation}) {
 					},
 					params: {
 						page,
-						size: 3
+						size
 					},
 					data: JSON.stringify({coordinates, query})
 				}
 			);
 			setIsloading(false);
 			setRefreshing(false);
-			if (pushMeals) {
+
+			if (pushResults) {
 				updateMeals([...meals, ...searchResult]);
 			} else {
 				updateMeals(searchResult);
 			}
 		} catch (e) {
 			setIsloading(false);
-			setPushMeals(false);
+			updateSearchCriteria({pushResults: false});
 		}
-	}
+	}, [searchCriteria])
+
 	const fetchMore = () => {
-		setPushMeals(true);
-		setPage(page + 1);
-		search();
-	}
-	useFocusEffect(
-		React.useCallback(() => {
-			console.log(searchCriteria)
-			search();
-		}, [searchCriteria])
-	);
+		updateSearchCriteria({pushResults: true, page: (page+1)});
+	};
+
+	React.useLayoutEffect(
+		() => {
+			search("useFocusEffect");
+		}
+	,[searchCriteria]);
 	return (
 		<View style={{flex: 1}}>
 			{isLoading ?
@@ -86,7 +83,7 @@ function SearchScreen({route, navigation}) {
 							<FlatList
 								contentContainerStyle={styles.searchResultsContainer}
 								scrollEventThrottle={150}
-								onEndReachedThreshold={0.01}
+								onEndReachedThreshold={0.8}
 								onEndReached={fetchMore}
 								data={meals}
 								keyExtractor={(item, index) => `${item.id}-${index}`}

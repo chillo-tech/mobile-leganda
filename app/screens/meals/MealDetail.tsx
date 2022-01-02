@@ -1,5 +1,15 @@
 import React, {useContext, useState} from 'react'
-import {Alert, Linking, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View} from 'react-native'
+import {
+	Alert,
+	Linking,
+	Platform,
+	SafeAreaView,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableHighlight,
+	View
+} from 'react-native'
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {colors, globalStyles} from '../../utils/Styles';
 import {AntDesign, Feather, FontAwesome, FontAwesome5} from '@expo/vector-icons';
@@ -74,10 +84,10 @@ const MealDetail = ({route, navigation}) => {
 		});
 	}, [navigation]);
 	return (
-		<View style={globalStyles.container}>
+		<SafeAreaView style={globalStyles.container}>
 			{
 				meal ? (
-					<View style={styles.container}>
+					<SafeAreaView style={styles.container}>
 						<ScrollView style={styles.informations}>
 							<View style={styles.gallery}>
 								<PictureDisplay picture={meal.pictures[0]}/>
@@ -126,7 +136,10 @@ const MealDetail = ({route, navigation}) => {
 									<FontAwesome name="map-marker" size={18} color={colors.primary}
 												 style={styles.addressicon}/>
 									<Text style={styles.addresslabel}>
-										{meal?.address?.street}
+										{meal?.address?.street.length > 50
+											? `${meal?.address?.street.substring(0, 50)}...`
+											: meal?.address?.street
+										}
 									</Text>
 								</View>
 								<AntDesign name="right" size={16} color={colors.primary}/>
@@ -160,11 +173,11 @@ const MealDetail = ({route, navigation}) => {
 								</TouchableHighlight>
 							</View>
 						</View>
-					</View>
+					</SafeAreaView>
 				) : null
 			}
 
-		</View>
+		</SafeAreaView>
 	)
 }
 
@@ -200,7 +213,8 @@ const styles = StyleSheet.create({
 	},
 	addresslabel: {
 		color: colors.primary,
-		fontSize: 16
+		fontSize: 16,
+		width: '92%'
 	},
 	gallery: {
 		backgroundColor: colors.primary,

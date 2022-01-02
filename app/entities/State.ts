@@ -1,5 +1,9 @@
 type State = {
 	searchCriteria: {
+		query?: string,
+		page?: number,
+		size?: number,
+		pushResults: false,
 		address: {
 			coordinates: any
 		}

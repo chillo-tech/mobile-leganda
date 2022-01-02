@@ -13,7 +13,7 @@ function ListHeaderComponent(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 50,
+		paddingTop: 80,
 	},
 	title: {
 		color: colors.warning,

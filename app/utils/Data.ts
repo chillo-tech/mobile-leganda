@@ -1,4 +1,4 @@
-import { EMAIL, PHONE } from "./providers";
+import {EMAIL, PHONE} from "./providers";
 
 export const ADD_MEALS = "ADD_MEALS";
 export const RESET_MEAL = "RESET_MEAL";
@@ -8,7 +8,7 @@ export const SET_SELECTED_ITEM_ID = "SET_SELECTED_ITEM_ID";
 export const SET_STEP_INDEX = "SET_STEP_INDEX";
 export const UPDATE_MEAL = "UPDATE_MEAL";
 export const UPDATE_SEARCH_CRITERIA = "UPDATE_SEARCH_CRITERIA";
-export const RECOMMEND_TEXT =  "Bonjour, j'ai découvert cette application qui permet de bien manger et moins cher. Je te la recommande";
+export const RECOMMEND_TEXT = "Bonjour, j'ai découvert cette application qui permet de bien manger et moins cher. Je te la recommande";
 
 export const INITIAL_STATE: State = {
 	creationWizard: {
@@ -19,6 +19,10 @@ export const INITIAL_STATE: State = {
 		}
 	},
 	searchCriteria: {
+		pushResults: false,
+		page: 0,
+		size: 6,
+		query: '',
 		address: {
 			coordinates: {}
 		}
@@ -27,17 +31,17 @@ export const INITIAL_STATE: State = {
 }
 
 export const HELP_LINK = {
-  whatsapp :`whatsapp://send?text=&phone=${PHONE}`,
-  sms :`sms:${PHONE}body=`,
-  mail :`mailto:${EMAIL}`,
-  phone :`tel:${PHONE}`
+	whatsapp: `whatsapp://send?text=&phone=${PHONE}`,
+	sms: `sms:${PHONE}body=`,
+	mail: `mailto:${EMAIL}`,
+	phone: `tel:${PHONE}`
 }
 
 export const SHARE_LINK = {
-  whatsapp :`whatsapp://send?text=`,
-  sms :`sms:body=`,
-  mail :`mailto:${EMAIL}`,
-  phone :`tel:${PHONE}`
+	whatsapp: `whatsapp://send?text=`,
+	sms: `sms:body=`,
+	mail: `mailto:${EMAIL}`,
+	phone: `tel:${PHONE}`
 }
 
 export const MORESCREEN_DATA = [
@@ -46,18 +50,11 @@ export const MORESCREEN_DATA = [
 		title: "Recommandations",
 		items: [
 			{
-				id: '586',
-				icon: 'whatsapp',
-				name: 'whatsapp',
-				action: 'recommend',
-				title: 'Recommandez via whatsapp'
-			},
-			{
 				id: '587',
-				icon: 'sms',
+				icon: 'thumbs-up',
 				name: 'sms',
 				action: 'recommend',
-				title: 'Recommandez par sms',
+				title: 'Recommandez notre application',
 			},
 			{
 				id: '588',
