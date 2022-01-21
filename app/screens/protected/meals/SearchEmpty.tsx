@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {colors} from '../../utils/Styles';
-import Message from '../../components/messages/Message';
+import {colors} from '../../../utils/Styles';
+import Message from '../../../components/messages/Message';
 
 function SearchEmpty() {
 	return (

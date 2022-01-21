@@ -1,14 +1,23 @@
 import {EMAIL, PHONE} from "./providers";
 
 export const ADD_MEALS = "ADD_MEALS";
+export const AUTHENTICATED_USER = "authenticatedUser";
+export const MAPBOX_ACCESSTOKEN = "pk.eyJ1IjoiYWNoaWxsZW1ib3VndWVuZyIsImEiOiJja3Zvd3EzcmswaThkMnZrZ25iYmtveDBhIn0.pDR7pKL18d3iz5NoaRmWYg";
 export const RESET_MEAL = "RESET_MEAL";
+export const DELETE_KEY = "DELETE_KEY";
 export const SET_NUMBER_OF_CHILDREN = "SET_NUMBER_OF_CHILDREN";
 export const SET_MEALS = "SET_MEALS";
 export const SET_SELECTED_ITEM_ID = "SET_SELECTED_ITEM_ID";
 export const SET_STEP_INDEX = "SET_STEP_INDEX";
 export const UPDATE_MEAL = "UPDATE_MEAL";
 export const UPDATE_SEARCH_CRITERIA = "UPDATE_SEARCH_CRITERIA";
+export const UPDATE_USER_INFOS = "UPDATE_USER_INFOS";
+export const USER_TOKEN = "USER_TOKEN";
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_OUT = 'SIGN_OUT';
+export const SIGN_UP = 'SIGN_UP';
 export const RECOMMEND_TEXT = "Bonjour, j'ai découvert cette application qui permet de bien manger et moins cher. Je te la recommande";
+export const RESTORE_TOKEN = "RESTORE_TOKEN";
 
 export const INITIAL_STATE: State = {
 	creationWizard: {
@@ -23,8 +32,8 @@ export const INITIAL_STATE: State = {
 		page: 0,
 		size: 6,
 		query: '',
-		address: {
-			coordinates: {}
+		location: {
+			coordinates: []
 		}
 	},
 	meals: []

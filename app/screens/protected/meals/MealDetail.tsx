@@ -10,16 +10,16 @@ import {
 	TouchableHighlight,
 	View
 } from 'react-native'
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {colors, globalStyles} from '../../utils/Styles';
+import {ApplicationContext} from '../../../context/ApplicationContextProvider';
+import {colors, globalStyles} from '../../../utils/Styles';
 import {AntDesign, Feather, FontAwesome, FontAwesome5} from '@expo/vector-icons';
-import {phonePrefix, smsDivider} from '../../utils/providers';
-import PictureDisplay from '../../components/Image/PictureDisplay';
+import {phonePrefix, smsDivider} from '../../../utils/providers';
+import PictureDisplay from '../../../components/Image/PictureDisplay';
 import {useFocusEffect} from '@react-navigation/native';
-import BackButton from '../../components/buttons/BackButton';
-import {getDisplayedDate, getFormattedTime} from '../../utils/DateFormat';
+import BackButton from '../../../components/buttons/BackButton';
+import {getDisplayedDate, getFormattedTime} from '../../../utils/DateFormat';
 import axios from 'axios';
-import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../../utils/Endpoints';
+import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../../../utils/Endpoints';
 
 const MealDetail = ({route, navigation}) => {
 	const selectedId = route.params?.selectedId;
@@ -126,7 +126,7 @@ const MealDetail = ({route, navigation}) => {
 									) : null
 							}
 							<View style={styles.description}>
-								<Text style={styles.descriptionTitle}>Description</Text>
+								<Text style={styles.descriptionTitle}>Ingrédients</Text>
 								<Text style={styles.descriptionBody}>{meal?.description}</Text>
 							</View>
 						</ScrollView>

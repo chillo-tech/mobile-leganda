@@ -1,13 +1,13 @@
-import React, {useContext, useState} from 'react';
-import {Alert, Text, TextInput, View} from 'react-native';
-import {Controller, useForm} from 'react-hook-form';
-import {globalStyles} from '../../utils/Styles';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {isValidPhoneNumber} from '../../utils/isValidPhoneNumber';
-import BottomBar from '../tabs/BottomBar';
 import axios from 'axios';
-import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../../utils/Endpoints';
+import React, { useContext, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Alert, Text, TextInput, View } from 'react-native';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { BACKOFFICE_URL, MEALS_ENDPOINT } from '../../utils/Endpoints';
+import { isValidPhoneNumber } from '../../utils/isValidPhoneNumber';
+import { globalStyles } from '../../utils/Styles';
 import Message from '../messages/Message';
+import BottomBar from '../tabs/BottomBar';
 
 function MealProvider() {
 	const [isActivating, setIsActivating] = useState(false);
@@ -16,7 +16,7 @@ function MealProvider() {
 	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange'});
 
-	const onSubmit = async (data) => {
+	const onSubmit = async (infos) => {
 		setIsActivating(true);
 		try {
 			const {status, data: {id}} = await axios(
@@ -27,13 +27,13 @@ function MealProvider() {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json'
 					},
-					data: JSON.stringify({...meal, profile: data['profile']})
+					data: JSON.stringify({...meal, profile: infos['profile']})
 				}
 			);
 			setIsActivating(false);
 
 			if (status === 201) {
-				updateMeal({data: {id, profile: data['profile'], active: false}});
+				updateMeal({infos: {id, profile: infos['profile'], active: false}});
 				setIsActivating(false);
 			}
 		} catch (error) {

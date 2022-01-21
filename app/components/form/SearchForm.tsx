@@ -1,17 +1,34 @@
-import React, {useContext, useState} from 'react';
-import {Keyboard, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
-import {colors} from '../../utils/Styles';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {AntDesign, EvilIcons, FontAwesome5} from '@expo/vector-icons';
+import { AntDesign, EvilIcons, FontAwesome5 } from '@expo/vector-icons';
+import React, { useContext, useState } from 'react';
+import { Keyboard, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { colors } from '../../utils/Styles';
 
-const MealSearch = ({navigation}) => {
-	const {state: {searchCriteria: {address}}, updateSearchCriteria} = useContext(ApplicationContext);
-	const [selectedcity, setSelectedCity] = useState(address.street || 'Choisir une ville');
+const SearchForm = ({navigation}) => {
+	const {
+		state,
+		updateSearchCriteria
+	} = useContext(ApplicationContext);
+	const {authenticatedUser, searchCriteria} = state;
+	const {location: criteriaLocation} = searchCriteria;
+  
+	const selectedCityName = () => {
+		let name = 'Choisir une ville';
+		if (authenticatedUser.street) {
+			name = authenticatedUser.street;
+		}
+		if (searchCriteria.street) {
+			name = searchCriteria.street;
+		}
+    
+		return name.split(',').map((item: string) => item.trim()).splice(0, 2).join(', ');
+	}
+	const [selectedcity, setSelectedCity] = useState(selectedCityName());
 	const [displayCancelButton, setDisplayCancelButton] = useState(false);
 	const [query, setQuery] = useState('');
 
 	const updateCity = () => {
-		navigation.push("AddressSearch");
+		navigation.push("locationSearch");
 	}
 
 	const handleFocus = () => {
@@ -37,9 +54,10 @@ const MealSearch = ({navigation}) => {
 		setDisplayCancelButton(false);
 	}
 
+
 	React.useLayoutEffect(() => {
-		setSelectedCity(address.street || 'Choisir une ville');
-	}, [navigation, address]);
+		setSelectedCity(selectedCityName());
+	}, [navigation, authenticatedUser, criteriaLocation]);
 
 
 	return (
@@ -54,8 +72,8 @@ const MealSearch = ({navigation}) => {
 						<Text style={styles.selectedCityLabel} numberOfLines={1}>
 							{
 								selectedcity.length > 32
-								? `${selectedcity.substring(0, 30)}...`
-								: selectedcity
+									? `${selectedcity.substring(0, 30)}...`
+									: selectedcity
 							}
 						</Text>
 						<Text style={styles.selectedCityDistance}>A moins de 30 Km</Text>
@@ -155,4 +173,4 @@ const styles = StyleSheet.create({
 		fontSize: 18
 	}
 })
-export default MealSearch;
+export default SearchForm;

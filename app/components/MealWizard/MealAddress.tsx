@@ -1,15 +1,18 @@
+import axios from 'axios';
 import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {colors, globalStyles} from '../../utils/Styles';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import axios from 'axios';
 import {ADDRESS_ENDPOINT, BACKOFFICE_URL} from '../../utils/Endpoints';
+import {colors, globalStyles} from '../../utils/Styles';
 import BottomBar from '../tabs/BottomBar';
 
 function MealAddress() {
 	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
-
+	const {state, updateMeal, previousStep} = useContext(ApplicationContext);
+	const {
+		authenticatedUser: {location: {coordinates: authenticatedUserCoordinates}},
+		creationWizard: {stepIndex, meal}
+	} = state;
 	const [searchResults, setSearchResults] = useState([]);
 	const [query, setQuery] = useState("");
 	const [errors, setErrors] = useState({});
@@ -22,7 +25,7 @@ function MealAddress() {
 		delete selectedAddress["id"];
 		setAddress(selectedAddress);
 		updateMeal({
-			data: {
+			infos: {
 				address: selectedAddress
 			}
 		})
@@ -36,13 +39,17 @@ function MealAddress() {
 		if (queryParam.length) {
 			try {
 				const {data} = await axios(
-					`${url}?query=${queryParam}`,
+					url,
 					{
 						headers: {
 							'X-Requested-With': 'XMLHttpRequest',
 							"Content-Type": "application/x-www-form-urlencoded",
 							Accept: "application/json"
 						},
+						params: {
+							proximity: `${authenticatedUserCoordinates[0]},${authenticatedUserCoordinates[1]}`,
+							query: queryParam
+						}
 					});
 				setSearchResults(data);
 			} catch (error) {

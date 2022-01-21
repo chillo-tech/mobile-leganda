@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
 	},
 	sectionTitle: {
 		textTransform: 'capitalize',
-		marginTop: 10,
+		marginTop: 20,
+		marginBottom: 5,
 		color: colors.primary,
 		paddingHorizontal: 5,
 		fontSize: 24,

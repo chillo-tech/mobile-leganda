@@ -1,0 +1,13 @@
+{
+  "cli": {
+    "version": ">= 0.34.0"
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "../documents/providers/google-play-store.json",
+        "track": "beta"
+      }
+    }
+  }
+}

@@ -1,18 +1,18 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import MealAddress from '../../components/MealWizard/MealAddress';
-import MealDates from '../../components/MealWizard/MealDates';
-import MealDescription from '../../components/MealWizard/MealDescription';
-import MealPictures from '../../components/MealWizard/MealPictures';
-import MealName from '../../components/MealWizard/MealName';
-import MealPrice from '../../components/MealWizard/MealPrice';
-import MealProvider from '../../components/MealWizard/MealProvider';
-import MealRecap from '../../components/MealWizard/MealRecap';
-import MealWizard from '../../components/MealWizard/MealWizard';
-import MealActivation from '../../components/MealWizard/MealActivation';
-import BackButton from '../../components/buttons/BackButton';
-import {LinearGradient} from 'expo-linear-gradient';
-import {colors} from '../../utils/Styles';
+import { StyleSheet } from 'react-native';
+import BackButton from '../../../components/buttons/BackButton';
+import MealActivation from '../../../components/MealWizard/MealActivation';
+import MealAddress from '../../../components/MealWizard/MealAddress';
+import MealDates from '../../../components/MealWizard/MealDates';
+import MealDescription from '../../../components/MealWizard/MealDescription';
+import MealName from '../../../components/MealWizard/MealName';
+import MealPictures from '../../../components/MealWizard/MealPictures';
+import MealPrice from '../../../components/MealWizard/MealPrice';
+import MealProvider from '../../../components/MealWizard/MealProvider';
+import MealRecap from '../../../components/MealWizard/MealRecap';
+import MealWizard from '../../../components/MealWizard/MealWizard';
+import { colors } from '../../../utils/Styles';
 
 function MealUpdate({navigation}) {
 	React.useLayoutEffect(() => {

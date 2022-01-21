@@ -1,21 +1,22 @@
-import React, {useContext} from 'react';
-import {colors, globalStyles} from '../../utils/Styles';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import React, { useContext } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { colors, globalStyles, IMAGES_URL } from '../../utils';
 import Button from '../buttons/Button';
-import {Image, StyleSheet, Text, View} from 'react-native';
 
 function MealRecap({navigation}) {
+  const image = {uri: `${IMAGES_URL}/thank-you.png`};
 	const {resetMeal} = useContext(ApplicationContext);
 	const goToList = () => {
 		resetMeal();
-		navigation.navigate('MealsList');
+		navigation.navigate('MealList');
 	}
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageWrapper}>
 				<Image
 					style={styles.image}
-					source={require('../../../assets/images/thank-you.png')}
+					source={image}
 				/>
 			</View>
 			<View>

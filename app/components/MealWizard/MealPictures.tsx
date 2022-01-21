@@ -1,10 +1,10 @@
-import React, {useContext, useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {colors, globalStyles} from '../../utils/Styles';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import BottomBar from '../tabs/BottomBar';
-import PictureUpload from '../Image/PictureUpload';
+import React, { useContext, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { colors, globalStyles } from '../../utils/Styles';
 import PictureDisplay from '../Image/PictureDisplay';
+import PictureUpload from '../Image/PictureUpload';
+import BottomBar from '../tabs/BottomBar';
 
 function MealPictures() {
 	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
@@ -12,7 +12,7 @@ function MealPictures() {
 	const [error, setError] = useState(null);
 	const onSubmit = async () => {
 		if (pictures && pictures.length) {
-			updateMeal({data: {pictures}})
+			updateMeal({infos: {pictures}})
 		} else {
 			setError("Veuilez ajouter des images de votre plat");
 		}

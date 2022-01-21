@@ -1,16 +1,21 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {colors} from '../utils/Styles';
+import { ImageBackground, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { ApplicationContext } from '../../../context/ApplicationContextProvider';
+import { colors, IMAGES_URL } from '../../../utils';
 
 function HomeScreen({navigation}) {
+
+	const {signOut} = React.useContext<any>(ApplicationContext);
+	const image = {uri: `${IMAGES_URL}/poulet.jpeg`};
+  
 	return (
 		<View style={[styles.container]}>
-			<ImageBackground source={require('../../assets/images/poulet.jpeg')} resizeMode="cover"
+			<ImageBackground source={image} resizeMode="cover"
 							 style={styles.image}>
 				<View style={[styles.buttonsContainer, styles.alignment]}>
 					<TouchableHighlight style={[styles.button, styles.listButton]}
 										underlayColor={colors.white}
-										onPress={() => navigation.navigate('MealsList')}>
+										onPress={() => navigation.navigate('MealList')}>
 						<>
 							<Text style={[styles.text, styles.primaryText]}>
 								Découvrir et réserver
@@ -28,6 +33,15 @@ function HomeScreen({navigation}) {
 							<Text style={[styles.text, styles.whiteText]}>délicieux repas</Text>
 						</>
 					</TouchableHighlight>
+
+					<TouchableHighlight style={[styles.button, styles.createButton]}
+										underlayColor={colors.primary}
+										onPress={() => signOut()}>
+						<>
+							<Text style={[styles.text, styles.whiteText]}>Me deconnecter</Text>
+						</>
+					</TouchableHighlight>
+					
 				</View>
 			</ImageBackground>
 		</View>

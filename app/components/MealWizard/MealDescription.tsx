@@ -1,14 +1,14 @@
-import React, {useContext} from 'react';
-import {Text, TextInput, View} from 'react-native';
-import {globalStyles} from '../../utils/Styles';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {Controller, useForm} from 'react-hook-form';
+import React, { useContext } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Text, TextInput, View } from 'react-native';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { globalStyles } from '../../utils/Styles';
 import BottomBar from '../tabs/BottomBar';
 
 function MealDescription() {
 	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange',});
-	const onSubmit = data => updateMeal({data});
+	const onSubmit = infos => updateMeal({infos});
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>

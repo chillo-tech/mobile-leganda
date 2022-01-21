@@ -1,10 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Platform, Text, TouchableOpacity, View} from 'react-native';
-import {globalStyles} from '../../utils/Styles';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {getFormattedDate, getFormattedTime} from '../../utils/DateFormat';
-import BottomBar from '../tabs/BottomBar';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useContext, useEffect, useState } from 'react';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { getFormattedDate, getFormattedTime } from '../../utils/DateFormat';
+import { globalStyles } from '../../utils/Styles';
+import BottomBar from '../tabs/BottomBar';
 
 function MealDates() {
 	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
@@ -50,7 +50,7 @@ function MealDates() {
 			setErrors({...errors, start: true});
 			return;
 		}
-		updateMeal({data: {validity: {date, start}}});
+		updateMeal({infos: {validity: {date, start}}});
 	};
 	
 	useEffect(() => {

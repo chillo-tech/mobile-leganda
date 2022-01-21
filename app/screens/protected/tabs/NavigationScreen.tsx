@@ -1,10 +1,10 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import SearchScreen from './SearchScreen';
-import MoreScreen from './MoreScreen';
+import EmptyMeal from '../../../components/mealItem/EmptyMeal';
+import BottomTab from '../../../components/tabs/BottomTab';
 import HomeScreen from './HomeScreen';
-import BottomTab from '../components/tabs/BottomTab';
-import EmptyMeal from '../components/mealItem/EmptyMeal';
+import MoreScreen from './MoreScreen';
+import SearchScreen from './SearchScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,11 +14,10 @@ function NavigationScreen() {
 
 		<Tab.Navigator
 			tabBar={props => <BottomTab {...props} />}
-
 		>
 			<Tab.Screen name="MealsHome" component={HomeScreen}
 						options={{headerShown: false}}/>
-			<Tab.Screen name="MealsList" component={SearchScreen}
+			<Tab.Screen name="MealList" component={SearchScreen}
 						options={{headerShown: false}}/>
 			<Tab.Screen name="NewMeal" component={EmptyMeal}
 						options={{headerShown: false}}/>

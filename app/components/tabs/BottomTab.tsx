@@ -37,7 +37,6 @@ function BottomTab({state, descriptors, navigation}) {
 						target: route.key,
 					});
 				};
-
 				return (
 					<TouchableOpacity key={`button${index}`}
 									  activeOpacity={1}

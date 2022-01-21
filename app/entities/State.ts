@@ -1,11 +1,14 @@
 type State = {
+	authenticatedUser?: {
+		location?: any
+	}
 	searchCriteria: {
 		query?: string,
 		page?: number,
 		size?: number,
-		pushResults: false,
-		address: {
-			coordinates: any
+		pushResults: boolean,
+		location: {
+			coordinates?: any
 		}
 	},
 	creationWizard: {
@@ -21,9 +24,9 @@ type Action = {
 	data?: any
 }
 
-type Picture = { 
-  id: string; 
-  name: string; 
-  uri: string; 
-  base64: any; 
+type Picture = {
+	id: string;
+	name: string;
+	uri: string;
+	base64: any;
 }

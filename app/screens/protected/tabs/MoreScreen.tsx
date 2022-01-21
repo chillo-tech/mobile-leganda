@@ -1,9 +1,9 @@
 import React from 'react';
 import {Alert, FlatList, Linking, SafeAreaView, Share, StyleSheet} from 'react-native';
-import ListCategoryComponent from '../components/more-screen/ListCategoryComponent';
-import ListHeaderComponent from '../components/more-screen/ListHeaderComponent';
-import {HELP_LINK, MORESCREEN_DATA} from '../utils/Data';
-import {colors} from '../utils/Styles';
+import ListCategoryComponent from '../../../components/more-screen/ListCategoryComponent';
+import ListHeaderComponent from '../../../components/more-screen/ListHeaderComponent';
+import {HELP_LINK, MORESCREEN_DATA} from '../../../utils/Data';
+import {colors} from '../../../utils/Styles';
 
 const MoreScreen = () => {
 

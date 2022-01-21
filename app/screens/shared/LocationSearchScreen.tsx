@@ -1,43 +1,42 @@
-import React, {useContext, useState} from 'react';
-import {
-	ActivityIndicator,
-	Alert,
-	FlatList,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableHighlight,
-	TouchableOpacity,
-	View
-} from 'react-native';
-import {colors, globalStyles} from '../utils/Styles';
+import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
-import {ADDRESS_ENDPOINT, BACKOFFICE_URL} from '../utils/Endpoints';
-import {ApplicationContext} from '../context/ApplicationContextProvider';
-import BackButton from '../components/buttons/BackButton';
-import {LinearGradient} from 'expo-linear-gradient';
-import {MaterialIcons} from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
+import React, { useContext, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import BackButton from '../../components/buttons/BackButton';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles } from '../../utils';
 
-function AddressSearchScreen({navigation}) {
-	const {state: {searchCriteria}, updateSearchCriteria} = useContext<any>(ApplicationContext);
+
+function LocationSearchScreen({navigation, route}) {
+	const {params} = route;
+	const {state, signIn, updateSearchCriteria} = useContext<any>(ApplicationContext);
+	const {authenticatedUser, searchCriteria} = state;
 	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
 	const [searchButtonVisible, setSearchButtonVisible] = useState(true);
+	const [authenticatedUserCoordinates, setAuthenticatedUserCoordinates] = useState({});
 	const [locationVisible, setLocationVisible] = useState(true);
 	const [searchResults, setSearchResults] = useState([]);
-	const [query, setQuery] = useState(searchCriteria?.address?.street);
+	const [location, setLocation] = useState({});
+	const [query, setQuery] = useState(searchCriteria?.location?.street);
 
-	const cleanString = (entry: string) => {
-		return entry ? entry.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
-	}
-
-	const setSelectedAddress = (selectedAddress: any) => {
-		setQuery(cleanString(selectedAddress.street.split(/,(.+)/)[0]));
-		updateSearchCriteria({
-			pushResults: false,
-			page: 0,
-			address: selectedAddress
-		})
+	const setSelectedAddress = (selectedLocation: any) => {
+		setQuery(cleanString(selectedLocation.street.split(/,(.+)/)[0]));
+		setLocation({
+			street: selectedLocation.street,
+			location: selectedLocation.coordinates
+		});
 		setSearchResults([]);
 		setSearchButtonVisible(true)
 	}
@@ -45,17 +44,24 @@ function AddressSearchScreen({navigation}) {
 	const onChange = async (queryParam: string) => {
 		setQuery(queryParam);
 		setSearchButtonVisible(false);
+
 		if (queryParam.length) {
 			try {
 				const {data} = await axios(
-					`${url}?query=${queryParam}&types=place`,
+					url,
 					{
 						headers: {
 							'X-Requested-With': 'XMLHttpRequest',
-							"Content-Type": "application/x-www-form-urlencoded",
+							'Content-Type': 'application/x-www-form-urlencode',
 							Accept: "application/json"
 						},
+						params: {
+							proximity: `${authenticatedUserCoordinates[0]},${authenticatedUserCoordinates[1]}`,
+							query: queryParam,
+							types: 'place'
+						}
 					});
+
 				setSearchResults(data);
 			} catch (error) {
 				Alert.alert(
@@ -78,7 +84,6 @@ function AddressSearchScreen({navigation}) {
 				[{text: 'OK'}],
 				{cancelable: false}
 			);
-			return;
 		}
 
 		try {
@@ -88,18 +93,15 @@ function AddressSearchScreen({navigation}) {
 				const {latitude, longitude} = coords;
 				const response = await Location.reverseGeocodeAsync({latitude, longitude});
 				for (let item of response) {
-					setQuery(item.city);
-					updateSearchCriteria({
-						pushResults: false,
-						page: 0,
-						address: {
-							street: item.city,
-							coordinates: {
-								coordinates: [longitude, latitude],
-								type: "Point"
-							}
+					const selectedLocation = {
+						street: item.city,
+						location: {
+							coordinates: [longitude, latitude],
+							type: "Point"
 						}
-					})
+					}
+					setLocation(selectedLocation);
+					setQuery(item.city);
 				}
 			}
 
@@ -111,15 +113,28 @@ function AddressSearchScreen({navigation}) {
 		}
 	}
 
-	const startSearch = () => {
-		navigation.navigate({
-			name: 'MealsList',
-			merge: true,
-		});
+	const startSearch = async () => {
+		updateSearchCriteria({
+			pushResults: false,
+			page: 0,
+			...location
+		})
+		if (params.userLocation) {
+			signIn(location);
+		} else {
+			navigation.navigate({
+				name: params.nextPage,
+				merge: true,
+			});
+		}
 	}
 
 	React.useLayoutEffect(() => {
 		setQuery('');
+		if (authenticatedUser) {
+			const {location: {coordinates: coordinatesToSave}} = authenticatedUser;
+			setAuthenticatedUserCoordinates(coordinatesToSave);
+		}
 	}, [navigation]);
 
 	return (
@@ -133,10 +148,11 @@ function AddressSearchScreen({navigation}) {
 				<View style={styles.pageDescription}>
 					<View/>
 					<View>
-						<Text style={styles.pageDescriptionText}>Choisis une ville</Text>
-						<Text style={styles.pageDescriptionText}>pour avoir liste de lieux</Text>
+						<Text style={styles.pageDescriptionText}>{params?.title}</Text>
+						<Text style={styles.pageDescriptionText}>{params?.subtitle}</Text>
 					</View>
-					<BackButton navigation={navigation} icon="closecircle" color={colors.primary}/>
+					{Boolean(params.cancellable) ?
+						<BackButton navigation={navigation} icon="closecircle" color={colors.primary}/> : <View/>}
 				</View>
 				<View style={styles.searchFormContainer}>
 					<View>
@@ -147,7 +163,7 @@ function AddressSearchScreen({navigation}) {
 								onChangeText={onChange}
 								onFocus={() => setSearchButtonVisible(false)}
 								value={query || ''}
-								placeholder="Choisir par ville"
+								placeholder="Recherches ta ville"
 							/>
 						</View>
 						{
@@ -173,7 +189,7 @@ function AddressSearchScreen({navigation}) {
 						{searchButtonVisible ?
 							<TouchableHighlight underlayColor={colors.warning} style={styles.searchFormSearch}
 												onPress={startSearch}>
-								<Text style={styles.searchFormSearchText}>Lancer la recherche</Text>
+								<Text style={styles.searchFormSearchText}>{params?.buttonLabel}</Text>
 							</TouchableHighlight>
 							: null
 						}
@@ -217,7 +233,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		backgroundColor: colors.white,
 		paddingTop: 50,
-		paddingBottom: 20,
+		paddingBottom: 10,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center'
@@ -263,7 +279,7 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 10,
 		borderTopLeftRadius: 10,
 		paddingHorizontal: 20,
-		paddingVertical: 20,
+		paddingVertical: 10,
 	},
 	searchFormUserPosition: {
 		flexDirection: 'row',
@@ -290,4 +306,4 @@ const styles = StyleSheet.create({
 		color: colors.white
 	}
 });
-export default AddressSearchScreen;
+export default LocationSearchScreen;

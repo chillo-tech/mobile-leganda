@@ -1,29 +1,46 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
+import * as Location from 'expo-location';
+import React, { useEffect } from 'react';
+import { Alert } from 'react-native';
 import ApplicationContextProvider from './app/context/ApplicationContextProvider';
-import AddressSearchScreen from './app/screens/AddressSearchScreen';
-import MealDetail from './app/screens/meals/MealDetail';
-import MealUpdate from './app/screens/meals/MealUpdate';
-import NavigationScreen from './app/screens/NavigationScreen';
-import UnProtectedStack from './app/screens/signin/UnProtectedStack';
+import RootStack from './app/stacks/RootStack';
+import { AUTHENTICATED_USER } from './app/utils';
 
 export default function App() {
-	const Stack = createNativeStackNavigator();
+	useEffect(() => {
+		(async () => {
+			let {status} = await Location.requestForegroundPermissionsAsync();
+			if (status !== 'granted') {
+				Alert.alert(
+					'Permettez nous de vous localiser',
+					`[${status}] Cliquez que OK pour permettre votre localisation.`,
+					[{text: 'OK'}],
+					{cancelable: false}
+				);
+			}
 
+			const {coords} = await Location.getCurrentPositionAsync({accuracy: 6});
+			if (coords) {
+				const {latitude, longitude} = coords;
+				const response = await Location.reverseGeocodeAsync({latitude, longitude});
+				for (let item of response) {
+					const selectedLocation = {
+						street: item.city,
+						location: {
+							coordinates: [longitude, latitude],
+							type: "Point"
+						}
+					}
+					await AsyncStorage.setItem(AUTHENTICATED_USER, JSON.stringify({...selectedLocation}));
+				}
+			}
+		})();
+	}, []);
 	return (
 		<NavigationContainer>
 			<ApplicationContextProvider>
-				<Stack.Navigator initialRouteName="Meals">
-					<Stack.Group>
-						<Stack.Screen name="Meals" component={NavigationScreen} options={{headerShown: false}}/>
-						<Stack.Screen name="MealDetail" component={MealDetail}/>
-						<Stack.Screen name="MealCreation" component={MealUpdate}/>
-						<Stack.Screen name="AddressSearch" component={AddressSearchScreen}
-									  options={{headerShown: false}}/>
-						<Stack.Screen name="Signin" component={UnProtectedStack} options={{headerShown: false}}/>
-					</Stack.Group>
-				</Stack.Navigator>
+				<RootStack/>
 			</ApplicationContextProvider>
 		</NavigationContainer>
 	);

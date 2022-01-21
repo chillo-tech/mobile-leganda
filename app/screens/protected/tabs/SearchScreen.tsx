@@ -1,24 +1,30 @@
-import React, {useContext, useState} from 'react';
-import {FlatList, RefreshControl, SafeAreaView, StyleSheet, View} from 'react-native';
-import {ApplicationContext} from '../context/ApplicationContextProvider';
-import MealItem from '../components/mealItem/MealItem';
-import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../utils/Endpoints';
+import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
-import {globalStyles} from '../utils/Styles';
-import {useFocusEffect} from '@react-navigation/native';
-import Message from '../components/messages/Message';
-import MealSearch from '../components/MealWizard/MealSearch';
-import SearchEmpty from './meals/SearchEmpty';
+import React, { useContext, useState } from 'react';
+import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
+import SearchForm from '../../../components/form/SearchForm';
+import MealItem from '../../../components/mealItem/MealItem';
+import Message from '../../../components/messages/Message';
+import { ApplicationContext } from '../../../context/ApplicationContextProvider';
+import { BACKOFFICE_URL, globalStyles, MEALS_ENDPOINT } from '../../../utils';
+import SearchEmpty from '../meals/SearchEmpty';
 
 function SearchScreen({route, navigation}) {
 	const url = `${BACKOFFICE_URL}/${MEALS_ENDPOINT}/search`;
-	const {state: {searchCriteria, meals}, updateMeals, updateSelectedItemId, updateSearchCriteria} = useContext(ApplicationContext);
-	const {query, pushResults, page, size, address: {coordinates: {coordinates}}} = searchCriteria;
+	const {
+		state,
+		updateMeals,
+		updateSelectedItemId,
+		updateSearchCriteria
+	} = useContext(ApplicationContext);
+  let isActive = true;
+	const {searchCriteria, meals} = state;
+	const {query, pushResults, page, size, location: {coordinates}} = searchCriteria;
 	const [isLoading, setIsloading] = useState(true);
 	const [refreshing, setRefreshing] = React.useState(false);
 
-	const onRefresh =() => {
-		updateSearchCriteria({pushResults: false});
+	const onRefresh = () => {
+		updateSearchCriteria({page: 0, pushResults: false});
 		setRefreshing(true);
 	};
 
@@ -27,9 +33,11 @@ function SearchScreen({route, navigation}) {
 		navigation.push("MealDetail", {selectedId: id});
 	}
 
-	const search =  React.useCallback(async(caller) => {
+	const search = async () => {
+		const {authenticatedUser} = state;
+		const {location: {coordinates: authenticatedUserCoordinates}} = authenticatedUser;
+    const queryCoordinates = coordinates.length? coordinates: authenticatedUserCoordinates;
 		try {
-			console.log({caller, searchCriteria})
 			const {data: searchResult = []} = await axios(
 				url,
 				{
@@ -42,32 +50,40 @@ function SearchScreen({route, navigation}) {
 						page,
 						size
 					},
-					data: JSON.stringify({coordinates, query})
+					data: JSON.stringify({
+						coordinates : queryCoordinates,
+						query,
+						proximity: `${authenticatedUserCoordinates[0]},${authenticatedUserCoordinates[1]}`
+					})
 				}
 			);
-			setIsloading(false);
-			setRefreshing(false);
-
 			if (pushResults) {
 				updateMeals([...meals, ...searchResult]);
 			} else {
 				updateMeals(searchResult);
 			}
+			setIsloading(false);
+			setRefreshing(false);
 		} catch (e) {
 			setIsloading(false);
-			updateSearchCriteria({pushResults: false});
 		}
-	}, [searchCriteria])
-
-	const fetchMore = () => {
-		updateSearchCriteria({pushResults: true, page: (page+1)});
 	};
 
-	React.useLayoutEffect(
-		() => {
-			search("useFocusEffect");
-		}
-	,[searchCriteria]);
+	const fetchMore = () => {
+		updateSearchCriteria({pushResults: true, page: (page + 1)});
+	};
+
+	useFocusEffect(
+		React.useCallback(() => {      
+      if(isActive) {
+        search();
+      }
+			return () => {
+        isActive = false;
+			};
+		}, [searchCriteria])
+	);
+
 	return (
 		<View style={{flex: 1}}>
 			{isLoading ?
@@ -78,12 +94,12 @@ function SearchScreen({route, navigation}) {
 				)
 				: (
 					<View style={{flex: 1}}>
-						<MealSearch navigation={navigation} route={route}/>
+						<SearchForm navigation={navigation} route={route}/>
 						<SafeAreaView style={[globalStyles.container]}>
 							<FlatList
 								contentContainerStyle={styles.searchResultsContainer}
 								scrollEventThrottle={150}
-								onEndReachedThreshold={0.8}
+								onEndReachedThreshold={2}
 								onEndReached={fetchMore}
 								data={meals}
 								keyExtractor={(item, index) => `${item.id}-${index}`}
