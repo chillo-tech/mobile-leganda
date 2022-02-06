@@ -14,9 +14,9 @@ type State = {
 	creationWizard: {
 		stepIndex: number,
 		numberOfChildren: number,
-		meal: any
+		ad: any
 	},
-	meals: any[]
+	ads: any[]
 }
 
 type Action = {

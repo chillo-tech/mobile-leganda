@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { colors, globalStyles } from '../../utils/Styles';
+import React, {useContext, useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {colors, globalStyles} from '../../utils';
 import PictureDisplay from '../Image/PictureDisplay';
 import PictureUpload from '../Image/PictureUpload';
 import BottomBar from '../tabs/BottomBar';
 
-function MealPictures() {
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
-	const [pictures, setPictures] = useState(meal.pictures);
-	const [error, setError] = useState(null);
+function AdPictures() {
+	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
+	const [pictures, setPictures] = useState(ad.pictures);
+	const [error, setError] = useState('');
 	const onSubmit = async () => {
 		if (pictures && pictures.length) {
-			updateMeal({infos: {pictures}})
+			updateAd({infos: {pictures}})
 		} else {
 			setError("Veuilez ajouter des images de votre plat");
 		}
@@ -20,14 +20,14 @@ function MealPictures() {
 	const onImageSelected = (picture) => {
 		setPictures(current => ([...current, picture]));
 	}
-	const deleteMealImage = (id: number) => {
+	const deleteAdImage = (id: number) => {
 		setPictures(pictures.filter(item => item.id !== id))
 	}
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
 				<Text style={globalStyles.creationTitle}>Veuillez ajouter, </Text>
-				<Text style={globalStyles.creationTitle}>une image de votre plat </Text>
+				<Text style={globalStyles.creationTitle}>une image</Text>
 			</View>
 			<View style={globalStyles.creationBody}>
 				<View
@@ -41,7 +41,7 @@ function MealPictures() {
 								numColumns={1}
 								renderItem={({item, index, separators}) => (
 									<View style={[styles.item]}>
-										<PictureDisplay picture={item} onDeletePressed={deleteMealImage}
+										<PictureDisplay picture={item} onDeletePressed={deleteAdImage}
 														editable={true}/>
 									</View>
 								)}
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
 		marginLeft: "2%"
 	}
 })
-export default MealPictures;
+export default AdPictures;

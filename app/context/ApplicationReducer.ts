@@ -2,18 +2,18 @@ import {
 	AUTHENTICATED_USER,
 	DELETE_KEY,
 	INITIAL_STATE,
-	RESET_MEAL,
+	RESET_AD,
 	RESTORE_TOKEN,
-	SET_MEALS,
+	SET_ADS,
 	SET_NUMBER_OF_CHILDREN,
 	SET_SELECTED_ITEM_ID,
 	SET_STEP_INDEX,
 	SIGN_IN,
 	SIGN_OUT,
-	UPDATE_MEAL,
+	UPDATE_AD,
 	UPDATE_SEARCH_CRITERIA,
 	UPDATE_USER_INFOS
-} from '../utils/Data';
+} from '../utils';
 
 export const ApplicationReducer = (state: State, action: Action) => {
 	const {type, data} = action || {};
@@ -23,7 +23,7 @@ export const ApplicationReducer = (state: State, action: Action) => {
 			delete next[data.key]
 			return next;
 
-		case RESET_MEAL:
+		case RESET_AD:
 			return {
 				...state,
 				creationWizard: INITIAL_STATE.creationWizard
@@ -33,10 +33,10 @@ export const ApplicationReducer = (state: State, action: Action) => {
 				...state,
 				...data
 			};
-		case SET_MEALS:
+		case SET_ADS:
 			return {
 				...state,
-				meals: data
+				ads: data
 			}
 		case SET_NUMBER_OF_CHILDREN:
 			return {
@@ -63,7 +63,7 @@ export const ApplicationReducer = (state: State, action: Action) => {
 		case SIGN_IN:
 			return {
 				...state,
-				...data
+				authenticatedUser: data
 			};
 
 		case SIGN_OUT:
@@ -71,15 +71,15 @@ export const ApplicationReducer = (state: State, action: Action) => {
 			delete signoutState[AUTHENTICATED_USER];
 			return signoutState;
 
-		case UPDATE_MEAL:
+		case UPDATE_AD:
 			return {
 				...state,
 				creationWizard: {
 					...state.creationWizard,
 					stepIndex: data.stepIndex,
-					meal: {
-						...state.creationWizard.meal,
-						...data.meal
+					ad: {
+						...state.creationWizard.ad,
+						...data.ad
 					}
 				}
 			}

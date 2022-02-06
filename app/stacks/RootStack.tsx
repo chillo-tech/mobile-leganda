@@ -5,20 +5,21 @@ import OpenedStack from './OpenedStack';
 import ProtectedStack from './ProtectedStack';
 
 function RootStack() {
-  const Stack = createNativeStackNavigator();
-  const {state} = useContext<any>(ApplicationContext);
-  const {authenticatedUser} = state;
-  return (
-      <Stack.Navigator>
-        {authenticatedUser ? (
-            <Stack.Screen name="Protected" component={ProtectedStack}
-                          options={{headerShown: false}}/>
-        ) : (
-            <Stack.Screen name="Unprotected" component={OpenedStack}
-                          options={{headerShown: false}}/>
-        )}
-      </Stack.Navigator>
-  );
+	const Stack = createNativeStackNavigator();
+	const {state} = useContext<any>(ApplicationContext);
+	const {authenticatedUser = {}} = state;
+	const {accessToken} = authenticatedUser;
+	return (
+		<Stack.Navigator>
+			{accessToken ? (
+				<Stack.Screen name="Protected" component={ProtectedStack}
+							  options={{headerShown: false}}/>
+			) : (
+				<Stack.Screen name="Unprotected" component={OpenedStack}
+							  options={{headerShown: false}}/>
+			)}
+		</Stack.Navigator>
+	);
 }
 
 export default RootStack;

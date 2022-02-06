@@ -4,16 +4,17 @@ import {
 	AUTHENTICATED_USER,
 	DELETE_KEY,
 	INITIAL_STATE,
-	RESET_MEAL,
-	SET_MEALS,
+	RESET_AD,
+	SET_ADS,
 	SET_NUMBER_OF_CHILDREN,
 	SET_SELECTED_ITEM_ID,
 	SET_STEP_INDEX,
+	SIGN_IN,
 	SIGN_OUT,
-	UPDATE_MEAL,
+	UPDATE_AD,
 	UPDATE_SEARCH_CRITERIA,
 	UPDATE_USER_INFOS
-} from '../utils/Data';
+} from '../utils';
 import {ApplicationReducer} from './ApplicationReducer';
 
 export const ApplicationContext = createContext(null);
@@ -25,38 +26,30 @@ function ApplicationContextProvider({children}) {
 		deleteKey: (data: {}) => dispatch({type: DELETE_KEY, data}),
 		goToStep: (stepIndex: number) => dispatch({type: SET_STEP_INDEX, data: stepIndex}),
 		previousStep: () => dispatch({type: SET_STEP_INDEX, data: stepIndex <= 0 ? 0 : stepIndex - 1}),
-		resetMeal: () => dispatch({type: RESET_MEAL}),
+		resetAd: () => dispatch({type: RESET_AD}),
 		signIn: async (infos: {}) => {
-			// In a production app, we need to send some data (usually username, password) to server and get a token
-			// We will also need to handle errors if sign in failed
-			// After getting token, we need to persist the token using `SecureStore`
-			// In the example, we'll use a dummy token
-			const userToken = Math.random().toString(36).substring(2);
-			const savedUser = await AsyncStorage.getItem(AUTHENTICATED_USER);
-			const parsedUser = JSON.parse(savedUser);
-			const authenticatedUser = {...parsedUser, ...infos, userToken}
-			dispatch({type: UPDATE_USER_INFOS, data: authenticatedUser});
-			await AsyncStorage.setItem(AUTHENTICATED_USER, JSON.stringify(authenticatedUser));
+			dispatch({type: SIGN_IN, data: infos});
+			await AsyncStorage.setItem(AUTHENTICATED_USER, JSON.stringify(infos));
 		},
 		signOut: async () => {
-			// In a production app, we need to send some data (usually username, password) to server and get a token
-			// We will also need to handle errors if sign in failed
-			// After getting token, we need to persist the token using `SecureStore`
 			await AsyncStorage.removeItem(AUTHENTICATED_USER);
 			dispatch({type: SIGN_OUT});
 		},
 		updateNumberOfChildren: (data: number) => dispatch({type: SET_NUMBER_OF_CHILDREN, data}),
 		updateSelectedItemId: (data: number) => dispatch({type: SET_SELECTED_ITEM_ID, data}),
-		updateMeal: ({infos = {}, goToNextStep = true}) => {
+		updateAd: ({infos = {}, goToNextStep = true}) => {
 			const nextStep = goToNextStep ? stepIndex + 1 : stepIndex;
-			dispatch({type: UPDATE_MEAL, data: {meal: infos, stepIndex: nextStep}});
+			dispatch({type: UPDATE_AD, data: {ad: infos, stepIndex: nextStep}});
 		},
-		updateMeals: (meals: []) => dispatch({type: SET_MEALS, data: meals}),
+		updateAds: (ads: []) => dispatch({type: SET_ADS, data: ads}),
 		updateSearchCriteria: (data: {}) => {
 			dispatch({type: UPDATE_SEARCH_CRITERIA, data})
 		},
 		updateUserInfos: async (data: {}) => {
-			const savedUser = await AsyncStorage.getItem(AUTHENTICATED_USER);
+			let savedUser = await AsyncStorage.getItem(AUTHENTICATED_USER);
+			if (savedUser === null) {
+				savedUser = "{}";
+			}
 			const parsedUser = JSON.parse(savedUser);
 			const authenticatedUser = {...parsedUser, ...data}
 			dispatch({type: UPDATE_USER_INFOS, data: authenticatedUser});
@@ -67,19 +60,13 @@ function ApplicationContextProvider({children}) {
 	React.useEffect(() => {
 		// Fetch the token from storage then navigate to our appropriate place
 		const bootstrapAsync = async () => {
-			let authenticatedUser;
-			try {
-				authenticatedUser = await AsyncStorage.getItem(AUTHENTICATED_USER);
-			} catch (e) {
-				// Restoring token failed
-			}
-
-			// After restoring token, we may need to validate it in production apps
-
-			// This will switch to the App screen or Auth screen and this loading
-			// screen will be unmounted and thrown away.
-			if (authenticatedUser) {
-				dispatch({type: UPDATE_USER_INFOS, data: JSON.parse(authenticatedUser)});
+			let authenticatedUser = await AsyncStorage.getItem(AUTHENTICATED_USER);
+			authenticatedUser = JSON.parse(authenticatedUser);
+			if (authenticatedUser && authenticatedUser['accessToken']) {
+				dispatch({type: SIGN_IN, data: authenticatedUser});
+			} else {
+				await AsyncStorage.removeItem(AUTHENTICATED_USER);
+				dispatch({type: SIGN_OUT})
 			}
 		};
 

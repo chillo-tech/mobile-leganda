@@ -11,33 +11,23 @@ import {
 	View
 } from 'react-native'
 import {ApplicationContext} from '../../../context/ApplicationContextProvider';
-import {colors, globalStyles} from '../../../utils/Styles';
+import {ADS_ENDPOINT, colors, getDisplayedDate, getFormattedTime, globalStyles} from '../../../utils';
 import {AntDesign, Feather, FontAwesome, FontAwesome5} from '@expo/vector-icons';
 import {phonePrefix, smsDivider} from '../../../utils/providers';
 import PictureDisplay from '../../../components/Image/PictureDisplay';
 import {useFocusEffect} from '@react-navigation/native';
 import BackButton from '../../../components/buttons/BackButton';
-import {getDisplayedDate, getFormattedTime} from '../../../utils/DateFormat';
-import axios from 'axios';
-import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../../../utils/Endpoints';
+import {SecurityContext} from '../../../context/SecurityContextProvider';
 
-const MealDetail = ({route, navigation}) => {
+const AdDetail = ({route, navigation}) => {
 	const selectedId = route.params?.selectedId;
-	const {state: {meals}} = useContext(ApplicationContext);
-	const [meal, setMeal] = useState();
-	const getMeal = async () => {
-		setMeal(meals.find(({id}) => id === selectedId))
-		const {data} = await axios(
-			`${BACKOFFICE_URL}/${MEALS_ENDPOINT}/${selectedId}`,
-			{
-				method: 'GET',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				}
-			}
-		);
-		setMeal(data);
+	const {protectedAxios} = useContext(SecurityContext);
+	const {state: {ads}} = useContext(ApplicationContext);
+	const [ad, setAd] = useState();
+	const getAd = async () => {
+		setAd(ads.find(({id}) => id === selectedId))
+		const {data} = await protectedAxios.get(`${ADS_ENDPOINT}/${selectedId}`);
+		setAd(data);
 	}
 
 	const navigate = ({street, coordinates: {coordinates: [lat, long]}}) => {
@@ -68,7 +58,7 @@ const MealDetail = ({route, navigation}) => {
 
 	useFocusEffect(
 		React.useCallback(() => {
-			getMeal();
+			getAd();
 		}, [route])
 	);
 	React.useLayoutEffect(() => {
@@ -86,29 +76,29 @@ const MealDetail = ({route, navigation}) => {
 	return (
 		<SafeAreaView style={globalStyles.container}>
 			{
-				meal ? (
+				ad ? (
 					<SafeAreaView style={styles.container}>
 						<ScrollView style={styles.informations}>
 							<View style={styles.gallery}>
-								<PictureDisplay picture={meal.pictures[0]}/>
+								<PictureDisplay picture={ad.pictures[0]}/>
 							</View>
 							<View style={styles.row}>
 								<Text style={styles.profile}>
-									{meal?.profile?.firstName}&nbsp; {meal?.profile?.lastName[0]}.
+									{ad?.profile?.firstName}&nbsp; {ad?.profile?.lastName[0]}.
 								</Text>
 								<View style={styles.iconLabel}>
 									<View style={styles.label}>
 										<AntDesign name="eye" size={20} color={colors.darkgray}/>
-										<Text>&nbsp;{meal.views ? meal.views : 0}</Text>
+										<Text>&nbsp;{ad.views ? ad.views : 0}</Text>
 									</View>
 								</View>
 							</View>
 							<View style={styles.row}>
-								<Text style={styles.name}>{meal.name}</Text>
-								<Text style={styles.price}>{meal.price} €</Text>
+								<Text style={styles.name}>{ad.name}</Text>
+								<Text style={styles.price}>{ad.price} €</Text>
 							</View>
 							{
-								meal?.validity?.date ?
+								ad?.validity?.date ?
 									(
 										<View style={styles.row}>
 											<Text
@@ -116,29 +106,29 @@ const MealDetail = ({route, navigation}) => {
 												<FontAwesome5 name="clock" color={colors.darkgray}
 															  size={14}/>
 												&nbsp;
-												{getDisplayedDate(meal?.validity?.date)}
+												{getDisplayedDate(ad?.validity?.date)}
 											</Text>
 											<Text
 												style={styles.profile}>
-												{getFormattedTime(new Date(meal?.validity?.start))}
+												{getFormattedTime(new Date(ad?.validity?.start))}
 											</Text>
 										</View>
 									) : null
 							}
 							<View style={styles.description}>
 								<Text style={styles.descriptionTitle}>Ingrédients</Text>
-								<Text style={styles.descriptionBody}>{meal?.description}</Text>
+								<Text style={styles.descriptionBody}>{ad?.description}</Text>
 							</View>
 						</ScrollView>
-						<TouchableHighlight underlayColor={'transparent'} onPress={() => navigate(meal?.address)}>
+						<TouchableHighlight underlayColor={'transparent'} onPress={() => navigate(ad?.address)}>
 							<View style={styles.address}>
 								<View style={styles.addressmarker}>
 									<FontAwesome name="map-marker" size={18} color={colors.primary}
 												 style={styles.addressicon}/>
 									<Text style={styles.addresslabel}>
-										{meal?.address?.street.length > 50
-											? `${meal?.address?.street.substring(0, 50)}...`
-											: meal?.address?.street
+										{ad?.address?.street.length > 50
+											? `${ad?.address?.street.substring(0, 50)}...`
+											: ad?.address?.street
 										}
 									</Text>
 								</View>
@@ -151,7 +141,7 @@ const MealDetail = ({route, navigation}) => {
 								<TouchableHighlight underlayColor={'transparent'}
 													onPress={() => handleContactPressed({
 														name: 'phone',
-														phone: meal?.profile?.phone
+														phone: ad?.profile?.phone
 													})}>
 									<Feather name="phone" size={32} color={colors.warning}/>
 								</TouchableHighlight>
@@ -161,14 +151,14 @@ const MealDetail = ({route, navigation}) => {
 								<TouchableHighlight underlayColor={'transparent'}
 													onPress={() => handleContactPressed({
 														name: 'sms',
-														phone: meal?.profile?.phone
+														phone: ad?.profile?.phone
 													})}>
 									<FontAwesome5 name="sms" size={32} color={colors.primary}/>
 								</TouchableHighlight>
 							</View>
 							<View style={[styles.contactItem]}>
 								<TouchableHighlight underlayColor={'transparent'}
-													onPress={() => navigate(meal?.address)}>
+													onPress={() => navigate(ad?.address)}>
 									<FontAwesome name="map-marker" size={32} color={colors.success}/>
 								</TouchableHighlight>
 							</View>
@@ -181,7 +171,7 @@ const MealDetail = ({route, navigation}) => {
 	)
 }
 
-export default MealDetail;
+export default AdDetail;
 
 const styles = StyleSheet.create({
 	address: {

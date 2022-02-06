@@ -1,25 +1,27 @@
-import { useFocusEffect } from '@react-navigation/native';
-import axios from 'axios';
-import React, { useContext, useState } from 'react';
-import { FlatList, RefreshControl, SafeAreaView, StyleSheet, View } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useContext, useState} from 'react';
+import {FlatList, RefreshControl, SafeAreaView, StyleSheet, View} from 'react-native';
 import SearchForm from '../../../components/form/SearchForm';
-import MealItem from '../../../components/mealItem/MealItem';
 import Message from '../../../components/messages/Message';
-import { ApplicationContext } from '../../../context/ApplicationContextProvider';
-import { BACKOFFICE_URL, globalStyles, MEALS_ENDPOINT } from '../../../utils';
-import SearchEmpty from '../meals/SearchEmpty';
+import {ApplicationContext} from '../../../context/ApplicationContextProvider';
+import {ADS_ENDPOINT, globalStyles} from '../../../utils';
+import SearchEmpty from '../ads/SearchEmpty';
+import AdItem from '../../../components/ad-item/adItem';
+import {SecurityContext} from '../../../context/SecurityContextProvider';
 
 function SearchScreen({route, navigation}) {
-	const url = `${BACKOFFICE_URL}/${MEALS_ENDPOINT}/search`;
+	const url = `${ADS_ENDPOINT}/search`;
 	const {
 		state,
-		updateMeals,
+		updateAds,
 		updateSelectedItemId,
 		updateSearchCriteria
 	} = useContext(ApplicationContext);
-  let isActive = true;
-	const {searchCriteria, meals} = state;
-	const {query, pushResults, page, size, location: {coordinates}} = searchCriteria;
+
+	const {protectedAxios} = useContext(SecurityContext);
+	let isActive = true;
+	const {searchCriteria, ads} = state;
+	const {query, pushResults, page, location: {coordinates}} = searchCriteria;
 	const [isLoading, setIsloading] = useState(true);
 	const [refreshing, setRefreshing] = React.useState(false);
 
@@ -28,39 +30,28 @@ function SearchScreen({route, navigation}) {
 		setRefreshing(true);
 	};
 
-	const displayMeal = (id: string) => {
+	const displayAd = (id: string) => {
 		updateSelectedItemId(id);
-		navigation.push("MealDetail", {selectedId: id});
+		navigation.push("ad-detail", {selectedId: id});
 	}
 
 	const search = async () => {
 		const {authenticatedUser} = state;
 		const {location: {coordinates: authenticatedUserCoordinates}} = authenticatedUser;
-    const queryCoordinates = coordinates.length? coordinates: authenticatedUserCoordinates;
+		const queryCoordinates = coordinates.length ? coordinates : authenticatedUserCoordinates;
 		try {
-			const {data: searchResult = []} = await axios(
+			const {data: searchResult = []} = await protectedAxios.post(
 				url,
 				{
-					method: 'POST',
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json'
-					},
-					params: {
-						page,
-						size
-					},
-					data: JSON.stringify({
-						coordinates : queryCoordinates,
-						query,
-						proximity: `${authenticatedUserCoordinates[0]},${authenticatedUserCoordinates[1]}`
-					})
+					coordinates: queryCoordinates,
+					query,
+					proximity: `${authenticatedUserCoordinates[0]},${authenticatedUserCoordinates[1]}`
 				}
 			);
 			if (pushResults) {
-				updateMeals([...meals, ...searchResult]);
+				updateAds([...ads, ...searchResult]);
 			} else {
-				updateMeals(searchResult);
+				updateAds(searchResult);
 			}
 			setIsloading(false);
 			setRefreshing(false);
@@ -74,12 +65,12 @@ function SearchScreen({route, navigation}) {
 	};
 
 	useFocusEffect(
-		React.useCallback(() => {      
-      if(isActive) {
-        search();
-      }
+		React.useCallback(() => {
+			if (isActive) {
+				search();
+			}
 			return () => {
-        isActive = false;
+				isActive = false;
 			};
 		}, [searchCriteria])
 	);
@@ -101,10 +92,10 @@ function SearchScreen({route, navigation}) {
 								scrollEventThrottle={150}
 								onEndReachedThreshold={2}
 								onEndReached={fetchMore}
-								data={meals}
+								data={ads}
 								keyExtractor={(item, index) => `${item.id}-${index}`}
 								renderItem={({item}) => (
-									<MealItem meal={item} displayMeal={displayMeal}/>
+									<AdItem ad={item} displayAd={displayAd}/>
 								)}
 								refreshControl={
 									<RefreshControl

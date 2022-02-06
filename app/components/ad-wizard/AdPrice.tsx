@@ -1,19 +1,19 @@
-import React, { useContext } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Text, TextInput, View } from 'react-native';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { globalStyles } from '../../utils/Styles';
+import React, {useContext} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {Text, TextInput, View} from 'react-native';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 
-function MealPrice() {
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+function AdPrice() {
+	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange',});
-	const onSubmit = infos => updateMeal({infos});
+	const onSubmit = infos => updateAd({infos});
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
-				<Text style={globalStyles.creationTitle}>Combien coûte </Text>
-				<Text style={globalStyles.creationTitle}>un plat ? </Text>
+				<Text style={globalStyles.creationTitle}>Combien </Text>
+				<Text style={globalStyles.creationTitle}>demandez vous ? </Text>
 			</View>
 			<View style={globalStyles.creationBody}>
 				<View
@@ -23,7 +23,7 @@ function MealPrice() {
 						<Controller
 							name="price"
 							control={control}
-							defaultValue={meal["price"]}
+							defaultValue={ad["price"]}
 							rules={{
 								required: true,
 							}}
@@ -53,4 +53,4 @@ function MealPrice() {
 	);
 }
 
-export default MealPrice;
+export default AdPrice;

@@ -1,13 +1,12 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import React, { useContext, useEffect, useState } from 'react';
-import { Platform, Text, TouchableOpacity, View } from 'react-native';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { getFormattedDate, getFormattedTime } from '../../utils/DateFormat';
-import { globalStyles } from '../../utils/Styles';
+import React, {useContext, useEffect, useState} from 'react';
+import {Platform, Text, TouchableOpacity, View} from 'react-native';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {getFormattedDate, getFormattedTime, globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 
-function MealDates() {
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+function AdDates() {
+	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
 	const [now, setNow] = useState<Date>(new Date());
 	const [date, setDate] = useState<Date>();
 	const [start, setStart] = useState<Date>();
@@ -50,12 +49,12 @@ function MealDates() {
 			setErrors({...errors, start: true});
 			return;
 		}
-		updateMeal({infos: {validity: {date, start}}});
+		updateAd({infos: {validity: {date, start}}});
 	};
-	
+
 	useEffect(() => {
-		const selectedDate = meal?.validity?.date;
-		const selectedStart = meal?.validity?.start;
+		const selectedDate = ad?.validity?.date;
+		const selectedStart = ad?.validity?.start;
 		if (selectedDate) {
 			setDate(selectedDate)
 		}
@@ -70,8 +69,8 @@ function MealDates() {
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
-				<Text style={globalStyles.creationTitle}>Quand vendez vous</Text>
-				<Text style={globalStyles.creationTitle}>ce plat ? </Text>
+				<Text style={globalStyles.creationTitle}>Quelles sont</Text>
+				<Text style={globalStyles.creationTitle}>vos disponibilités? </Text>
 			</View>
 			<View style={globalStyles.creationBody}>
 				<View
@@ -164,4 +163,4 @@ function MealDates() {
 	);
 }
 
-export default MealDates;
+export default AdDates;

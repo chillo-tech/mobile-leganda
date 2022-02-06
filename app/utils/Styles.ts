@@ -13,6 +13,24 @@ export const colors = {
 }
 
 export const globalStyles = StyleSheet.create({
+
+	bacgroundImage: {
+		flex: 1,
+		justifyContent: "center",
+	},
+	button: {
+		backgroundColor: colors.warning,
+		borderRadius: 5,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	buttonText: {
+		color: colors.white,
+		textAlign: 'center',
+		fontSize: 20,
+		paddingVertical: 10
+	},
 	container: {
 		marginTop: 0,
 		backgroundColor: colors.warningLight,
@@ -31,7 +49,7 @@ export const globalStyles = StyleSheet.create({
 		width: '100%'
 	},
 	inputGroupDefault: {
-		marginBottom: 20,
+		marginBottom: 15,
 	},
 	inputGroupError: {
 		borderBottomWidth: 1,
@@ -76,7 +94,7 @@ export const globalStyles = StyleSheet.create({
 	},
 	creationHeader: {
 		paddingHorizontal: 10,
-		paddingBottom: 20,
+		paddingBottom: 10,
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'flex-end'
@@ -97,7 +115,7 @@ export const globalStyles = StyleSheet.create({
 	creationBodyFieldGroup: {
 		borderColor: colors.lightgray,
 		borderRadius: 5,
-		marginVertical: 10,
+		marginVertical: 5,
 		borderWidth: 2,
 		display: 'flex',
 		flexDirection: 'row',
@@ -123,5 +141,11 @@ export const globalStyles = StyleSheet.create({
 		fontSize: 20,
 		color: colors.black,
 		paddingHorizontal: 10
+	},
+	wrapper: {
+		backgroundColor: "rgba(0, 0, 0, 0.6)",
+		flex: 1,
+		justifyContent: 'flex-end',
+		padding: 10
 	},
 })

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {colors} from '../../utils/Styles';
-import {IMAGES_URL} from '../../utils/Endpoints';
+import {colors, IMAGES_URL} from '../../utils';
 
 const getUri = (picture: Picture) => {
 	if (picture && picture.uri)

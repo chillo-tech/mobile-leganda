@@ -1,15 +1,14 @@
 import React, {useContext, useState} from 'react';
 import {Alert, Text, TextInput, View} from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
-import {globalStyles} from '../../utils/Styles';
+import {ADS_ENDPOINT, BACKOFFICE_URL, globalStyles} from '../../utils';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import axios from 'axios';
-import {BACKOFFICE_URL, MEALS_ENDPOINT} from '../../utils/Endpoints';
 import Message from '../messages/Message';
 import BottomBar from '../tabs/BottomBar';
 
-function MealActivation() {
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+function AdActivation() {
+	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange'});
 	const [isActivating, setIsActivating] = useState(false);
 
@@ -19,17 +18,17 @@ function MealActivation() {
 		setIsActivating(true);
 		try {
 			await axios(
-				`${BACKOFFICE_URL}/${MEALS_ENDPOINT}/activate`,
+				`${BACKOFFICE_URL}/${ADS_ENDPOINT}/activate`,
 				{
 					method: 'POST',
 					headers: {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json'
 					},
-					data: JSON.stringify({phone: meal?.profile?.phone, itemId: meal.id, ...data})
+					data: JSON.stringify({phone: ad?.profile?.phone, itemId: ad.id, ...data})
 				}
 			);
-			updateMeal({});
+			updateAd({});
 			setIsActivating(false);
 		} catch (error) {
 			Alert.alert(
@@ -106,4 +105,4 @@ function MealActivation() {
 	);
 }
 
-export default MealActivation;
+export default AdActivation;

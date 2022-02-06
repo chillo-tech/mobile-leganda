@@ -1,12 +1,12 @@
 export const LABELS = {
-	MealsHome: 'Accueil',
-	MealList: 'Parcourir',
-	NewMeal: 'Créer',
+	AdsHome: 'Accueil',
+	AdList: 'Parcourir',
+	NewAd: 'Créer',
 	More: 'Plus',
 }
 export const ICON = {
-	MealsHome: 'home',
-	MealList: 'search',
-	NewMeal: 'plus-circle',
+	AdsHome: 'home',
+	AdList: 'search',
+	NewAd: 'plus-circle',
 	More: 'grid',
 }

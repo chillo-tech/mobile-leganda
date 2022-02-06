@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../utils/Styles';
+import {colors} from '../../utils';
 import React from 'react';
 import {ICON, LABELS} from '../../utils/Labels';
 import {Feather} from '@expo/vector-icons';
@@ -22,9 +22,9 @@ function BottomTab({state, descriptors, navigation}) {
 
 					if (!isFocused && !event.defaultPrevented) {
 						// The `merge: true` option makes sure that the params inside the tab screen are preserved
-						if (name === 'NewMeal') {
+						if (name === 'NewAd') {
 							//navigation.navigate({name: 'Signin', merge: true});
-							navigation.navigate({name: 'MealCreation', merge: true});
+							navigation.navigate({name: 'ad-update', merge: true});
 						} else {
 							navigation.navigate({name: route.name, merge: true});
 						}

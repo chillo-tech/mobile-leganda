@@ -1,27 +1,28 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import axios from 'axios';
-import { LinearGradient } from 'expo-linear-gradient';
+import {MaterialIcons} from '@expo/vector-icons';
+import {LinearGradient} from 'expo-linear-gradient';
 import * as Location from 'expo-location';
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
-  ActivityIndicator,
-  Alert,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  View
+	ActivityIndicator,
+	Alert,
+	FlatList,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableHighlight,
+	TouchableOpacity,
+	View
 } from 'react-native';
 import BackButton from '../../components/buttons/BackButton';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles } from '../../utils';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles} from '../../utils';
+import {SecurityContext} from '../../context/SecurityContextProvider';
 
 
 function LocationSearchScreen({navigation, route}) {
 	const {params} = route;
-	const {state, signIn, updateSearchCriteria} = useContext<any>(ApplicationContext);
+	const {protectedAxios} = useContext(SecurityContext);
+	const {state, updateUserInfos, updateSearchCriteria} = useContext<any>(ApplicationContext);
 	const {authenticatedUser, searchCriteria} = state;
 	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
 	const [searchButtonVisible, setSearchButtonVisible] = useState(true);
@@ -44,17 +45,11 @@ function LocationSearchScreen({navigation, route}) {
 	const onChange = async (queryParam: string) => {
 		setQuery(queryParam);
 		setSearchButtonVisible(false);
-
 		if (queryParam.length) {
 			try {
-				const {data} = await axios(
+				const {data} = await protectedAxios.get(
 					url,
 					{
-						headers: {
-							'X-Requested-With': 'XMLHttpRequest',
-							'Content-Type': 'application/x-www-form-urlencode',
-							Accept: "application/json"
-						},
 						params: {
 							proximity: `${authenticatedUserCoordinates[0]},${authenticatedUserCoordinates[1]}`,
 							query: queryParam,
@@ -120,20 +115,23 @@ function LocationSearchScreen({navigation, route}) {
 			...location
 		})
 		if (params.userLocation) {
-			signIn(location);
-		} else {
-			navigation.navigate({
-				name: params.nextPage,
-				merge: true,
-			});
+			updateUserInfos(location);
 		}
+		
+		navigation.navigate({
+			name: params.nextPage,
+			merge: true
+		});
 	}
 
 	React.useLayoutEffect(() => {
 		setQuery('');
 		if (authenticatedUser) {
-			const {location: {coordinates: coordinatesToSave}} = authenticatedUser;
-			setAuthenticatedUserCoordinates(coordinatesToSave);
+			const {location} = authenticatedUser;
+			if (location) {
+				const {coordinates: coordinatesToSave} = location;
+				setAuthenticatedUserCoordinates(coordinatesToSave);
+			}
 		}
 	}, [navigation]);
 
@@ -163,7 +161,7 @@ function LocationSearchScreen({navigation, route}) {
 								onChangeText={onChange}
 								onFocus={() => setSearchButtonVisible(false)}
 								value={query || ''}
-								placeholder="Recherches ta ville"
+								placeholder={params.placeholder}
 							/>
 						</View>
 						{
@@ -187,9 +185,9 @@ function LocationSearchScreen({navigation, route}) {
 						}
 
 						{searchButtonVisible ?
-							<TouchableHighlight underlayColor={colors.warning} style={styles.searchFormSearch}
+							<TouchableHighlight underlayColor={colors.warning} style={globalStyles.button}
 												onPress={startSearch}>
-								<Text style={styles.searchFormSearchText}>{params?.buttonLabel}</Text>
+								<Text style={globalStyles.buttonText}>{params?.buttonLabel}</Text>
 							</TouchableHighlight>
 							: null
 						}

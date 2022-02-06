@@ -1,19 +1,19 @@
-import React, { useContext } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Text, TextInput, View } from 'react-native';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { globalStyles } from '../../utils/Styles';
+import React, {useContext} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {Text, TextInput, View} from 'react-native';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 
-function MealDescription() {
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+function AdDescription() {
+	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange',});
-	const onSubmit = infos => updateMeal({infos});
+	const onSubmit = infos => updateAd({infos});
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
-				<Text style={globalStyles.creationTitle}>Veuillez présenter, </Text>
-				<Text style={globalStyles.creationTitle}>votre plat </Text>
+				<Text style={globalStyles.creationTitle}>Quelques mots</Text>
+				<Text style={globalStyles.creationTitle}>sur votre annonce ? </Text>
 			</View>
 			<View style={globalStyles.creationBody}>
 				<View
@@ -22,7 +22,7 @@ function MealDescription() {
 						style={[globalStyles.creationBodyFieldGroup, errors.description ? globalStyles.inputGroupError : globalStyles.inputGroupDefault]}>
 						<Controller
 							control={control}
-							defaultValue={meal["description"]}
+							defaultValue={ad["description"]}
 							rules={{
 								required: true,
 							}}
@@ -36,7 +36,7 @@ function MealDescription() {
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
-									placeholder="Quels sont les ingrédients de votre plat ?"
+									placeholder="Du fait maison"
 									numberOfLines={4}
 									multiline
 								/>
@@ -57,4 +57,4 @@ function MealDescription() {
 	);
 }
 
-export default MealDescription;
+export default AdDescription;

@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { colors, globalStyles, IMAGES_URL } from '../../utils';
+import React, {useContext} from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {colors, globalStyles, IMAGES_URL} from '../../utils';
 import Button from '../buttons/Button';
 
-function MealRecap({navigation}) {
-  const image = {uri: `${IMAGES_URL}/thank-you.png`};
-	const {resetMeal} = useContext(ApplicationContext);
+function AdRecap({navigation}) {
+	const image = {uri: `${IMAGES_URL}/thank-you.png`};
+	const {resetAd} = useContext(ApplicationContext);
 	const goToList = () => {
-		resetMeal();
-		navigation.navigate('MealList');
+		resetAd();
+		navigation.navigate('AdList');
 	}
 	return (
 		<View style={styles.container}>
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
 		fontSize: 80
 	}
 })
-export default MealRecap;
+export default AdRecap;

@@ -6,10 +6,11 @@ import {LinearGradient} from 'expo-linear-gradient';
 import Message from '../../components/messages/Message';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import axios from 'axios';
+import BackButton from '../../components/buttons/BackButton';
 
-function NewPasswordScreen({navigation}) {
+function SignInScreen({navigation}) {
 	const message = "Un instant nous vérifions votre compte.";
-	const {updateAd} = useContext(ApplicationContext);
+	const {updateUserInfos} = useContext(ApplicationContext);
 	const [isActivating, setIsActivating] = useState(false);
 	const {control, handleSubmit, formState: {errors}} = useForm({
 		defaultValues: {
@@ -24,8 +25,8 @@ function NewPasswordScreen({navigation}) {
 	const onSubmit = async (profile: Profile) => {
 		setIsActivating(true);
 		try {
-			const {status} = await axios(
-				`${BACKOFFICE_URL}/add-profile`,
+			const {data} = await axios(
+				`${BACKOFFICE_URL}/signin`,
 				{
 					method: 'POST',
 					headers: {
@@ -36,11 +37,6 @@ function NewPasswordScreen({navigation}) {
 				}
 			);
 			setIsActivating(false);
-
-			if (status === 201) {
-				updateAd(profile);
-				setIsActivating(false);
-			}
 		} catch (error) {
 			Alert.alert(
 				"Une erreur est survenue",
@@ -52,6 +48,19 @@ function NewPasswordScreen({navigation}) {
 			setIsActivating(false);
 		}
 	};
+
+	React.useLayoutEffect(() => {
+		navigation.setOptions({
+			headerTitle: "",
+			title: "",
+			headerBackTitleVisible: false,
+			headerTransparent: true,
+			headerShadowVisible: false,
+			headerLeft: () => (
+				<BackButton navigation={navigation}/>
+			),
+		});
+	}, [navigation]);
 	return (
 		<ScrollView contentContainerStyle={styles.container}>
 			<LinearGradient
@@ -61,7 +70,6 @@ function NewPasswordScreen({navigation}) {
 				style={styles.container}
 			>
 				<View style={globalStyles.creationHeader}>
-					<Text style={globalStyles.creationTitle}>Mot de passe</Text>
 					<Text style={globalStyles.creationTitle}>Saisis tes identifiants</Text>
 				</View>
 
@@ -70,14 +78,6 @@ function NewPasswordScreen({navigation}) {
 						? (<Message firstText={message}/>)
 						: (
 							<>
-								<Text style={[{
-									textAlign: 'center',
-									paddingVertical: 10,
-									fontSize: 18,
-									color: colors.primary
-								}]}>
-									Nous t'enverrons un code pour valider ton nouveau mot de passe
-								</Text>
 								<View
 									style={[globalStyles.creationBodyFieldGroup, errors?.phone ? globalStyles.inputGroupError : globalStyles.inputGroupDefault]}>
 									<Controller
@@ -116,27 +116,35 @@ function NewPasswordScreen({navigation}) {
 												onChangeText={onChange}
 												value={value}
 												secureTextEntry={true}
-												placeholder="Nouveau mot de passe"
+												placeholder="Mot de passe"
 											/>
 										)}
 									/>
 								</View>
 								{errors?.password &&
                                 <Text style={globalStyles.error}>Cette donnée est invalide</Text>}
-
 								<TouchableOpacity
 									style={[styles.button]}
 									onPress={handleSubmit(onSubmit)}
 									activeOpacity={1}
 								>
-									<Text style={[styles.buttonLabel]}>Rénitiliaser mon mot de passe</Text>
+									<Text style={[styles.buttonLabel]}>Je me connecte</Text>
 								</TouchableOpacity>
 								<View style={styles.account}>
+									<Text style={styles.accountText}>Pas encore de compte ? </Text>
 									<TouchableOpacity
-										onPress={() => navigation.navigate('signin')}
+										onPress={() => navigation.navigate('signup')}
 										activeOpacity={1}
 									>
-										<Text style={styles.accountButton}>Je me connecte</Text>
+										<Text style={styles.accountButton}>Créé ton compte</Text>
+									</TouchableOpacity>
+								</View>
+								<View style={styles.account}>
+									<TouchableOpacity
+										onPress={() => navigation.navigate('newPassword')}
+										activeOpacity={1}
+									>
+										<Text style={styles.accountButton}>Mot de pass oublié ?</Text>
 									</TouchableOpacity>
 								</View>
 							</>
@@ -187,4 +195,4 @@ const styles = StyleSheet.create({
 		borderRadius: 5
 	}
 })
-export default NewPasswordScreen;
+export default SignInScreen;

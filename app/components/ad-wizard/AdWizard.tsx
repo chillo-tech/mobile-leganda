@@ -2,7 +2,7 @@ import React, {cloneElement, useContext, useEffect} from 'react';
 import {View} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 
-function MealWizard({children}) {
+function AdWizard({children}) {
 	const {state: {creationWizard: {stepIndex}}, updateNumberOfChildren} = useContext(ApplicationContext);
 	useEffect(() => {
 		updateNumberOfChildren(children.length)
@@ -25,4 +25,4 @@ function MealWizard({children}) {
 	);
 }
 
-export default MealWizard;
+export default AdWizard;

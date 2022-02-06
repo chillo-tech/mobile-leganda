@@ -37,9 +37,9 @@ export const getDisplayedDate = (entry: string = "") => {
 	if (!entry.trim().length) {
 		return entry;
 	}
-	const mealWeekNo = getWeekNumber(new Date(entry));
+	const adWeekNo = getWeekNumber(new Date(entry));
 	const todayWeekNo = getWeekNumber(new Date());
-	if ((mealWeekNo - todayWeekNo) > 1) {
+	if ((adWeekNo - todayWeekNo) > 1) {
 		const [dayOfDate, month, year] = getFormattedDate(new Date(entry)).split('/');
 		const [dayOfWeekLabel, monthLabel] = getDayAndMonthLabel(new Date(entry));
 		return `${dayOfWeekLabel}, ${dayOfDate} ${monthLabel}`;

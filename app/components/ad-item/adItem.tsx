@@ -1,37 +1,36 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {colors} from '../../utils/Styles';
+import {colors, getDisplayedDate, getFormattedTime} from '../../utils';
 import PictureDisplay from '../Image/PictureDisplay';
-import {getDisplayedDate, getFormattedTime} from '../../utils/DateFormat';
 import {AntDesign, FontAwesome5} from '@expo/vector-icons';
 
-function MealItem({meal, displayMeal}) {
+function AdItem({ad, displayAd}) {
 	return (
 		<TouchableHighlight style={styles.item} underlayColor={'transparent'}
-							onPress={() => displayMeal(meal.id)}>
+							onPress={() => displayAd(ad.id)}>
 			<View style={[styles.itemContainer]}>
 				<>
 					<View style={styles.imageContainer}>
-						<PictureDisplay picture={meal.pictures[0]}/>
+						<PictureDisplay picture={ad.pictures[0]}/>
 					</View>
 					<View style={styles.descriptionContainer}>
 						<View style={styles.profileData}>
 							<Text
-								style={styles.profile}>{meal?.profile?.firstName} {meal?.profile?.lastName ? meal?.profile?.lastName[0] : null}.
+								style={styles.profile}>{ad?.profile?.firstName} {ad?.profile?.lastName ? ad?.profile?.lastName[0] : null}.
 							</Text>
 							<View style={styles.iconLabel}>
 								<View style={styles.label}>
 									<AntDesign name="eye" size={20} color={colors.black}/>
-									<Text>&nbsp;{meal.views ? meal.views : 0}</Text>
+									<Text>&nbsp;{ad.views ? ad.views : 0}</Text>
 								</View>
 							</View>
 						</View>
 						<View style={styles.infos}>
-							<Text style={styles.infosName}>{meal.name}</Text>
-							<Text style={styles.infosPrice}>{meal.price} €</Text>
+							<Text style={styles.infosName}>{ad.name}</Text>
+							<Text style={styles.infosPrice}>{ad.price} €</Text>
 						</View>
 						{
-							meal?.validity?.date ?
+							ad?.validity?.date ?
 								(
 									<View style={styles.datesData}>
 										<Text
@@ -40,11 +39,11 @@ function MealItem({meal, displayMeal}) {
 											<FontAwesome5 name="clock" color={colors.darkgray}
 														  size={14}/>
 											&nbsp;
-											{getDisplayedDate(meal?.validity?.date)}
+											{getDisplayedDate(ad?.validity?.date)}
 										</Text>
 										<Text
 											style={styles.dateItem}>
-											{getFormattedTime(new Date(meal?.validity?.start))}
+											{getFormattedTime(new Date(ad?.validity?.start))}
 										</Text>
 									</View>
 								) : null
@@ -155,4 +154,4 @@ const styles = StyleSheet.create({
 		}
 	})
 ;
-export default MealItem;
+export default AdItem;

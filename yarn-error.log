@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add @react-native-async-storage/async-storage
+  /usr/local/bin/node /usr/local/bin/yarn add jwt-decode
 
 PATH: 
   /Users/chillo/Library/Android/sdk/platform-tools:/Users/chillo/anaconda3/bin:/Users/chillo/anaconda3/condabin:/Library/Java/JavaVirtualMachines/jdk-11.0.13.jdk/Contents/Home/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/chillo/Library/Android/sdk/platform-tools
@@ -29,6 +29,7 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
+      "@react-native-async-storage/async-storage": "^1.15.15",
       "@react-native-community/datetimepicker": "^3.5.2",
       "@react-navigation/bottom-tabs": "^6.0.9",
       "@react-navigation/native": "^6.0.6",
@@ -44,8 +45,10 @@ npm manifest:
       "react-dom": "17.0.1",
       "react-hook-form": "^7.18.1",
       "react-native": "0.64.3",
+      "react-native-country-picker-modal": "^2.0.0",
       "react-native-gesture-handler": "^2.0.0",
       "react-native-linear-gradient": "^2.5.6",
+      "react-native-maps": "^0.30.1",
       "react-native-raw-bottom-sheet": "^2.2.0",
       "react-native-reanimated": "^2.2.4",
       "react-native-safe-area-context": "3.3.2",
@@ -1114,6 +1117,15 @@ Lockfile:
       "@babel/helper-validator-identifier" "^7.15.7"
       to-fast-properties "^2.0.0"
   
+  "@callstack/react-theme-provider@3.0.3":
+    version "3.0.3"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@callstack/react-theme-provider/-/react-theme-provider-3.0.3.tgz#f964dda28cd6e731c3fbcf916b0579c6f9fb2db7"
+    integrity sha512-B+9JBK7zsND/AdVkjwHvbb4cR05fJofLFG30hOeoXke8WkKAWN36yFljauAhI8qwlXlGFGZMYE1wQvsqBSccrA==
+    dependencies:
+      "@types/hoist-non-react-statics" "^3.3.1"
+      deepmerge "^3.2.0"
+      hoist-non-react-statics "^3.3.0"
+  
   "@cnakazawa/watch@^1.0.3":
     version "1.0.4"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -1301,6 +1313,13 @@ Lockfile:
     dependencies:
       "@nodelib/fs.scandir" "2.1.5"
       fastq "^1.6.0"
+  
+  "@react-native-async-storage/async-storage@^1.15.15":
+    version "1.15.15"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@react-native-async-storage/async-storage/-/async-storage-1.15.15.tgz#33f930aaebc602199a3294a9b1eafff7b56df409"
+    integrity sha512-Ss2FqWP9HC5AhCyP6ydRERSwWb8QMTLknETB8cp2+tbEUhu7Q/S5+e0QIrF0D2Z/YZTUvQ2MP7uXzt9FLG9OYQ==
+    dependencies:
+      merge-options "^3.0.4"
   
   "@react-native-community/cli-debugger-ui@^5.0.1":
     version "5.0.1"
@@ -1519,6 +1538,11 @@ Lockfile:
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
     integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
   
+  "@types/geojson@^7946.0.7":
+    version "7946.0.8"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@types/geojson/-/geojson-7946.0.8.tgz#30744afdb385e2945e22f3b033f897f76b1f12ca"
+    integrity sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA==
+  
   "@types/graceful-fs@^4.1.2":
     version "4.1.5"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@types/graceful-fs/-/graceful-fs-4.1.5.tgz#21ffba0d98da4350db64891f92a9e5db3cdb4e15"
@@ -1530,6 +1554,14 @@ Lockfile:
     version "2.0.40"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@types/hammerjs/-/hammerjs-2.0.40.tgz#ded0240b6ea1ad7afc1e60374c49087aaea5dbd8"
     integrity sha512-VbjwR1fhsn2h2KXAY4oy1fm7dCxaKy0D+deTb8Ilc3Eo3rc5+5eA4rfYmZaHgNJKxVyI0f6WIXzO2zLkVmQPHA==
+  
+  "@types/hoist-non-react-statics@^3.3.1":
+    version "3.3.1"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+    integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
+    dependencies:
+      "@types/react" "*"
+      hoist-non-react-statics "^3.3.0"
   
   "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
     version "2.0.3"
@@ -2979,6 +3011,11 @@ Lockfile:
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
     integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
   
+  fuse.js@3.4.5:
+    version "3.4.5"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/fuse.js/-/fuse.js-3.4.5.tgz#8954fb43f9729bd5dbcb8c08f251db552595a7a6"
+    integrity sha512-s9PGTaQIkT69HaeoTVjwGsLfb8V8ScJLx5XGFcKHg0MqLUH/UZ4EKOtqtXX9k7AFqCGxD1aJmYb8Q5VYDibVRQ==
+  
   gensync@^1.0.0-beta.2:
     version "1.0.0-beta.2"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
@@ -3331,6 +3368,11 @@ Lockfile:
     version "7.0.0"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
     integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
+  
+  is-plain-obj@^2.1.0:
+    version "2.1.0"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/is-plain-obj/-/is-plain-obj-2.1.0.tgz#45e42e37fccf1f40da8e5f76ee21515840c09287"
+    integrity sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
   
   is-plain-object@^2.0.3, is-plain-object@^2.0.4:
     version "2.0.4"
@@ -3705,6 +3747,11 @@ Lockfile:
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
     integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
   
+  lodash.toarray@^4.4.0:
+    version "4.4.0"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/lodash.toarray/-/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
+    integrity sha1-JMS/zWsvuji/0FlNsRedjptlZWE=
+  
   lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.21:
     version "4.17.21"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -3781,6 +3828,13 @@ Lockfile:
     integrity sha512-3Tkp1piAHaworfcCgH0jKbTvj1jWWFgbvh2cXaNCgHwyTCBxxvD1Y04rmfpvdPm1P4oXMOpm6+2H7sr7v9v8Fw==
     dependencies:
       buffer-alloc "^1.1.0"
+  
+  merge-options@^3.0.4:
+    version "3.0.4"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/merge-options/-/merge-options-3.0.4.tgz#84709c2aa2a4b24c1981f66c179fe5565cc6dbb7"
+    integrity sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==
+    dependencies:
+      is-plain-obj "^2.1.0"
   
   merge-stream@^2.0.0:
     version "2.0.0"
@@ -4232,6 +4286,13 @@ Lockfile:
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/mockdate/-/mockdate-3.0.5.tgz#789be686deb3149e7df2b663d2bc4392bc3284fb"
     integrity sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==
   
+  modal-react-native-web@0.2.0:
+    version "0.2.0"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/modal-react-native-web/-/modal-react-native-web-0.2.0.tgz#5daaa76213218fd25df739a267b11aed37e8c0c2"
+    integrity sha512-sC0/jL3ZL4bGtv1VS43TnrH7/FHUqgb7IU3VYWNDzuR223fYlpG5Gc974GsTP172Vi+lnnBL/G70xONmaggxeQ==
+    dependencies:
+      warning "^4.0.1"
+  
   ms@2.0.0:
     version "2.0.0"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -4311,6 +4372,13 @@ Lockfile:
     integrity sha1-X1Zl2TNRM1yqvvjxxVRRbPXx5OU=
     dependencies:
       minimatch "^3.0.2"
+  
+  node-emoji@1.10.0:
+    version "1.10.0"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/node-emoji/-/node-emoji-1.10.0.tgz#8886abd25d9c7bb61802a658523d1f8d2a89b2da"
+    integrity sha512-Yt3384If5H6BYGVHiHwTL+99OzJKHhgp82S8/dktEK73T26BazdgZ4JZh92xSVtGNJvz9UbXdNAc5hcrXV42vw==
+    dependencies:
+      lodash.toarray "^4.4.0"
   
   node-fetch@2.6.1:
     version "2.6.1"
@@ -4673,7 +4741,7 @@ Lockfile:
       kleur "^3.0.3"
       sisteransi "^1.0.5"
   
-  prop-types@^15.6.0, prop-types@^15.7.2:
+  prop-types@15.7.2, prop-types@^15.6.0, prop-types@^15.7.2:
     version "15.7.2"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4714,6 +4782,11 @@ Lockfile:
     version "1.2.1"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
     integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
+  
+  react-async-hook@3.6.1:
+    version "3.6.1"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/react-async-hook/-/react-async-hook-3.6.1.tgz#aed3e492d87319392865c83ed7cef3609e2a7fef"
+    integrity sha512-YWBB2feVQF79t5u2raMPHlZ8975Jds+guCvkWVC4kRLDlSCouLsYpQm4DGSqPeHvoHYVVcDfqNayLZAXQmnxnw==
   
   react-devtools-core@^4.6.0:
     version "4.21.0"
@@ -4756,6 +4829,18 @@ Lockfile:
       jscodeshift "^0.11.0"
       nullthrows "^1.1.1"
   
+  react-native-country-picker-modal@^2.0.0:
+    version "2.0.0"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/react-native-country-picker-modal/-/react-native-country-picker-modal-2.0.0.tgz#005421303349a81fedf5975e465405bb4b7312d5"
+    integrity sha512-p0wfkKx1mOCEkn3Qm2/FA8TrxSdUw/nqaCcT6KYvIGmPtPdia1Ce+iWh5G0j2hZcDs6yJSkYAx+7lrZ0HwixAw==
+    dependencies:
+      "@callstack/react-theme-provider" "3.0.3"
+      fuse.js "3.4.5"
+      modal-react-native-web "0.2.0"
+      node-emoji "1.10.0"
+      prop-types "15.7.2"
+      react-async-hook "3.6.1"
+  
   react-native-gesture-handler@^2.0.0:
     version "2.0.0"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/react-native-gesture-handler/-/react-native-gesture-handler-2.0.0.tgz#066016e2b87922511605a23b2ee00358a3216e32"
@@ -4771,6 +4856,13 @@ Lockfile:
     version "2.5.6"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
     integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+  
+  react-native-maps@^0.30.1:
+    version "0.30.1"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/react-native-maps/-/react-native-maps-0.30.1.tgz#b227f3cbf68947bbd22fcf2b7470a7ab3a4f3fbb"
+    integrity sha512-VDgGygFcXwKLFNmdGb5DVy3DJhjP3qCe3txzDfeO6kQyNELj875ZbZMTYW84XsLUBFNpAWXKffWvMKHMQKv2Gg==
+    dependencies:
+      "@types/geojson" "^7946.0.7"
   
   react-native-raw-bottom-sheet@^2.2.0:
     version "2.2.0"
@@ -5810,6 +5902,13 @@ Lockfile:
     version "0.1.0"
     resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/warn-once/-/warn-once-0.1.0.tgz#4f58d89b84f968d0389176aa99e0cf0f14ffd4c8"
     integrity sha512-recZTSvuaH/On5ZU5ywq66y99lImWqzP93+AiUo9LUwG8gXHW+LJjhOd6REJHm7qb0niYqrEQJvbHSQfuJtTqA==
+  
+  warning@^4.0.1:
+    version "4.0.3"
+    resolved "http://packages-digitalfactory.maif.local/repository/npmjs-public/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
+    integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
+    dependencies:
+      loose-envify "^1.0.0"
   
   wcwidth@^1.0.1:
     version "1.0.1"

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight} from 'react-native';
-import {colors} from '../../utils/Styles';
+import {colors} from '../../utils';
 
 const Button = ({label = "Continuer", onPress}) => {
 	return (

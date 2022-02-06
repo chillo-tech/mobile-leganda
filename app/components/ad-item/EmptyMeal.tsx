@@ -2,11 +2,11 @@ import React from 'react';
 import {View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
-function EmptyMeal({route, navigation}) {
+function EmptyAd({route, navigation}) {
 
 	useFocusEffect(
 		React.useCallback(() => {
-			navigation.navigate({name: 'MealCreation', merge: true});
+			navigation.navigate({name: 'ad-update', merge: true});
 		}, [route])
 	);
 	return (
@@ -14,4 +14,4 @@ function EmptyMeal({route, navigation}) {
 	);
 }
 
-export default EmptyMeal;
+export default EmptyAd;

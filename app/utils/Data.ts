@@ -1,15 +1,14 @@
 import {EMAIL, PHONE} from "./providers";
 
-export const ADD_MEALS = "ADD_MEALS";
 export const AUTHENTICATED_USER = "authenticatedUser";
 export const MAPBOX_ACCESSTOKEN = "pk.eyJ1IjoiYWNoaWxsZW1ib3VndWVuZyIsImEiOiJja3Zvd3EzcmswaThkMnZrZ25iYmtveDBhIn0.pDR7pKL18d3iz5NoaRmWYg";
-export const RESET_MEAL = "RESET_MEAL";
+export const RESET_AD = "RESET_AD";
 export const DELETE_KEY = "DELETE_KEY";
 export const SET_NUMBER_OF_CHILDREN = "SET_NUMBER_OF_CHILDREN";
-export const SET_MEALS = "SET_MEALS";
+export const SET_ADS = "SET_ADS";
 export const SET_SELECTED_ITEM_ID = "SET_SELECTED_ITEM_ID";
 export const SET_STEP_INDEX = "SET_STEP_INDEX";
-export const UPDATE_MEAL = "UPDATE_MEAL";
+export const UPDATE_AD = "UPDATE_AD";
 export const UPDATE_SEARCH_CRITERIA = "UPDATE_SEARCH_CRITERIA";
 export const UPDATE_USER_INFOS = "UPDATE_USER_INFOS";
 export const USER_TOKEN = "USER_TOKEN";
@@ -23,7 +22,7 @@ export const INITIAL_STATE: State = {
 	creationWizard: {
 		stepIndex: 0,
 		numberOfChildren: 0,
-		meal: {
+		ad: {
 			pictures: []
 		}
 	},
@@ -36,7 +35,7 @@ export const INITIAL_STATE: State = {
 			coordinates: []
 		}
 	},
-	meals: []
+	ads: []
 }
 
 export const HELP_LINK = {

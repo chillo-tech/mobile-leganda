@@ -1,39 +1,37 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Alert, Text, TextInput, View } from 'react-native';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { BACKOFFICE_URL, MEALS_ENDPOINT } from '../../utils/Endpoints';
-import { isValidPhoneNumber } from '../../utils/isValidPhoneNumber';
-import { globalStyles } from '../../utils/Styles';
+import React, {useContext, useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {Alert, Text, TextInput, View} from 'react-native';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {ADS_ENDPOINT, BACKOFFICE_URL, globalStyles, isValidPhoneNumber} from '../../utils';
 import Message from '../messages/Message';
 import BottomBar from '../tabs/BottomBar';
 
-function MealProvider() {
+function AdProvider() {
 	const [isActivating, setIsActivating] = useState(false);
-	const [message, setMessage] = useState("Un instant nous vérifions votre annonce.");
+	const message = "Un instant nous vérifions votre annonce.";
 
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange'});
 
 	const onSubmit = async (infos) => {
 		setIsActivating(true);
 		try {
 			const {status, data: {id}} = await axios(
-				`${BACKOFFICE_URL}/${MEALS_ENDPOINT}`,
+				`${BACKOFFICE_URL}/${ADS_ENDPOINT}`,
 				{
 					method: 'POST',
 					headers: {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json'
 					},
-					data: JSON.stringify({...meal, profile: infos['profile']})
+					data: JSON.stringify({...ad, profile: infos['profile']})
 				}
 			);
 			setIsActivating(false);
 
 			if (status === 201) {
-				updateMeal({infos: {id, profile: infos['profile'], active: false}});
+				updateAd({infos: {id, profile: infos['profile'], active: false}});
 				setIsActivating(false);
 			}
 		} catch (error) {
@@ -65,7 +63,7 @@ function MealProvider() {
 									<Controller
 										name="profile.firstName"
 										control={control}
-										defaultValue={meal?.profile?.firstName}
+										defaultValue={ad?.profile?.firstName}
 										rules={{
 											required: true,
 										}}
@@ -90,7 +88,7 @@ function MealProvider() {
 									<Controller
 										name="profile.lastName"
 										control={control}
-										defaultValue={meal?.profile?.lastName}
+										defaultValue={ad?.profile?.lastName}
 										rules={{
 											required: true,
 										}}
@@ -115,7 +113,7 @@ function MealProvider() {
 									<Controller
 										name="profile.phone"
 										control={control}
-										defaultValue={meal?.profile?.phone}
+										defaultValue={ad?.profile?.phone}
 										rules={{
 											required: true,
 											validate: (value) => isValidPhoneNumber(value)
@@ -150,4 +148,4 @@ function MealProvider() {
 	)
 }
 
-export default MealProvider;
+export default AdProvider;

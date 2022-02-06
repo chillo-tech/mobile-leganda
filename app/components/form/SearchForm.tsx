@@ -1,8 +1,8 @@
-import { AntDesign, EvilIcons, FontAwesome5 } from '@expo/vector-icons';
-import React, { useContext, useState } from 'react';
-import { Keyboard, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
-import { ApplicationContext } from '../../context/ApplicationContextProvider';
-import { colors } from '../../utils/Styles';
+import {AntDesign, EvilIcons, FontAwesome5} from '@expo/vector-icons';
+import React, {useContext, useState} from 'react';
+import {Keyboard, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import {colors} from '../../utils';
 
 const SearchForm = ({navigation}) => {
 	const {
@@ -11,7 +11,7 @@ const SearchForm = ({navigation}) => {
 	} = useContext(ApplicationContext);
 	const {authenticatedUser, searchCriteria} = state;
 	const {location: criteriaLocation} = searchCriteria;
-  
+
 	const selectedCityName = () => {
 		let name = 'Choisir une ville';
 		if (authenticatedUser.street) {
@@ -20,7 +20,7 @@ const SearchForm = ({navigation}) => {
 		if (searchCriteria.street) {
 			name = searchCriteria.street;
 		}
-    
+
 		return name.split(',').map((item: string) => item.trim()).splice(0, 2).join(', ');
 	}
 	const [selectedcity, setSelectedCity] = useState(selectedCityName());
@@ -28,7 +28,18 @@ const SearchForm = ({navigation}) => {
 	const [query, setQuery] = useState('');
 
 	const updateCity = () => {
-		navigation.push("locationSearch");
+		navigation.push(
+			"location-search",
+			{
+				title: 'Indiquez votre ville',
+				subtitle: 'elle permet de proposer des lieux proche',
+				buttonLabel: 'Rechercher',
+				placeholder: 'Recherchez votre ville',
+				nextPage: 'ads',
+				cancellable: true,
+				userLocation: false
+			}
+		);
 	}
 
 	const handleFocus = () => {

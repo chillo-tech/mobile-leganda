@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../utils/Styles';
+import {colors} from '../../utils';
 
 const BottomBar = ({
 					   stepIndex,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		paddingHorizontal: 10,
-		paddingVertical: 10
+		paddingBottom: 10
 	},
 	nextButton: {
 		paddingHorizontal: 20,

@@ -5,15 +5,15 @@ import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 
-function MealName() {
-	const {state: {creationWizard: {stepIndex, meal}}, updateMeal, previousStep} = useContext(ApplicationContext);
+function AdName() {
+	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange',});
-	const onSubmit = infos => updateMeal({infos});
+	const onSubmit = infos => updateAd({infos});
 	return (
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
-				<Text style={globalStyles.creationTitle}>Quel est le nom </Text>
-				<Text style={globalStyles.creationTitle}>de votre plat ? </Text>
+				<Text style={globalStyles.creationTitle}>Donnez un nom à votre </Text>
+				<Text style={globalStyles.creationTitle}>annonce </Text>
 			</View>
 			<View style={globalStyles.creationBody}>
 				<View
@@ -23,7 +23,7 @@ function MealName() {
 						<Controller
 							name="name"
 							control={control}
-							defaultValue={meal["name"]}
+							defaultValue={ad["name"]}
 							rules={{
 								required: true,
 							}}
@@ -33,7 +33,7 @@ function MealName() {
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
-									placeholder="Exemple: Attiéké"
+									placeholder="Exemple: Taro du dimanche"
 								/>
 							)}
 						/>
@@ -51,4 +51,4 @@ function MealName() {
 	);
 }
 
-export default MealName;
+export default AdName;

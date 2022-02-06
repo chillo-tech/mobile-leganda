@@ -1,13 +1,13 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { ApplicationContext } from '../../../context/ApplicationContextProvider';
-import { colors, IMAGES_URL } from '../../../utils';
+import {ImageBackground, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {ApplicationContext} from '../../../context/ApplicationContextProvider';
+import {colors, IMAGES_URL} from '../../../utils';
 
 function HomeScreen({navigation}) {
 
 	const {signOut} = React.useContext<any>(ApplicationContext);
 	const image = {uri: `${IMAGES_URL}/poulet.jpeg`};
-  
+
 	return (
 		<View style={[styles.container]}>
 			<ImageBackground source={image} resizeMode="cover"
@@ -15,7 +15,7 @@ function HomeScreen({navigation}) {
 				<View style={[styles.buttonsContainer, styles.alignment]}>
 					<TouchableHighlight style={[styles.button, styles.listButton]}
 										underlayColor={colors.white}
-										onPress={() => navigation.navigate('MealList')}>
+										onPress={() => navigation.navigate('AdList')}>
 						<>
 							<Text style={[styles.text, styles.primaryText]}>
 								Découvrir et réserver
@@ -27,7 +27,7 @@ function HomeScreen({navigation}) {
 					</TouchableHighlight>
 					<TouchableHighlight style={[styles.button, styles.createButton]}
 										underlayColor={colors.primary}
-										onPress={() => navigation.navigate('MealCreation')}>
+										onPress={() => navigation.navigate('ad-update')}>
 						<>
 							<Text style={[styles.text, styles.whiteText]}>Proposer mon</Text>
 							<Text style={[styles.text, styles.whiteText]}>délicieux repas</Text>
@@ -41,7 +41,7 @@ function HomeScreen({navigation}) {
 							<Text style={[styles.text, styles.whiteText]}>Me deconnecter</Text>
 						</>
 					</TouchableHighlight>
-					
+
 				</View>
 			</ImageBackground>
 		</View>
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
 	createButton: {
 		backgroundColor: colors.primary,
 		shadowColor: colors.white,
-
 	},
 	listButton: {
 		backgroundColor: colors.white,

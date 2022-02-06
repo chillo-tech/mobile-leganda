@@ -1,34 +1,73 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {LinearGradient} from 'expo-linear-gradient';
 import React from 'react';
-import Presentation from '../screens/opened/Presentation';
+import {PresentationScreen, SignUpScreen, ValidationScreen} from '../screens/opened';
 import LocationSearchScreenBack from '../screens/shared/LocationSearchScreen';
+import {colors} from '../utils';
+import {StyleSheet} from 'react-native';
+import LoginOptionScreen from '../screens/opened/LoginOptionScreen';
+import UserPhoneScreen from '../screens/opened/UserPhoneScreen';
 
 function OpenedStack() {
 	const Stack = createNativeStackNavigator();
 
 	return (
-		<Stack.Navigator>
-			<Stack.Screen
-				name="Presentation"
-				component={Presentation}
-				options={{headerShown: false}}
-			/>
-			<Stack.Screen
-				name="location"
-				component={LocationSearchScreenBack}
-				options={{headerShown: false}}
-				initialParams={{
-					title: 'Indiques ta position',
-					subtitle: 'elle permet de proposer des lieux proche',
-					buttonLabel: 'Valider',
-					nextPage: 'Protected',
-					cancellable: false,
-					userLocation: true
-				}}
-			/>
-		</Stack.Navigator>
+		<LinearGradient
+			start={{x: 0, y: 0}}
+			end={{x: 1, y: 1}}
+			colors={[colors.warning, colors.primary]}
+			style={styles.container}
+		>
+			<Stack.Navigator>
+				<Stack.Screen
+					name="Presentation"
+					component={PresentationScreen}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="loginoption"
+					component={LoginOptionScreen}
+				/>
+				<Stack.Screen
+					name="phonescreen"
+					component={UserPhoneScreen}
+				/>
+				<Stack.Screen
+					name="accountValidation"
+					component={ValidationScreen}
+				/>
+				<Stack.Screen
+					name="signup"
+					component={SignUpScreen}
+				/>
+
+				<Stack.Screen
+					name="location"
+					component={LocationSearchScreenBack}
+					options={{headerShown: false}}
+					initialParams={{
+						title: 'Indiques ta position',
+						subtitle: 'elle permet de proposer des lieux proche',
+						buttonLabel: 'Valider',
+						nextPage: 'Protected',
+						cancellable: false,
+						userLocation: true
+					}}
+				/>
+			</Stack.Navigator>
+		</LinearGradient>
 	)
 }
+
+
+const styles = StyleSheet.create({
+	container: {
+		width: '100%',
+		marginTop: 0,
+		flex: 1,
+		flexDirection: 'column'
+	}
+});
 
 export default OpenedStack;
 
