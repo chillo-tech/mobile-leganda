@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "com.ams.leganda",
-      "versionCode": 25,
+      "versionCode": 26,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#30698C"
