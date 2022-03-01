@@ -15,7 +15,7 @@ export const USER_TOKEN = "USER_TOKEN";
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 export const SIGN_UP = 'SIGN_UP';
-export const RECOMMEND_TEXT = "Bonjour, j'ai découvert cette application qui permet de bien manger et moins cher. Je te la recommande";
+export const RECOMMEND_TEXT = "Bonjour, j'ai découvert cette application qui a de belles annonces. Je te la recommande";
 export const RESTORE_TOKEN = "RESTORE_TOKEN";
 
 export const INITIAL_STATE: State = {

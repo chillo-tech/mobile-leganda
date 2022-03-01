@@ -59,13 +59,7 @@ function LocationSearchScreen({navigation, route}) {
 
 				setSearchResults(data);
 			} catch (error) {
-				Alert.alert(
-					"Une erreur est survenue",
-					error?.response?.data?.message,
-					[
-						{text: "OK"}
-					]
-				);
+
 			}
 		}
 	}
@@ -117,7 +111,7 @@ function LocationSearchScreen({navigation, route}) {
 		if (params.userLocation) {
 			updateUserInfos(location);
 		}
-		
+
 		navigation.navigate({
 			name: params.nextPage,
 			merge: true

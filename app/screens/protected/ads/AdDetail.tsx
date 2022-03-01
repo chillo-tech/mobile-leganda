@@ -1,23 +1,27 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState} from 'react';
+import FlashMessage, {showMessage} from "react-native-flash-message";
+
 import {
 	Alert,
 	Linking,
 	Platform,
 	SafeAreaView,
 	ScrollView,
+	Share,
 	StyleSheet,
 	Text,
 	TouchableHighlight,
 	View
 } from 'react-native'
 import {ApplicationContext} from '../../../context/ApplicationContextProvider';
-import {ADS_ENDPOINT, colors, getDisplayedDate, getFormattedTime, globalStyles} from '../../../utils';
+import {ADS_ENDPOINT, colors, getDisplayedDate, getFormattedTime, globalStyles, RECOMMEND_TEXT} from '../../../utils';
 import {AntDesign, Feather, FontAwesome, FontAwesome5} from '@expo/vector-icons';
 import {phonePrefix, smsDivider} from '../../../utils/providers';
 import PictureDisplay from '../../../components/Image/PictureDisplay';
 import {useFocusEffect} from '@react-navigation/native';
 import BackButton from '../../../components/buttons/BackButton';
 import {SecurityContext} from '../../../context/SecurityContextProvider';
+import IconButton from '../../../components/buttons/IconButton';
 
 const AdDetail = ({route, navigation}) => {
 	const selectedId = route.params?.selectedId;
@@ -56,6 +60,36 @@ const AdDetail = ({route, navigation}) => {
 		}
 	}
 
+	const handleShare = async () => {
+		try {
+			const result = await Share.share({
+				message: RECOMMEND_TEXT
+			});
+			if (result.action === Share.sharedAction) {
+				if (result.activityType) {
+					// shared with activity type of result.activityType
+				} else {
+					// shared
+				}
+			} else if (result.action === Share.dismissedAction) {
+				// dismissed
+			}
+		} catch (error) {
+			alert(error.message);
+		}
+	}
+
+	const handleFavorite = async () => {
+		const {params: {selectedId}} = route;
+		showMessage({
+			message: "Merci pour votre confiance",
+			description: "Vos favoris ont été mis à jour",
+			type: "default",
+			backgroundColor: colors.primary, // background color
+			color: colors.white, // text color
+		});
+	}
+
 	useFocusEffect(
 		React.useCallback(() => {
 			getAd();
@@ -71,6 +105,12 @@ const AdDetail = ({route, navigation}) => {
 			headerLeft: () => (
 				<BackButton navigation={navigation}/>
 			),
+			headerRight: () => (
+				<>
+					<IconButton icon="sharealt" onclick={handleShare}/>
+					{/*<IconButton icon="hearto" onclick={handleFavorite}/>*/}
+				</>
+			),
 		});
 	}, [navigation]);
 	return (
@@ -84,7 +124,7 @@ const AdDetail = ({route, navigation}) => {
 							</View>
 							<View style={styles.row}>
 								<Text style={styles.profile}>
-									{ad?.profile?.firstName}&nbsp; {ad?.profile?.lastName[0]}.
+									{ad?.profile?.firstName} &nbsp; {ad?.profile?.lastName[0]}.
 								</Text>
 								<View style={styles.iconLabel}>
 									<View style={styles.label}>
@@ -166,7 +206,7 @@ const AdDetail = ({route, navigation}) => {
 					</SafeAreaView>
 				) : null
 			}
-
+			<FlashMessage position="bottom" style={styles.flashText}/>
 		</SafeAreaView>
 	)
 }
@@ -174,6 +214,11 @@ const AdDetail = ({route, navigation}) => {
 export default AdDetail;
 
 const styles = StyleSheet.create({
+	flashText: {
+		textAlign: 'center',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
 	address: {
 		flexDirection: 'row',
 		alignItems: 'center',

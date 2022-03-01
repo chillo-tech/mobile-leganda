@@ -1,47 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0380e207-fd0d-4e8b-a01b-b232eacc53b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/screens/opened/PresentationScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/opened/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/protected/ads/AdUpdate.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/isValidEmaIl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/Image/PictureDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Image/PictureDisplay.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealActivation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdActivation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealAddress.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdAddress.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealDates.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdDates.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealDescription.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdDescription.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealName.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdName.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealPictures.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdPictures.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealPrice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdPrice.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealRecap.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdRecap.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/MealWizard/MealWizard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-wizard/AdWizard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/buttons/BackButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/buttons/BackButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/mealItem/EmptyMeal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-item/EmptyMeal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/mealItem/MealItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ad-item/adItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/tabs/BottomTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/tabs/BottomTab.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/ApplicationContextProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/ApplicationContextProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/ApplicationReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/ApplicationReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/entities/State.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/entities/State.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/opened/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/opened/LoginScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/opened/Presentation.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/opened/SignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/opened/SignUpScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/protected/meals/MealDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/protected/ads/AdDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/protected/meals/MealUpdate.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/protected/meals/SearchEmpty.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/protected/ads/SearchEmpty.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/protected/tabs/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/protected/tabs/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/protected/tabs/NavigationScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/protected/tabs/NavigationScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/screens/protected/tabs/SearchScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/protected/tabs/SearchScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stacks/OpenedStack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/stacks/OpenedStack.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stacks/ProtectedStack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/stacks/ProtectedStack.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/Data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/DateFormat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/DateFormat.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/Endpoints.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Endpoints.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/Labels.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Labels.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/Styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/index.ts" afterDir="false" />
-    </list>
+    <list default="true" id="0380e207-fd0d-4e8b-a01b-b232eacc53b8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
