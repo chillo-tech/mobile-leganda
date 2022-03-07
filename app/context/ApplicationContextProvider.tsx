@@ -5,6 +5,7 @@ import {
 	DELETE_KEY,
 	INITIAL_STATE,
 	RESET_AD,
+	SET_AD,
 	SET_ADS,
 	SET_NUMBER_OF_CHILDREN,
 	SET_SELECTED_ITEM_ID,
@@ -42,6 +43,7 @@ function ApplicationContextProvider({children}) {
 			dispatch({type: UPDATE_AD, data: {ad: infos, stepIndex: nextStep}});
 		},
 		updateAds: (ads: []) => dispatch({type: SET_ADS, data: ads}),
+		selectedAd: (ad: {}) => dispatch({type: SET_AD, data: ad}),
 		updateSearchCriteria: (data: {}) => {
 			dispatch({type: UPDATE_SEARCH_CRITERIA, data})
 		},

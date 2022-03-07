@@ -1,11 +1,10 @@
 import React, {useContext} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
 import {colors} from '../../utils';
 import {StackActions} from '@react-navigation/native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import IconButton from './IconButton';
 
-function BackButton({navigation, icon = "leftcircle", color = colors.white}) {
+function BackButton({navigation, icon = "arrowleft", color = colors.primary}) {
 	const {resetAd} = useContext(ApplicationContext);
 	const goBack = () => {
 		resetAd();
@@ -13,9 +12,8 @@ function BackButton({navigation, icon = "leftcircle", color = colors.white}) {
 		navigation.dispatch(popAction);
 	}
 	return (
-		<TouchableOpacity activeOpacity={1} onPress={goBack}>
-			<AntDesign name={icon} size={28} color={color}/>
-		</TouchableOpacity>
+		<IconButton icon={icon}
+					color={color} onclick={goBack}/>
 	);
 }
 

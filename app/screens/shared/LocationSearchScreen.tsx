@@ -80,6 +80,7 @@ function LocationSearchScreen({navigation, route}) {
 			const {coords} = await Location.getCurrentPositionAsync({accuracy: 6});
 			if (coords) {
 				const {latitude, longitude} = coords;
+				console.log({latitude, longitude})
 				const response = await Location.reverseGeocodeAsync({latitude, longitude});
 				for (let item of response) {
 					const selectedLocation = {
@@ -104,6 +105,7 @@ function LocationSearchScreen({navigation, route}) {
 
 	const startSearch = async () => {
 		updateSearchCriteria({
+			query: '',
 			pushResults: false,
 			page: 0,
 			...location

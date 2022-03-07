@@ -14,7 +14,7 @@ import {
 	View
 } from 'react-native'
 import {ApplicationContext} from '../../../context/ApplicationContextProvider';
-import {ADS_ENDPOINT, colors, getDisplayedDate, getFormattedTime, globalStyles, RECOMMEND_TEXT} from '../../../utils';
+import {ADS_ENDPOINT, colors, globalStyles, RECOMMEND_TEXT} from '../../../utils';
 import {AntDesign, Feather, FontAwesome, FontAwesome5} from '@expo/vector-icons';
 import {phonePrefix, smsDivider} from '../../../utils/providers';
 import PictureDisplay from '../../../components/Image/PictureDisplay';
@@ -22,16 +22,18 @@ import {useFocusEffect} from '@react-navigation/native';
 import BackButton from '../../../components/buttons/BackButton';
 import {SecurityContext} from '../../../context/SecurityContextProvider';
 import IconButton from '../../../components/buttons/IconButton';
+import FavoriteButton from '../../../components/buttons/FavoriteButton';
 
 const AdDetail = ({route, navigation}) => {
 	const selectedId = route.params?.selectedId;
 	const {protectedAxios} = useContext(SecurityContext);
-	const {state: {ads}} = useContext(ApplicationContext);
+	const {state: {ads}, selectedAd} = useContext(ApplicationContext);
 	const [ad, setAd] = useState();
 	const getAd = async () => {
 		setAd(ads.find(({id}) => id === selectedId))
 		const {data} = await protectedAxios.get(`${ADS_ENDPOINT}/${selectedId}`);
 		setAd(data);
+		selectedAd(data);
 	}
 
 	const navigate = ({street, coordinates: {coordinates: [lat, long]}}) => {
@@ -59,7 +61,12 @@ const AdDetail = ({route, navigation}) => {
 
 		}
 	}
-
+	const favoriteCallBack = (message) => {
+		showMessage({
+			message,
+			type: "success"
+		});
+	}
 	const handleShare = async () => {
 		try {
 			const result = await Share.share({
@@ -79,17 +86,6 @@ const AdDetail = ({route, navigation}) => {
 		}
 	}
 
-	const handleFavorite = async () => {
-		const {params: {selectedId}} = route;
-		showMessage({
-			message: "Merci pour votre confiance",
-			description: "Vos favoris ont été mis à jour",
-			type: "default",
-			backgroundColor: colors.primary, // background color
-			color: colors.white, // text color
-		});
-	}
-
 	useFocusEffect(
 		React.useCallback(() => {
 			getAd();
@@ -107,8 +103,8 @@ const AdDetail = ({route, navigation}) => {
 			),
 			headerRight: () => (
 				<>
+					<FavoriteButton selectedId={selectedId} favoriteCallBack={favoriteCallBack}/>
 					<IconButton icon="sharealt" onclick={handleShare}/>
-					{/*<IconButton icon="hearto" onclick={handleFavorite}/>*/}
 				</>
 			),
 		});
@@ -124,7 +120,7 @@ const AdDetail = ({route, navigation}) => {
 							</View>
 							<View style={styles.row}>
 								<Text style={styles.profile}>
-									{ad?.profile?.firstName} &nbsp; {ad?.profile?.lastName[0]}.
+									{ad?.profile?.firstName.trim()} {ad?.profile?.lastName[0]}.
 								</Text>
 								<View style={styles.iconLabel}>
 									<View style={styles.label}>
@@ -137,7 +133,7 @@ const AdDetail = ({route, navigation}) => {
 								<Text style={styles.name}>{ad.name}</Text>
 								<Text style={styles.price}>{ad.price} €</Text>
 							</View>
-							{
+							{/*
 								ad?.validity?.date ?
 									(
 										<View style={styles.row}>
@@ -154,9 +150,8 @@ const AdDetail = ({route, navigation}) => {
 											</Text>
 										</View>
 									) : null
-							}
+							*/}
 							<View style={styles.description}>
-								<Text style={styles.descriptionTitle}>Ingrédients</Text>
 								<Text style={styles.descriptionBody}>{ad?.description}</Text>
 							</View>
 						</ScrollView>
@@ -206,7 +201,12 @@ const AdDetail = ({route, navigation}) => {
 					</SafeAreaView>
 				) : null
 			}
-			<FlashMessage position="bottom" style={styles.flashText}/>
+			<FlashMessage
+				style={styles.flashText}
+				position="bottom"
+				backgroundColor={colors.primary}
+				color={colors.white}
+			/>
 		</SafeAreaView>
 	)
 }
@@ -316,10 +316,10 @@ const styles = StyleSheet.create({
 		borderTopWidth: 1,
 		borderTopColor: colors.lightgray,
 		fontSize: 18,
-		paddingHorizontal: 10,
 		color: colors.black,
-		paddingVertical: 5,
-		marginVertical: 10
+		marginVertical: 10,
+		paddingHorizontal: 0,
+		paddingVertical: 20,
 	},
 	descriptionTitle: {
 		color: colors.black,

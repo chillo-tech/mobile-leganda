@@ -1,12 +1,14 @@
 export const LABELS = {
 	AdsHome: 'Accueil',
 	AdList: 'Parcourir',
-	NewAd: 'Créer',
+	favorites: 'Favoris',
 	More: 'Plus',
+	NewAd: 'Créer',
 }
 export const ICON = {
 	AdsHome: 'home',
 	AdList: 'search',
-	NewAd: 'plus-circle',
+	favorites: 'heart',
 	More: 'grid',
+	NewAd: 'plus-circle',
 }

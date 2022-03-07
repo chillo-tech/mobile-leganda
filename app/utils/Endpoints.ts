@@ -3,5 +3,6 @@ export const PROD_DNS = "https://api.leganda.chillo.fr";
 export const IMAGES_URL = `${PROD_DNS}/assets`;
 export const BACKOFFICE_URL = `${LOCAL_DNS}/api/v1`;
 export const ADS_ENDPOINT = "ad";
+export const FAVORITE_ENDPOINT = "favorite";
 export const ACCOUNT_ENDPOINT = "account";
 export const ADDRESS_ENDPOINT = "address";

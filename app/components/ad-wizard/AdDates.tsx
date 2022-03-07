@@ -1,8 +1,8 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, {useContext, useEffect, useState} from 'react';
-import {Platform, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {getFormattedDate, getFormattedTime, globalStyles} from '../../utils';
+import {colors, getFormattedDate, getFormattedTime, globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 
 function AdDates() {
@@ -40,6 +40,14 @@ function AdDates() {
 		setMode(currentMode);
 	};
 
+	const setRandomDate = () => {
+		setDate(new Date(new Date().getFullYear(), 11, 31));
+	}
+	const setRandomHour = () => {
+		const date = new Date();
+		date.setHours(23, 58)
+		setStart(date);
+	}
 	const onSubmit = () => {
 		if (typeof date === 'undefined') {
 			setErrors({...errors, date: true});
@@ -76,7 +84,13 @@ function AdDates() {
 				<View
 					style={[globalStyles.creationBodyContent]}>
 					<View>
-						<Text style={globalStyles.fieldFont}>Date</Text>
+						<View style={styles.labelButton}>
+							<Text style={globalStyles.fieldFont}>Date</Text>
+							<TouchableHighlight style={[styles.button]} underlayColor={'transparent'}
+												onPress={setRandomDate}>
+								<Text style={styles.button}>Peu importe</Text>
+							</TouchableHighlight>
+						</View>
 						<TouchableOpacity onPress={() => showMode('date')}
 										  activeOpacity={1}
 										  style={[
@@ -114,7 +128,13 @@ function AdDates() {
                         <Text style={globalStyles.error}>La date sasie est incorrecte</Text>}
 					</View>
 					<View>
-						<Text style={globalStyles.fieldFont}>Heure</Text>
+						<View style={styles.labelButton}>
+							<Text style={globalStyles.fieldFont}>Heure</Text>
+							<TouchableHighlight style={[styles.button]} underlayColor={'transparent'}
+												onPress={setRandomHour}>
+								<Text style={styles.button}>Peu importe</Text>
+							</TouchableHighlight>
+						</View>
 						<TouchableOpacity onPress={() => showMode('time')}
 										  activeOpacity={1}
 										  style={[
@@ -162,5 +182,19 @@ function AdDates() {
 		</View>
 	);
 }
+
+
+const styles = StyleSheet.create({
+	labelButton: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginTop: 10
+	},
+
+	button: {
+		fontSize: 18,
+		color: colors.warning
+	}
+});
 
 export default AdDates;

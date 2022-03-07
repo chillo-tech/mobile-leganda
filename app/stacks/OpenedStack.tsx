@@ -46,7 +46,7 @@ function OpenedStack() {
 					component={LocationSearchScreenBack}
 					options={{headerShown: false}}
 					initialParams={{
-						title: 'Indiques ta position',
+						title: 'Indiquez votre position',
 						subtitle: 'elle permet de proposer des lieux proche',
 						buttonLabel: 'Valider',
 						nextPage: 'Protected',

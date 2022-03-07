@@ -4,6 +4,7 @@ import {
 	INITIAL_STATE,
 	RESET_AD,
 	RESTORE_TOKEN,
+	SET_AD,
 	SET_ADS,
 	SET_NUMBER_OF_CHILDREN,
 	SET_SELECTED_ITEM_ID,
@@ -37,6 +38,11 @@ export const ApplicationReducer = (state: State, action: Action) => {
 			return {
 				...state,
 				ads: data
+			}
+		case SET_AD:
+			return {
+				...state,
+				ad: data
 			}
 		case SET_NUMBER_OF_CHILDREN:
 			return {

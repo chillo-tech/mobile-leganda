@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "com.ams.leganda",
-      "versionCode": 26,
+      "versionCode": 30,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#30698C"
@@ -39,10 +39,6 @@
         "CAMERA",
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION",
-        "ACCESS_BACKGROUND_LOCATION",
-        "CAMERA",
-        "RECORD_AUDIO",
         "READ_CONTACTS"
       ]
     },

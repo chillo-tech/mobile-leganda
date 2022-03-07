@@ -67,7 +67,24 @@ function SearchScreen({route, navigation}) {
 	useFocusEffect(
 		React.useCallback(() => {
 			if (isActive) {
-				search();
+				const {authenticatedUser} = state;
+				const {location: {coordinates}} = authenticatedUser;
+				if (coordinates) {
+					search();
+				} else {
+					navigation.push(
+						"location-search",
+						{
+							title: 'Indiquez votre ville',
+							subtitle: 'elle permet de proposer des lieux proche',
+							placeholder: 'Recherchez votre ville',
+							buttonLabel: 'Valider',
+							nextPage: 'Protected',
+							cancellable: false,
+							userLocation: true
+						}
+					);
+				}
 			}
 			return () => {
 				isActive = false;

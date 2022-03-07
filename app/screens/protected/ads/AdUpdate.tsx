@@ -21,7 +21,7 @@ function AdUpdate({navigation}) {
 			headerTransparent: true,
 			headerShadowVisible: false,
 			headerLeft: () => (
-				<BackButton navigation={navigation} icon="closecircle"/>
+				<BackButton navigation={navigation} icon="close"/>
 			),
 		});
 	}, [navigation]);

@@ -1,10 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import BottomTab from '../../../components/tabs/BottomTab';
-import HomeScreen from './HomeScreen';
 import MoreScreen from './MoreScreen';
 import SearchScreen from './SearchScreen';
 import EmptyAd from '../../../components/ad-item/EmptyMeal';
+import FavoritesScreen from './FavoritesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,14 +12,14 @@ function NavigationScreen() {
 
 	return (
 
-		<Tab.Navigator
-			tabBar={props => <BottomTab {...props} />}
+		<Tab.Navigator initialRouteName="AdList"
+					   tabBar={props => <BottomTab {...props} />}
 		>
-			<Tab.Screen name="AdsHome" component={HomeScreen}
+			<Tab.Screen name="NewAd" component={EmptyAd}
 						options={{headerShown: false}}/>
 			<Tab.Screen name="AdList" component={SearchScreen}
 						options={{headerShown: false}}/>
-			<Tab.Screen name="NewAd" component={EmptyAd}
+			<Tab.Screen name="favorites" component={FavoritesScreen}
 						options={{headerShown: false}}/>
 			<Tab.Screen name="More" component={MoreScreen}
 						options={{headerShown: false}}/>

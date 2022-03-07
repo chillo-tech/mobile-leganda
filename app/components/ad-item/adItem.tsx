@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {colors, getDisplayedDate, getFormattedTime} from '../../utils';
+import {colors} from '../../utils';
 import PictureDisplay from '../Image/PictureDisplay';
-import {AntDesign, FontAwesome5} from '@expo/vector-icons';
+import {AntDesign} from '@expo/vector-icons';
 
 function AdItem({ad, displayAd}) {
 	return (
@@ -29,7 +29,7 @@ function AdItem({ad, displayAd}) {
 							<Text style={styles.infosName}>{ad.name}</Text>
 							<Text style={styles.infosPrice}>{ad.price} €</Text>
 						</View>
-						{
+						{/*
 							ad?.validity?.date ?
 								(
 									<View style={styles.datesData}>
@@ -47,7 +47,7 @@ function AdItem({ad, displayAd}) {
 										</Text>
 									</View>
 								) : null
-						}
+						*/}
 					</View>
 				</>
 			</View>

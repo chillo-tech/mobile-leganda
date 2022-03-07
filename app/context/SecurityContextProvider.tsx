@@ -1,8 +1,9 @@
 import React, {createContext} from 'react';
 import {ApplicationContext} from './ApplicationContextProvider';
 import axios from 'axios';
-import {LOCAL_DNS} from '../utils';
+import {BACKOFFICE_URL} from '../utils';
 import jwt_decode from 'jwt-decode';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 export const SecurityContext = createContext(null);
 
@@ -10,7 +11,6 @@ function SecurityContextProvider({children}) {
 	const {state, signIn, signOut} = React.useContext(ApplicationContext);
 	const {authenticatedUser = {}} = state;
 	const {accessToken, refreshToken, location} = authenticatedUser;
-	const BACKOFFICE_URL = `${LOCAL_DNS}/api/v1`;
 
 	const {searchCriteria} = state;
 	const {page, size} = searchCriteria;
@@ -38,6 +38,9 @@ function SecurityContextProvider({children}) {
 	protectedAxios.interceptors.request.use(
 		(config = {}) => {
 			config.headers.Cookie = `accessToken=${accessToken};`
+			if (!config.headers.Authorization) {
+				config.headers.Authorization = `Bearer ${accessToken}`;
+			}
 			return config;
 		},
 		error => {
@@ -51,14 +54,42 @@ function SecurityContextProvider({children}) {
 	}, async function (error) {
 		const originalRequest = error.config;
 		if ([401, 403].includes(error.response.status) && !originalRequest._retry) {
+			/*
 			originalRequest._retry = true;
 			const newAccessToken = await refreshAccessToken();
 			axios.defaults.headers.common['Cookie'] = `accessToken=${newAccessToken};`;
+			axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 			return protectedAxios(originalRequest);
+
+			 */
 		}
 		return Promise.reject(error);
 	});
 
+	const refreshAuthLogic = (failedRequest) => {
+		publicAxios.post(
+			"refresh-token",
+			{refreshToken}
+		)
+			.then(response => {
+				const {data} = response;
+				if (data['accessToken']) {
+					const decoded = jwt_decode<Profile>(accessToken);
+					signIn({
+						...decoded,
+						accessToken: data['accessToken'],
+						refreshToken: data['refreshToken'],
+						location
+					});
+				}
+				failedRequest.response.config.headers['Authorization'] = `Bearer ${data['accessToken']}`;
+				return Promise.resolve();
+			}).catch((e) => {
+			console.log(e)
+			signOut();
+			return Promise.reject(e)
+		});
+	}
 	const refreshAccessToken = async () => {
 		try {
 			const response = await publicAxios.post(
@@ -75,6 +106,8 @@ function SecurityContextProvider({children}) {
 			signOut();
 		}
 	};
+
+	createAuthRefreshInterceptor(protectedAxios, refreshAuthLogic);
 
 	return (
 		<SecurityContext.Provider value={{publicAxios, protectedAxios}}>

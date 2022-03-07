@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {Text, TextInput, View} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {globalStyles} from '../../utils';
+import {AD_PLACEHOLDER, globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 
 function AdName() {
@@ -29,11 +29,11 @@ function AdName() {
 							}}
 							render={({field: {onChange, onBlur, value}}) => (
 								<TextInput
+									placeholder={`Exemple: ${AD_PLACEHOLDER[Math.floor(Math.random() * AD_PLACEHOLDER.length)]}`}
 									style={[globalStyles.fieldFont, globalStyles.creationBodyField]}
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
-									placeholder="Exemple: Taro du dimanche"
 								/>
 							)}
 						/>
