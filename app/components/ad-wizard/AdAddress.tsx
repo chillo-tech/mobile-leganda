@@ -69,6 +69,7 @@ function AdAddress() {
 
 	const onSubmit = async () => {
 		try {
+			setIsActivating(true);
 			const finalAd = {
 				...ad,
 				address,

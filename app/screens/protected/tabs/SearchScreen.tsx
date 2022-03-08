@@ -37,7 +37,7 @@ function SearchScreen({route, navigation}) {
 
 	const search = async () => {
 		const {authenticatedUser} = state;
-		const {location: {coordinates: authenticatedUserCoordinates}} = authenticatedUser;
+		const authenticatedUserCoordinates = authenticatedUser?.location?.coordinates;
 		const queryCoordinates = coordinates.length ? coordinates : authenticatedUserCoordinates;
 		try {
 			const {data: searchResult = []} = await protectedAxios.post(
@@ -68,7 +68,7 @@ function SearchScreen({route, navigation}) {
 		React.useCallback(() => {
 			if (isActive) {
 				const {authenticatedUser} = state;
-				const {location: {coordinates}} = authenticatedUser;
+				const coordinates = authenticatedUser?.location?.coordinates;
 				if (coordinates) {
 					search();
 				} else {
@@ -97,7 +97,7 @@ function SearchScreen({route, navigation}) {
 			{isLoading ?
 				(
 					<View style={[globalStyles.container, {justifyContent: 'center'}]}>
-						<Message firstText="Un instant nous recherchons des plats"/>
+						<Message firstText="Un instant nous recherchons des annonces"/>
 					</View>
 				)
 				: (

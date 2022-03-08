@@ -85,7 +85,6 @@ function SecurityContextProvider({children}) {
 				failedRequest.response.config.headers['Authorization'] = `Bearer ${data['accessToken']}`;
 				return Promise.resolve();
 			}).catch((e) => {
-			console.log(e)
 			signOut();
 			return Promise.reject(e)
 		});
