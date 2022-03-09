@@ -99,7 +99,7 @@ function UserPhoneScreen({navigation}) {
 											control={control}
 											rules={{
 												required: true,
-												pattern: /\d{10}/
+												pattern: /0?\d{9}/
 											}}
 											render={({field: {onChange, onBlur, value}}) => (
 												<TextInput

@@ -13,6 +13,7 @@ function SearchScreen({route, navigation}) {
 	const url = `${ADS_ENDPOINT}/search`;
 	const {
 		state,
+		signOut,
 		updateAds,
 		updateSelectedItemId,
 		updateSearchCriteria
@@ -66,6 +67,7 @@ function SearchScreen({route, navigation}) {
 
 	useFocusEffect(
 		React.useCallback(() => {
+			signOut();
 			if (isActive) {
 				const {authenticatedUser} = state;
 				const coordinates = authenticatedUser?.location?.coordinates;

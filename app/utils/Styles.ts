@@ -13,7 +13,6 @@ export const colors = {
 }
 
 export const globalStyles = StyleSheet.create({
-
 	bacgroundImage: {
 		flex: 1,
 		justifyContent: "center",
@@ -143,7 +142,7 @@ export const globalStyles = StyleSheet.create({
 		paddingHorizontal: 10
 	},
 	wrapper: {
-		backgroundColor: "rgba(0, 0, 0, 0.6)",
+		backgroundColor: "rgba(200, 200, 200, 0.3)",
 		flex: 1,
 		justifyContent: 'flex-end',
 		padding: 10
