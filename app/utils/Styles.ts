@@ -142,7 +142,7 @@ export const globalStyles = StyleSheet.create({
 		paddingHorizontal: 10
 	},
 	wrapper: {
-		backgroundColor: "rgba(200, 200, 200, 0.3)",
+		backgroundColor: "rgba(0, 0, 0, 0.3)",
 		flex: 1,
 		justifyContent: 'flex-end',
 		padding: 10

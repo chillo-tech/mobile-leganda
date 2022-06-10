@@ -20,11 +20,11 @@ import {SecurityContext} from '../../context/SecurityContextProvider';
 
 
 function LocationSearchScreen({navigation, route}) {
+	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
 	const {params} = route;
 	const {protectedAxios} = useContext(SecurityContext);
 	const {state, updateUserInfos, updateSearchCriteria} = useContext<any>(ApplicationContext);
 	const {authenticatedUser, searchCriteria} = state;
-	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
 	const [searchButtonVisible, setSearchButtonVisible] = useState(true);
 	const [authenticatedUserCoordinates, setAuthenticatedUserCoordinates] = useState({});
 	const [locationVisible, setLocationVisible] = useState(true);
@@ -36,7 +36,7 @@ function LocationSearchScreen({navigation, route}) {
 		setQuery(cleanString(selectedLocation.street.split(/,(.+)/)[0]));
 		setLocation({
 			street: selectedLocation.street,
-			location: selectedLocation.coordinates
+			location: selectedLocation.location
 		});
 		setSearchResults([]);
 		setSearchButtonVisible(true)
@@ -59,7 +59,7 @@ function LocationSearchScreen({navigation, route}) {
 
 				setSearchResults(data);
 			} catch (error) {
-
+				console.log(error)
 			}
 		}
 	}
@@ -109,14 +109,25 @@ function LocationSearchScreen({navigation, route}) {
 			page: 0,
 			...location
 		})
+
 		if (params.userLocation) {
-			updateUserInfos(location);
+			try {
+				await protectedAxios.post(
+					'add-address',
+					location
+				);
+				updateUserInfos(location);
+			} catch (error) {
+				console.log(error)
+			}
 		}
 
-		navigation.navigate({
-			name: params.nextPage,
-			merge: true
-		});
+		if (!params.userLocation) {
+			navigation.navigate({
+				name: params.nextPage,
+				merge: true
+			});
+		}
 	}
 
 	React.useLayoutEffect(() => {

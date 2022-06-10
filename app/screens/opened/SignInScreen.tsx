@@ -1,16 +1,14 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {BACKOFFICE_URL, colors, globalStyles, isValidEmail, isValidPhoneNumber} from '../../utils';
 import {Controller, useForm} from "react-hook-form";
 import {LinearGradient} from 'expo-linear-gradient';
 import Message from '../../components/messages/Message';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import axios from 'axios';
 import BackButton from '../../components/buttons/BackButton';
 
 function SignInScreen({navigation}) {
 	const message = "Un instant nous vérifions votre compte.";
-	const {updateUserInfos} = useContext(ApplicationContext);
 	const [isActivating, setIsActivating] = useState(false);
 	const {control, handleSubmit, formState: {errors}} = useForm({
 		defaultValues: {

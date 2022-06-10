@@ -8,10 +8,10 @@ function RootStack() {
 	const Stack = createNativeStackNavigator();
 	const {state} = useContext<any>(ApplicationContext);
 	const {authenticatedUser = {}} = state;
-	const {accessToken} = authenticatedUser;
+	const {accessToken, location} = authenticatedUser;
 	return (
 		<Stack.Navigator>
-			{accessToken ? (
+			{accessToken && location ? (
 				<Stack.Screen name="Protected" component={ProtectedStack}
 							  options={{headerShown: false}}/>
 			) : (

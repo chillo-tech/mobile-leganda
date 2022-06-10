@@ -50,7 +50,7 @@ function UserPhoneScreen({navigation}) {
 		setCountryPhoneIndex(`+${callingCode[0]}`);
 	}
 	React.useLayoutEffect(() => {
-		signOut();
+		//signOut();
 		navigation.setOptions({
 			headerTitle: "",
 			title: "",
@@ -109,7 +109,7 @@ function UserPhoneScreen({navigation}) {
 													value={value || ''}
 													keyboardType="numeric"
 													maxLength={10}
-													placeholder="0761705745"
+													placeholder="761705745"
 												/>
 											)}
 										/>

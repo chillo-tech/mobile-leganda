@@ -18,10 +18,9 @@ function SearchScreen({route, navigation}) {
 		updateSelectedItemId,
 		updateSearchCriteria
 	} = useContext(ApplicationContext);
-
 	const {protectedAxios} = useContext(SecurityContext);
 	let isActive = true;
-	const {searchCriteria, ads} = state;
+	const {searchCriteria, authenticatedUser, ads} = state;
 	const {query, pushResults, page, location: {coordinates}} = searchCriteria;
 	const [isLoading, setIsloading] = useState(true);
 	const [refreshing, setRefreshing] = React.useState(false);
@@ -91,7 +90,7 @@ function SearchScreen({route, navigation}) {
 			return () => {
 				isActive = false;
 			};
-		}, [searchCriteria])
+		}, [state])
 	);
 
 	return (

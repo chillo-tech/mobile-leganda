@@ -2,7 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {LinearGradient} from 'expo-linear-gradient';
 import React from 'react';
 import {PresentationScreen, SignUpScreen, ValidationScreen} from '../screens/opened';
-import LocationSearchScreenBack from '../screens/shared/LocationSearchScreen';
+import LocationSearchScreen from '../screens/shared/LocationSearchScreen';
 import {colors} from '../utils';
 import {StyleSheet} from 'react-native';
 import LoginOptionScreen from '../screens/opened/LoginOptionScreen';
@@ -43,13 +43,15 @@ function OpenedStack() {
 
 				<Stack.Screen
 					name="location"
-					component={LocationSearchScreenBack}
+					component={LocationSearchScreen}
 					options={{headerShown: false}}
 					initialParams={{
 						title: 'Indiquez votre position',
 						subtitle: 'elle permet de proposer des lieux proche',
 						buttonLabel: 'Valider',
-						nextPage: 'Protected',
+						placeholder: 'Recherchez votre ville',
+						nextPage: 'ads',
+						stack: 'opened',
 						cancellable: false,
 						userLocation: true
 					}}
