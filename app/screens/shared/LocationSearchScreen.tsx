@@ -109,7 +109,6 @@ function LocationSearchScreen({navigation, route}) {
 			page: 0,
 			...location
 		})
-
 		if (params.userLocation) {
 			try {
 				await protectedAxios.post(
@@ -117,6 +116,10 @@ function LocationSearchScreen({navigation, route}) {
 					location
 				);
 				updateUserInfos(location);
+
+
+
+
 			} catch (error) {
 				console.log(error)
 			}
@@ -132,7 +135,7 @@ function LocationSearchScreen({navigation, route}) {
 
 	React.useLayoutEffect(() => {
 		setQuery('');
-		if (authenticatedUser) {
+		if (!authenticatedUser) {
 			const {location} = authenticatedUser;
 			if (location) {
 				const {coordinates: coordinatesToSave} = location;

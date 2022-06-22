@@ -32,7 +32,9 @@ function AdAddress() {
 		setSearchResults([]);
 	}
 	const cleanString = (entry: string) => {
+		
 		return entry ? entry.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
+		
 	}
 	const onChange = async (queryParam: string) => {
 		setQuery(queryParam);
@@ -47,8 +49,10 @@ function AdAddress() {
 						}
 					}
 				);
+				
 				setSearchResults(data);
 			} catch (error) {
+				
 			}
 		}
 	}
@@ -93,7 +97,8 @@ function AdAddress() {
 		}
 	}
 
-	return (
+	return ( 
+		
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
 				<Text style={globalStyles.creationTitle}>Quelle est</Text>
@@ -101,6 +106,7 @@ function AdAddress() {
 			</View>
 			<View style={globalStyles.creationBody}>
 				{isActivating ? (<Message firstText={message}/>) : (
+					
 					<>
 						<View
 							style={[globalStyles.creationBodyContent]}>
@@ -111,6 +117,7 @@ function AdAddress() {
 									onChangeText={onChange}
 									value={query || ''}
 									placeholder="Exemple: 10 rue dalby, 56000 Vannes"
+									
 								/>
 							</View>
 							{

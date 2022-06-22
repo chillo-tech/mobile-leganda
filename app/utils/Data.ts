@@ -43,7 +43,7 @@ export const INITIAL_STATE: State = {
 
 export const HELP_LINK = {
 	whatsapp: `whatsapp://send?text=&phone=${PHONE}`,
-	sms: `sms:${PHONE}body=`,
+	sms: `sms:${PHONE}`,
 	mail: `mailto:${EMAIL}`,
 	phone: `tel:${PHONE}`
 }

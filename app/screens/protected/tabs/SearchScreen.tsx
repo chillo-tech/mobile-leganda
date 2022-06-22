@@ -66,7 +66,7 @@ function SearchScreen({route, navigation}) {
 
 	useFocusEffect(
 		React.useCallback(() => {
-			signOut();
+
 			if (isActive) {
 				const {authenticatedUser} = state;
 				const coordinates = authenticatedUser?.location?.coordinates;
@@ -90,7 +90,7 @@ function SearchScreen({route, navigation}) {
 			return () => {
 				isActive = false;
 			};
-		}, [state])
+		},[searchCriteria])//[state] lorsqu'on a state la page n'arrete pas de charger car selon moi le state peu changer à tout moment
 	);
 
 	return (

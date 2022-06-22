@@ -9,6 +9,9 @@ function RootStack() {
 	const {state} = useContext<any>(ApplicationContext);
 	const {authenticatedUser = {}} = state;
 	const {accessToken, location} = authenticatedUser;
+	React.useLayoutEffect(() => {
+
+	});
 	return (
 		<Stack.Navigator>
 			{accessToken && location ? (

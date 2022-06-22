@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, globalStyles, IMAGES_URL} from '../../utils';
+import {SecurityContext} from "../../context/SecurityContextProvider";
+import {ApplicationContext} from "../../context/ApplicationContextProvider";
 
 function PresentationScreen({navigation}) {
 	const image = {uri: `${IMAGES_URL}/bg-home.jpeg`};
+	const {state, signIn, signOut} = React.useContext(ApplicationContext);
+	const {authenticatedUser = {}} = state;
+	const {accessToken, refreshToken, location} = authenticatedUser;
+
+	React.useLayoutEffect(() => {
+
+	});
 	return (
 		<View style={[globalStyles.container]}>
 			<ImageBackground

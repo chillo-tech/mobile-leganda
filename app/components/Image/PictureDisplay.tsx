@@ -11,7 +11,8 @@ const getUri = (picture: Picture) => {
 }
 
 function PictureDisplay({picture = null, editable = false, onDeletePressed = () => null}) {
-	const source = {uri: `${getUri(picture)}`};
+	//const source = {uri: `${getUri(picture)}`};
+	const source ={uri:`data:image/png;base64,${picture.base64}`};
 	return (
 		<View style={styles.container}>
 			<Image style={styles.picture} resizeMode="cover" source={source}/>

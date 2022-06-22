@@ -35,7 +35,12 @@ const AdDetail = ({route, navigation}) => {
 		setAd(data);
 		selectedAd(data);
 	}
-
+//pour l'adresse
+	const goTo =() =>{
+		const {address} = ad;
+		const {street, location} = address
+		navigate({street, coordinates: location})
+	}
 	const navigate = ({street, coordinates: {coordinates: [lat, long]}}) => {
 		const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
 		const url = `http://maps.google.com/maps?q=${long},${lat}&z=7&t=h`;
@@ -61,6 +66,7 @@ const AdDetail = ({route, navigation}) => {
 
 		}
 	}
+
 	const favoriteCallBack = (message) => {
 		showMessage({
 			message,
@@ -155,7 +161,7 @@ const AdDetail = ({route, navigation}) => {
 								<Text style={styles.descriptionBody}>{ad?.description}</Text>
 							</View>
 						</ScrollView>
-						<TouchableHighlight underlayColor={'transparent'} onPress={() => navigate(ad?.address)}>
+						<TouchableHighlight underlayColor={'transparent'} onPress={goTo}>
 							<View style={styles.address}>
 								<View style={styles.addressmarker}>
 									<FontAwesome name="map-marker" size={18} color={colors.primary}
@@ -193,7 +199,7 @@ const AdDetail = ({route, navigation}) => {
 							</View>
 							<View style={[styles.contactItem]}>
 								<TouchableHighlight underlayColor={'transparent'}
-													onPress={() => navigate(ad?.address)}>
+													onPress={goTo}>
 									<FontAwesome name="map-marker" size={32} color={colors.success}/>
 								</TouchableHighlight>
 							</View>

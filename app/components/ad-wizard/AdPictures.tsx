@@ -18,6 +18,7 @@ function AdPictures() {
 		}
 	}
 	const onImageSelected = (picture) => {
+		
 		setPictures(current => ([...current, picture]));
 	}
 	const deleteAdImage = (id: number) => {

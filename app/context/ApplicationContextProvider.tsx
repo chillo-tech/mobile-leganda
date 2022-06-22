@@ -23,6 +23,7 @@ export const ApplicationContext = createContext(null);
 function ApplicationContextProvider({children}) {
 	const [state, dispatch] = useReducer(ApplicationReducer, INITIAL_STATE);
 	const {creationWizard: {stepIndex}} = state;
+	// @ts-ignore
 	const authContext = React.useMemo(() => ({
 		deleteKey: (data: {}) => dispatch({type: DELETE_KEY, data}),
 		goToStep: (stepIndex: number) => dispatch({type: SET_STEP_INDEX, data: stepIndex}),

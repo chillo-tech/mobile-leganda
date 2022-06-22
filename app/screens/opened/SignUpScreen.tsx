@@ -35,6 +35,7 @@ function SignUpScreen({navigation}) {
 				authenticatedUser = {...authenticatedUser, ...decoded, accessToken, refreshToken}
 			}
 			signIn(authenticatedUser);
+			navigation.navigate('location')
 		} catch (error) {
 			Alert.alert(
 				"",
