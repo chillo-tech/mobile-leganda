@@ -7,6 +7,8 @@ import {
 	RESET_AD,
 	SET_AD,
 	SET_ADS,
+	SET_CATS,
+	SET_CAT,
 	SET_NUMBER_OF_CHILDREN,
 	SET_SELECTED_ITEM_ID,
 	SET_STEP_INDEX,
@@ -23,7 +25,6 @@ export const ApplicationContext = createContext(null);
 function ApplicationContextProvider({children}) {
 	const [state, dispatch] = useReducer(ApplicationReducer, INITIAL_STATE);
 	const {creationWizard: {stepIndex}} = state;
-	// @ts-ignore
 	const authContext = React.useMemo(() => ({
 		deleteKey: (data: {}) => dispatch({type: DELETE_KEY, data}),
 		goToStep: (stepIndex: number) => dispatch({type: SET_STEP_INDEX, data: stepIndex}),
@@ -48,6 +49,8 @@ function ApplicationContextProvider({children}) {
 		updateSearchCriteria: (data: {}) => {
 			dispatch({type: UPDATE_SEARCH_CRITERIA, data})
 		},
+		updateCats:(cats:[])=>dispatch({type:SET_CATS,data:cats}),
+		selectedCat: (cat:{})=>dispatch({type:SET_CAT,data:cat}),
 		updateUserInfos: async (data: {}) => {
 			let savedUser = await AsyncStorage.getItem(AUTHENTICATED_USER);
 			if (savedUser === null) {
@@ -72,8 +75,8 @@ function ApplicationContextProvider({children}) {
 				dispatch({type: SIGN_OUT})
 			}
 		};
-
 		bootstrapAsync();
+
 	}, []);
 	return (
 		<ApplicationContext.Provider value={{state, ...authContext}}>

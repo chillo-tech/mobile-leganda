@@ -16,7 +16,8 @@ type State = {
 		numberOfChildren: number,
 		ad: any
 	},
-	ads: any[]
+	ads: any[],
+	cats: any[],
 }
 
 type Action = {

@@ -11,6 +11,7 @@ import AdRecap from '../../../components/ad-wizard/AdRecap';
 import AdAddress from '../../../components/ad-wizard/AdAddress';
 import AdDates from '../../../components/ad-wizard/AdDates';
 import AdName from '../../../components/ad-wizard/AdName';
+import AdCategorie from "../../../components/ad-wizard/AdCategorie";
 
 function AdUpdate({navigation}) {
 	React.useLayoutEffect(() => {
@@ -33,6 +34,7 @@ function AdUpdate({navigation}) {
 			style={styles.container}
 		>
 			<AdWizard>
+				<AdCategorie/>
 				<AdName/>
 				<AdDescription/>
 				<AdPictures/>

@@ -6,3 +6,4 @@ export const ADS_ENDPOINT = "ad";
 export const FAVORITE_ENDPOINT = "favorite";
 export const ACCOUNT_ENDPOINT = "account";
 export const ADDRESS_ENDPOINT = "address";
+export const CATEGORY_ENDPOINT="category";

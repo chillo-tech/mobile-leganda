@@ -5,7 +5,7 @@ import {
 	RESET_AD,
 	RESTORE_TOKEN,
 	SET_AD,
-	SET_ADS,
+	SET_ADS, SET_CAT, SET_CATS,
 	SET_NUMBER_OF_CHILDREN,
 	SET_SELECTED_ITEM_ID,
 	SET_STEP_INDEX,
@@ -23,7 +23,6 @@ export const ApplicationReducer = (state: State, action: Action) => {
 			const next = {...state}
 			delete next[data.key]
 			return next;
-
 		case RESET_AD:
 			return {
 				...state,
@@ -43,6 +42,16 @@ export const ApplicationReducer = (state: State, action: Action) => {
 			return {
 				...state,
 				ad: data
+			}
+		case SET_CATS:
+			return {
+				...state,
+				cats: data
+			};
+		case SET_CAT:
+			return {
+				...state,
+				cat: data
 			}
 		case SET_NUMBER_OF_CHILDREN:
 			return {

@@ -8,6 +8,8 @@ export const RESET_AD = "RESET_AD";
 export const DELETE_KEY = "DELETE_KEY";
 export const SET_NUMBER_OF_CHILDREN = "SET_NUMBER_OF_CHILDREN";
 export const SET_ADS = "SET_ADS";
+export const SET_CATS = "SET_CATS";
+export const SET_CAT = "SET_CAT";
 export const SET_AD = "SET_AD";
 export const SET_SELECTED_ITEM_ID = "SET_SELECTED_ITEM_ID";
 export const SET_STEP_INDEX = "SET_STEP_INDEX";
@@ -22,6 +24,7 @@ export const RECOMMEND_TEXT = "Bonjour, j'ai découvert cette application qui a 
 export const RESTORE_TOKEN = "RESTORE_TOKEN";
 export const AD_PLACEHOLDER = ["Taro du dimanche", "20kg à destination de Yaoundé", "Carton de Guinness", "Stage de developpeur"];
 export const INITIAL_STATE: State = {
+
 	creationWizard: {
 		stepIndex: 0,
 		numberOfChildren: 0,
@@ -38,7 +41,9 @@ export const INITIAL_STATE: State = {
 			coordinates: []
 		}
 	},
+	cats: [],
 	ads: []
+
 }
 
 export const HELP_LINK = {
