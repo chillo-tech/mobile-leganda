@@ -21,7 +21,6 @@ function AdCategorie() {
     const {protectedAxios} = useContext(SecurityContext);
     const {cats} = state;
     const onSubmit = async () => {
-        console.log(category);
         if (category && category !=='undefined') {
 
             updateAd({infos: {category}})
@@ -44,7 +43,6 @@ function AdCategorie() {
     };
     const onCategorySelected = (categ) => {
         setCategory(categ);
-        console.log(category);
     }
 
 
@@ -102,6 +100,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center'
+
     },
     searchResultsContainer: {
         paddingHorizontal: 10,

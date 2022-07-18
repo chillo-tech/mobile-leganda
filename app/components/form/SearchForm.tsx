@@ -50,6 +50,7 @@ const SearchForm = ({navigation}) => {
 		const updatedValue = value || '';
 		setDisplayCancelButton(updatedValue.length);
 		setQuery(updatedValue);
+		updateSearchCriteria({pushResults: false, query: updatedValue, page: 0})
 	}
 
 	const handleSubmit = ({nativeEvent: {text}}) => {
