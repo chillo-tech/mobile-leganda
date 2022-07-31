@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {FlatList, RefreshControl, SafeAreaView, StyleSheet, View, Text,TouchableHighlight, Image} from 'react-native';
+import {FlatList, RefreshControl, SafeAreaView, StyleSheet, View, Text,TouchableHighlight, Image,Dimensions} from 'react-native';
 import RNPickerSelect from "react-native-picker-select";
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {CATEGORY_ENDPOINT, colors, globalStyles} from '../../utils';
@@ -8,6 +8,7 @@ import BottomBar from '../tabs/BottomBar';
 import {SecurityContext} from '../../context/SecurityContextProvider';
 import {useFocusEffect} from "@react-navigation/native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import CategoryForm from "../form/CategoryForm";
 
 
 
@@ -51,12 +52,14 @@ function AdCategorie() {
                     searchCategory();
         },[])
     );
-
+    const numberColumns = 2;
+    const WIDTH= Dimensions.get('window').width;
     return (
         <View style={globalStyles.creationContainer}>
             <View style={globalStyles.creationHeader}>
                 <Text style={globalStyles.creationTitle}>Choisissez une </Text>
                 <Text style={globalStyles.creationTitle}>Catégorie </Text>
+
             </View>
             <View style={globalStyles.creationBody}>
                 <View
@@ -70,11 +73,8 @@ function AdCategorie() {
                                     keyExtractor={(item, index) => `${item.id}-${index}`}
                                     renderItem={({item}) => (
                                         <TouchableHighlight style={styles.item} underlayColor={'#ffffff'} onPress={() => onCategorySelected(item)  }>
-                                            <Card style={styles.cardDisplay}   >
-                                                <Card.Content>
-                                                    <Paragraph style={styles.categoriesContainer}>{item.name}</Paragraph>
-                                                </Card.Content>
-                                            </Card>
+                                            {   /* <CategoryForm nom={item.name} uri={"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"}></CategoryForm>*/}
+                                            <CategoryForm nom={item.name} uri={item.icon}></CategoryForm>
                                         </TouchableHighlight>
                                     )}
                                 />
@@ -93,6 +93,7 @@ function AdCategorie() {
     );
 
 }
+
 export default AdCategorie;
 const styles = StyleSheet.create({
     container: {
@@ -109,12 +110,16 @@ const styles = StyleSheet.create({
     categoriesContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        textAlign: 'right',
+        textTransform: 'uppercase',
+
     },
     cardDisplay: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         marginBottom:10,
-        backgroundColor:'#808080'
+        backgroundColor:'#D3D3D3',
+        borderRadius: 20
     },
     errorsText: {
         color: colors.error,

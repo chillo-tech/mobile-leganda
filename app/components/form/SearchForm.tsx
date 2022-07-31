@@ -104,7 +104,7 @@ const SearchForm = ({navigation}) => {
 			<View style={styles.filterContainer}>
 				<EvilIcons name="search" size={24} color={colors.primary}/>
 				<TextInput
-					placeholder="Plats, boissons, restaurants, ..."
+					placeholder="Repas, Boissons, Autres, ..."
 					onSubmitEditing={handleSubmit}
 					onChangeText={handleChange}
 					onFocus={handleFocus}
