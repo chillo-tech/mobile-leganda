@@ -10,7 +10,6 @@ function RootStack() {
 	const {authenticatedUser = {}} = state;
 	const {accessToken, location} = authenticatedUser;
 	React.useLayoutEffect(() => {
-
 	});
 	return (
 		<Stack.Navigator>

@@ -66,15 +66,15 @@ function AdCategorie() {
                     style={[globalStyles.creationBodyContent]}>
                     <View>
 
-                                <FlatList
-                                    contentContainerStyle={styles.searchResultsContainer}
-                                    scrollEventThrottle={150}
+                                <FlatList style={styles.list}
+                                          columnWrapperStyle={{justifyContent: 'space-between'}}
+                                          horizontal={false}
+                                          numColumns={2}
                                     data={cats}
                                     keyExtractor={(item, index) => `${item.id}-${index}`}
                                     renderItem={({item}) => (
-                                        <TouchableHighlight style={styles.item} underlayColor={'#ffffff'} onPress={() => onCategorySelected(item)  }>
-                                            {   /* <CategoryForm nom={item.name} uri={"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"}></CategoryForm>*/}
-                                            <CategoryForm nom={item.name} uri={item.icon}></CategoryForm>
+                                        <TouchableHighlight style={styles.item} onPress={() => onCategorySelected(item)  }>
+                                            <CategoryForm nom={item.name} uri={item.icon}/>
                                         </TouchableHighlight>
                                     )}
                                 />
@@ -102,6 +102,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
 
+
+    },
+
+    item:{
+        width:'50%',
+
     },
     searchResultsContainer: {
         paddingHorizontal: 10,
@@ -113,6 +119,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'right',
         textTransform: 'uppercase',
+
 
     },
     cardDisplay: {
@@ -133,26 +140,6 @@ const styles = StyleSheet.create({
     },
 });
 
-const pickerSelectStyles = StyleSheet.create({
-    inputIOS: {
-        fontSize: 16,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 4,
-        color: 'black',
-        paddingRight: 30 // to ensure the text is never behind the icon
-    },
-    inputAndroid: {
-        fontSize: 16,
-        paddingHorizontal: 10,
-        paddingVertical: 8,
-        borderWidth: 0.5,
-        borderColor: 'purple',
-        borderRadius: 8,
-        color: 'black',
-        paddingRight: 30 // to ensure the text is never behind the icon
-    }
-});
+
+
 

@@ -25,11 +25,13 @@
     "expo-location": "~13.0.4",
     "expo-status-bar": "~1.1.0",
     "jwt-decode": "^3.1.2",
+    "metro-react-native-babel-preset": "~0.64.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "^7.18.1",
     "react-native": "0.64.3",
     "react-native-country-picker-modal": "^2.0.0",
+    "react-native-elements": "^3.4.2",
     "react-native-flash-message": "^0.2.1",
     "react-native-geolocation-service": "^5.3.0-beta.4",
     "react-native-gesture-handler": "~1.10.2",
@@ -43,15 +45,14 @@
     "react-native-screens": "~3.8.0",
     "react-native-web": "0.17.1",
     "react-query": "^3.32.1",
-    "react-textarea-autosize": "^8.3.3",
-    "metro-react-native-babel-preset": "~0.64.0"
+    "react-textarea-autosize": "^8.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
-    "typescript": "~4.3.5",
-    "metro-react-native-babel-preset": "~0.64.0"
+    "metro-react-native-babel-preset": "~0.64.0",
+    "typescript": "~4.3.5"
   },
   "private": true
 }
