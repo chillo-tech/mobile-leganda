@@ -73,7 +73,7 @@ function AdCategorie() {
                                     data={cats}
                                     keyExtractor={(item, index) => `${item.id}-${index}`}
                                     renderItem={({item}) => (
-                                        <TouchableHighlight style={styles.item} onPress={() => onCategorySelected(item)  }>
+                                        <TouchableHighlight style={styles.item} underlayColor={'#F2785C'} onPress={() => onCategorySelected(item)  }>
                                             <CategoryForm nom={item.name} uri={item.icon}/>
                                         </TouchableHighlight>
                                     )}
@@ -107,6 +107,10 @@ const styles = StyleSheet.create({
 
     item:{
         width:'50%',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
 
     },
     searchResultsContainer: {
