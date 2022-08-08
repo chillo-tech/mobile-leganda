@@ -30,5 +30,10 @@ jobs:
       - name: Installation des dependences # install project deps with --frozen-lockfile to make sure we will have the same packages version ( very recommended  on running yarn install on ci)
         run: yarn install --frozen-lockfile
 
-      
+      - name: Setup Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
 
