@@ -30,6 +30,9 @@ jobs:
       - name: Installation des dependences # install project deps with --frozen-lockfile to make sure we will have the same packages version ( very recommended  on running yarn install on ci)
         run: yarn install --frozen-lockfile
 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
