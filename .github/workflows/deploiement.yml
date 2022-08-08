@@ -30,10 +30,5 @@ jobs:
       - name: Installation des dependences # install project deps with --frozen-lockfile to make sure we will have the same packages version ( very recommended  on running yarn install on ci)
         run: yarn install --frozen-lockfile
 
-      - name: VERIFICATION D EXPO_TOKEN
-        run: |
-          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
-              echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-              exit 1
-            fi
+      
 
