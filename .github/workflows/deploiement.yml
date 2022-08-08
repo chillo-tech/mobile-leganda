@@ -6,3 +6,6 @@ jobs:
     steps:
       - name: clone du projet # clone the repo to local ci workspace
         uses: actions/checkout@v2
+
+      - name: check
+        run: ls -al
