@@ -52,5 +52,7 @@ jobs:
                     echo "You must provide an EXPO_SECRET secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
                     exit 1
           fi
+          
+
       - name: Publish deploiement
         run: eas update --auto
