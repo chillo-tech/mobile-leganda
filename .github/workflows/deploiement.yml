@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-yarn-   
 
       - name: Installation des dependences # install project deps with --frozen-lockfile to make sure we will have the same packages version ( very recommended  on running yarn install on ci)
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Checkout repository
         uses: actions/checkout@v2
