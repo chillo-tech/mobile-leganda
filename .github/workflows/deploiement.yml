@@ -2,7 +2,7 @@ name: deploiement
 on: push
 
 jobs:
-  build:
+  publish:
     runs-on:  ubuntu-latest
     steps:
       - name: clone du projet
@@ -55,5 +55,5 @@ jobs:
           fi
           
 
-      - name: Publish deploiement
-        run: eas update --auto
+
+       - run: expo publish --release-channel production
