@@ -56,4 +56,4 @@ jobs:
           
 
       - name: Publish deploiement
-        run: publish update --auto
+        run: eas update --auto
