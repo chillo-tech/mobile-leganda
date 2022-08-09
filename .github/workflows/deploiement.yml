@@ -13,7 +13,7 @@ jobs:
       - name: JDK environnenment
         uses: actions/setup-java@v1.4.3
         with:
-          java-version: 17
+          java-version: 1.8
 
       - name: chemin du repertoire
         id: yarn-cache-path
