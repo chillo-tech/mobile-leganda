@@ -56,4 +56,4 @@ jobs:
           
 
       - name: Publish deploiement
-        run:  eas build --non-interactive
+        run:  expo publish --non-interactive
