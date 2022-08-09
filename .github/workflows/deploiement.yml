@@ -1,8 +1,6 @@
 name: deploiement
-on:
-  workflow_dispatch: # To trigger manual build
-  release:
-    types: [published] # only run the workflow when a new release has been published
+on: push
+
 jobs:
   build:
     runs-on:  ubuntu-latest
@@ -57,5 +55,4 @@ jobs:
           fi
           
 
-      - name: Publish deploiement
-        run: eas update --auto
+      
