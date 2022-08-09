@@ -1,5 +1,8 @@
 name: deploiement
-on: [push]
+on:
+  workflow_dispatch: # To trigger manual build
+  release:
+    types: [published] # only run the workflow when a new release has been published
 jobs:
   build:
     runs-on:  ubuntu-latest
