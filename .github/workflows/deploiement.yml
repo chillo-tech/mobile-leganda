@@ -3,7 +3,6 @@ on: push
 
 jobs:
   build:
-
     runs-on:  ubuntu-latest
     steps:
       - name: clone du projet
@@ -57,4 +56,4 @@ jobs:
           
 
       - name: Publish deploiement
-        run: eas update 
+        run: --auto
