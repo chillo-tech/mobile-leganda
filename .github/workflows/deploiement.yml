@@ -28,5 +28,4 @@ jobs:
         run: yarn install
 
       - name: 🚀 Build app
-        run: eas build --non-interactive
-        token: ${{ secrets.EXPO_TOKEN }}
+        run: EXPO_TOKEN=${{ secrets.EXPO_TOKEN }} eas build --non-interactive
