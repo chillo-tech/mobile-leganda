@@ -1,4 +1,4 @@
-name: miseEnLigne
+name: build mobile app
 on:
   push:
     branches:
