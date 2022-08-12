@@ -1,8 +1,9 @@
-name: build mobile app
 on:
   push:
     branches:
       - miseEnLigne
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
