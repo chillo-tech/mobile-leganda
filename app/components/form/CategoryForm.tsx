@@ -3,14 +3,13 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import {StyleSheet,Image} from "react-native";
 import {IMAGES_URL} from "../../utils";
 
-const CategoryForm = ( {nom, uri})=>{
+const CategoryForm = ( {nom, uri}) => {
+  console.log({uri: `${IMAGES_URL}/${uri}` });
+  
     return(
         <Card style={styles.cardDisplay}>
-
-                <Paragraph style={styles.Paragraph}>{nom}</Paragraph>
-
-                <Image source={{uri: `${IMAGES_URL}/${uri}` }}   style={{width:100,height:100}}/>
-
+            <Paragraph style={styles.Paragraph}>{nom}</Paragraph>
+            <Image source={{uri: `${IMAGES_URL}/${uri}` }}   style={{width:100,height:100}}/>
         </Card>
     );
 }
@@ -20,21 +19,14 @@ const styles = StyleSheet.create({
         flex:0.3,
         justifyContent:'center',
         alignItems:'center',
+        height: 300,
         paddingVertical:10,
         marginBottom:10,
-        backgroundColor:'#FCFCFC',
+        backgroundColor:'#FCF',
         borderRadius: 10,
         padding :20,
         margin:10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 8,
-        },
-        shadowOpacity: 0.46,
-        shadowRadius: 11.14,
-
-        elevation: 10,
+        elevation: 2,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         borderBottomLeftRadius: 20,
@@ -47,17 +39,10 @@ const styles = StyleSheet.create({
         textAlignVertical: 'auto',
         fontWeight: 'bold',
         marginBottom:20
-
-
     },
     Image:{
         backgroundColor: 'transparent',
         marginTop:30,
-        justifyContent:'center',
-
-
-
-
-
+        justifyContent:'center'
     }
 })

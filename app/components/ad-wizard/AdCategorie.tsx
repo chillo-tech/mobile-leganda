@@ -73,7 +73,7 @@ function AdCategorie() {
                                     data={cats}
                                     keyExtractor={(item, index) => `${item.id}-${index}`}
                                     renderItem={({item}) => (
-                                        <TouchableHighlight style={styles.item} underlayColor={'#F2785C'} onPress={() => onCategorySelected(item)  }>
+                                        <TouchableHighlight style={styles.item} onPress={() => onCategorySelected(item)  }>
                                             <CategoryForm nom={item.name} uri={item.icon}/>
                                         </TouchableHighlight>
                                     )}
@@ -101,8 +101,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center'
-
-
     },
 
     item:{
@@ -122,9 +120,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'right',
-        textTransform: 'uppercase',
-
-
+        textTransform: 'uppercase'
     },
     cardDisplay: {
         flexDirection: 'row',
