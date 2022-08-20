@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
 
+export const BGCOLORS = ["#6CD5C6", "#F1A68A", "#9BBEF4", "##EC9ED6", "#BCA1F2", "#BCDDE4", "#CFEACB", "#F4E169"];
+export const CATEGORY_BGCOLORS = [ "#BCA1F2", "#BCDDE4", "#CFEACB", "#F4E169"];
 export const colors = {
 	success: '#146608',
 	primary: '#30698C',

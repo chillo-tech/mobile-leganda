@@ -14,7 +14,6 @@ function SecurityContextProvider({children}) {
 
 	const {searchCriteria} = state;
 	const {page, size} = searchCriteria;
-
 	const protectedAxios = axios.create({
 		baseURL: BACKOFFICE_URL,
 		headers: {
@@ -36,10 +35,7 @@ function SecurityContextProvider({children}) {
 	});
 
 	protectedAxios.interceptors.request.use(
-		(config = {}) => {	
-			
-			
-			
+		(config = {}) => {
 			config.headers.Cookie = `accessToken=${accessToken};`
 			if (!config.headers.Authorization) {
 				config.headers.Authorization = `Bearer ${accessToken}`;
@@ -47,7 +43,6 @@ function SecurityContextProvider({children}) {
 			return config;
 		},
 		error => {
-			
 			return Promise.reject(error);
 		},
 	)

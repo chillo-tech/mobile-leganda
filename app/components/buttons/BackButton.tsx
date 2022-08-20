@@ -10,10 +10,12 @@ function BackButton({navigation, icon = "arrowleft", color = colors.primary}) {
 		resetAd();
 		const popAction = StackActions.pop(1);
 		navigation.dispatch(popAction);
+    if(icon != "arrowleft") {
+		  navigation.navigate('AdList');
+    }
 	}
 	return (
-		<IconButton icon={icon}
-					color={color} onclick={goBack}/>
+		<IconButton icon={icon} color={color} onclick={goBack}/>
 	);
 }
 

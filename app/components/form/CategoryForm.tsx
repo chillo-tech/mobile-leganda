@@ -1,46 +1,42 @@
-import React, {useContext, useState} from 'react';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import React from 'react';
+import { Card, Text } from 'react-native-paper';
 import {StyleSheet,Image} from "react-native";
-import {IMAGES_URL} from "../../utils";
-
-const CategoryForm = ( {nom, uri}) => {
-  console.log({uri: `${IMAGES_URL}/${uri}` });
-  
+import {IMAGES_URL, CATEGORY_BGCOLORS, colors} from "../../utils";
+import {AntDesign} from '@expo/vector-icons';
+const CategoryForm = ( {data, selectedCategory, index}) => {
     return(
-        <Card style={styles.cardDisplay}>
-            <Paragraph style={styles.Paragraph}>{nom}</Paragraph>
-            <Image source={{uri: `${IMAGES_URL}/${uri}` }}   style={{width:100,height:100}}/>
+        <Card style={[styles.wrapper, { backgroundColor: CATEGORY_BGCOLORS[index]}]}>
+            {selectedCategory && selectedCategory.id === data.id ? <AntDesign style={styles.icon} name="checkcircle" size={20} color={colors.success}/> : null}
+            <Text style={styles.title}>{data.name}</Text>
+            <Image source={{uri: `${IMAGES_URL}/${data.icon}` }} style={{width:80, height:80}}/>
         </Card>
     );
 }
 export  default  CategoryForm;
 const styles = StyleSheet.create({
-    cardDisplay: {
-        flex:0.3,
-        justifyContent:'center',
-        alignItems:'center',
-        height: 300,
-        paddingVertical:10,
-        marginBottom:10,
-        backgroundColor:'#FCF',
-        borderRadius: 10,
-        padding :20,
-        margin:10,
-        elevation: 2,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
+    icon: {
+      position: 'absolute',
+      right: -40,
+      top: -10,
     },
-    Paragraph:{
+    wrapper: {
+        borderRadius: 10,
+        padding: 20,
+        elevation: 1,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    title:{
         textAlign: 'center',
         textDecorationLine: 'none',
-        textTransform: 'uppercase',
+        textTransform: 'capitalize',
         textAlignVertical: 'auto',
-        fontWeight: 'bold',
-        marginBottom:20
+        fontWeight: '700',
+        marginBottom:20,
+        color: "#ffffff",
     },
-    Image:{
+    image:{
         backgroundColor: 'transparent',
         marginTop:30,
         justifyContent:'center'

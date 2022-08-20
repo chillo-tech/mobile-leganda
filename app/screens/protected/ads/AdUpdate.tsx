@@ -34,7 +34,7 @@ function AdUpdate({navigation}) {
 			style={styles.container}
 		>
 			<AdWizard>
-				<AdCategorie/>
+				<AdCategorie navigation={navigation}/>
 				<AdName/>
 				<AdDescription/>
 				<AdPictures/>

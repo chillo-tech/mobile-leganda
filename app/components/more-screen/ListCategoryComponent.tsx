@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 		color: colors.primary,
 		paddingHorizontal: 5,
-		fontSize: 24,
+		fontSize: 20,
 		paddingVertical: 5,
-		fontWeight: 'bold',
+		fontWeight: 'light',
 	}
 })
 

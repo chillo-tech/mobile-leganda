@@ -1,29 +1,24 @@
 import React, {useContext, useState} from 'react';
-import {Controller, useForm} from 'react-hook-form';
-import {FlatList, RefreshControl, SafeAreaView, StyleSheet, View, Text,TouchableHighlight, Image,Dimensions} from 'react-native';
-import RNPickerSelect from "react-native-picker-select";
+import {FlatList, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {CATEGORY_ENDPOINT, colors, globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 import {SecurityContext} from '../../context/SecurityContextProvider';
 import {useFocusEffect} from "@react-navigation/native";
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import CategoryForm from "../form/CategoryForm";
 
 
 
-function AdCategorie() {
+function AdCategorie({navigation}) {
 
-    const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
+    const {state: {creationWizard: {stepIndex}}, updateAd, previousStep} = useContext(ApplicationContext);
     const [category, setCategory] = useState();
     const [error, setError] = useState('');
     const {state, updateCats} = useContext(ApplicationContext);
-    const url = `${CATEGORY_ENDPOINT}`;
     const {protectedAxios} = useContext(SecurityContext);
     const {cats} = state;
     const onSubmit = async () => {
-        if (category && category !=='undefined') {
-
+        if (category) {
             updateAd({infos: {category}})
         } else {
             setError("Veuillez sélectionner une catégorie");
@@ -31,29 +26,21 @@ function AdCategorie() {
     }
 
     const searchCategory= async () => {
-
         try {
-            const {data: results = []} = await protectedAxios.get(
-                url,
-
-            );
-            updateCats(results)
-
+          const {data: results = []} = await protectedAxios.get(CATEGORY_ENDPOINT);
+          updateCats(results);
         } catch (e) {
         }
     };
-    const onCategorySelected = (categ) => {
-        setCategory(categ);
+    const onCategorySelected = (category) => {
+        setCategory(category);
     }
-
 
     useFocusEffect(
         React.useCallback(() => {
-                    searchCategory();
+          searchCategory();
         },[])
     );
-    const numberColumns = 2;
-    const WIDTH= Dimensions.get('window').width;
     return (
         <View style={globalStyles.creationContainer}>
             <View style={globalStyles.creationHeader}>
@@ -72,10 +59,10 @@ function AdCategorie() {
                                           numColumns={2}
                                     data={cats}
                                     keyExtractor={(item, index) => `${item.id}-${index}`}
-                                    renderItem={({item}) => (
-                                        <TouchableHighlight style={styles.item} onPress={() => onCategorySelected(item)  }>
-                                            <CategoryForm nom={item.name} uri={item.icon}/>
-                                        </TouchableHighlight>
+                                    renderItem={({item, index}) => (
+                                        <TouchableOpacity activeOpacity={1} style={styles.item}  onPress={() => onCategorySelected(item)  }>
+                                            <CategoryForm data={item} selectedCategory={category} index={index}/>
+                                        </TouchableOpacity>
                                     )}
                                 />
                     </View>
@@ -84,7 +71,7 @@ function AdCategorie() {
                 </View>
                 <BottomBar
                     stepIndex={stepIndex}
-                    nextDisabled={!(category && category !=='undefined')}
+                    nextDisabled={!category}
                     previousStep={previousStep}
                     nextStep={onSubmit}
                 />
@@ -104,12 +91,9 @@ const styles = StyleSheet.create({
     },
 
     item:{
-        width:'50%',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-
+        width:'48%',
+        marginBottom: 10,
+        marginHorizontal: '1%'
     },
     searchResultsContainer: {
         paddingHorizontal: 10,

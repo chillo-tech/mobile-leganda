@@ -33,6 +33,7 @@ function LocationSearchScreen({navigation, route}) {
 	const [query, setQuery] = useState(searchCriteria?.location?.street);
 
 	const setSelectedAddress = (selectedLocation: any) => {
+		console.log({selectedLocation})
 		setQuery(cleanString(selectedLocation.street.split(/,(.+)/)[0]));
 		setLocation({
 			street: selectedLocation.street,
@@ -118,8 +119,6 @@ function LocationSearchScreen({navigation, route}) {
 				updateUserInfos(location);
 
 
-
-
 			} catch (error) {
 				console.log(error)
 			}
@@ -135,7 +134,7 @@ function LocationSearchScreen({navigation, route}) {
 
 	React.useLayoutEffect(() => {
 		setQuery('');
-		if (!authenticatedUser) {
+		if (authenticatedUser) {
 			const {location} = authenticatedUser;
 			if (location) {
 				const {coordinates: coordinatesToSave} = location;

@@ -8,10 +8,10 @@ function ListItem({item, onContactPressed}) {
 		<TouchableHighlight underlayColor={colors.white} onPress={() => onContactPressed(item)}>
 			<View style={styles.container}>
 				<View style={styles.iconText}>
-					<FontAwesome5 name={item.icon} size={18} color={colors.black}/>
+					<FontAwesome5 name={item.icon} size={14} color={colors.black}/>
 					<Text style={styles.title}>{item.title}</Text>
 				</View>
-				<AntDesign name="right" size={18} color={colors.black}/>
+				<AntDesign name="right" size={14} color={colors.black}/>
 			</View>
 		</TouchableHighlight>
 	);
@@ -20,7 +20,7 @@ function ListItem({item, onContactPressed}) {
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: colors.white,
-		paddingVertical: 18,
+		paddingVertical: 12,
 		paddingHorizontal: 10,
 		borderBottomWidth: 1,
 		borderBottomColor: colors.lightgray,
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	title: {
-		marginLeft: 12,
-		fontSize: 18,
+		marginLeft: 10,
+		fontSize: 16,
 		color: colors.black
 	},
 })
