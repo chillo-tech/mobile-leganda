@@ -1,32 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
 import {colors} from '../../utils/Styles';
+import {FontAwesome} from '@expo/vector-icons';
 
 function ListHeaderComponent(props) {
+
+	const {state: {authenticatedUser: {prenom, nom}}} = useContext<any>(ApplicationContext);
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>LE GANDA</Text>
-			<Text style={styles.description}>Votre coin qualité</Text>
+				<FontAwesome name="user-circle-o" size={50} color={colors.primary} />
+        <Text style={styles.description}>{prenom} {nom[0]}.</Text>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 80,
-	},
-	title: {
-		color: colors.warning,
-		textTransform: 'uppercase',
-		textAlign: 'center',
-		fontSize: 36,
-		fontWeight: 'bold'
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20
 	},
 	description: {
+    marginLeft: 10,
 		color: colors.primary,
 		textAlign: 'center',
 		fontSize: 24,
-		fontWeight: 'normal'
+		fontWeight: 'bold'
+
 	}
 })
 export default ListHeaderComponent;

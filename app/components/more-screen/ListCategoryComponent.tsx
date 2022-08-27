@@ -18,15 +18,14 @@ function ListCategoryComponent({category, onContactPressed}) {
 }
 
 const styles = StyleSheet.create({
+  section: {
+  },
 	container: {
-		flex: 1,
-		justifyContent: "space-around",
 		paddingHorizontal: 10,
 		backgroundColor: colors.white
 	},
 	listStyle: {
 		marginHorizontal: 5,
-		borderRadius: 10,
 		overflow: 'hidden'
 	},
 	sectionTitle: {

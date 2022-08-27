@@ -11,12 +11,14 @@ import {
 	TextInput,
 	TouchableHighlight,
 	TouchableOpacity,
-	View
+	View,
+  Dimensions
 } from 'react-native';
 import BackButton from '../../components/buttons/BackButton';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles} from '../../utils';
+import {ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles, GOOGLE_PACES_API_BASE_URL, GOOGLE_PACES_API_KEY} from '../../utils';
 import {SecurityContext} from '../../context/SecurityContextProvider';
+import MapView, { Marker } from 'react-native-maps';
 
 
 function LocationSearchScreen({navigation, route}) {
@@ -29,19 +31,80 @@ function LocationSearchScreen({navigation, route}) {
 	const [authenticatedUserCoordinates, setAuthenticatedUserCoordinates] = useState({});
 	const [locationVisible, setLocationVisible] = useState(true);
 	const [searchResults, setSearchResults] = useState([]);
+	const [locations, setLocations] = useState([]);
 	const [location, setLocation] = useState({});
+	const [zoom, setZoom] = useState(10);
+	const [region, setRegion] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
 	const [query, setQuery] = useState(searchCriteria?.location?.street);
 
-	const setSelectedAddress = (selectedLocation: any) => {
-		console.log({selectedLocation})
-		setQuery(cleanString(selectedLocation.street.split(/,(.+)/)[0]));
-		setLocation({
-			street: selectedLocation.street,
-			location: selectedLocation.location
-		});
-		setSearchResults([]);
-		setSearchButtonVisible(true)
+	const setSelectedAddress = async (selectedLocation: any) => {
+    const {place_id, structured_formatting: {main_text}} = selectedLocation;
+		setQuery(cleanString(main_text));
+    
+    if (place_id.length) {
+      try {
+        const params =  new URLSearchParams({
+          key: GOOGLE_PACES_API_KEY,
+          fields: 'formatted_address,geometry,place_id',
+          place_id
+        });
+        const response = await fetch(`${GOOGLE_PACES_API_BASE_URL}/details/json?${params}`);
+        const data = await response.json();
+        
+        const {result: {formatted_address, geometry: {location}}} = data; 
+        setLocation({
+          street: formatted_address,
+          location: {
+            type: 'Point',
+            coordinates: [
+                location.lng,
+                location.lat
+            ]
+        }
+        });
+        setSearchResults([]);
+        setLocations([ {latlng: {latitude: location.lat, longitude: location.lng}}]);
+        setRegion({
+          ...region,
+          latitude: location.lat,
+          longitude: location.lng
+        });
+        setZoom(12);
+        setSearchButtonVisible(true);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
 	}
+
+  const onInputChange =  async (queryParam: string) => {
+    setQuery(queryParam);
+		setSearchButtonVisible(false);
+		if (queryParam.length) {
+      try {
+        const params =  new URLSearchParams({
+          input: queryParam, 
+          key: GOOGLE_PACES_API_KEY, 
+          types: '(cities)', 
+          origin:  `${authenticatedUserCoordinates[1]},${authenticatedUserCoordinates[0]}`,
+          radius: '50',
+          fields: 'formatted_address'
+        });
+        const response = await fetch(`${GOOGLE_PACES_API_BASE_URL}/autocomplete/json?${params}`);
+        const { predictions } = await response.json();
+        //const {place_id, structured_formatting: {main_text, secondary_text} } = predictions;
+				setSearchResults(predictions);
+      } catch (error) {
+        
+      }
+    }
+  }
 
 	const onChange = async (queryParam: string) => {
 		setQuery(queryParam);
@@ -94,7 +157,6 @@ function LocationSearchScreen({navigation, route}) {
 					setQuery(item.city);
 				}
 			}
-
 			setLocationVisible(true);
 			setSearchResults([]);
 			setSearchButtonVisible(true)
@@ -117,8 +179,6 @@ function LocationSearchScreen({navigation, route}) {
 					location
 				);
 				updateUserInfos(location);
-
-
 			} catch (error) {
 				console.log(error)
 			}
@@ -139,18 +199,46 @@ function LocationSearchScreen({navigation, route}) {
 			if (location) {
 				const {coordinates: coordinatesToSave} = location;
 				setAuthenticatedUserCoordinates(coordinatesToSave);
+				setRegion({
+          ...region,
+          latitude: coordinatesToSave[1],
+          longitude: coordinatesToSave[0]
+        });
 			}
 		}
 	}, [navigation]);
+
+	React.useEffect(() => {
+    if (Object.keys(authenticatedUserCoordinates).length) {
+      setRegion({
+        ...region,
+        latitude: authenticatedUserCoordinates[1],
+        longitude: authenticatedUserCoordinates[0]
+      });
+
+    }
+	}, [authenticatedUserCoordinates]);
 
 	return (
 		<LinearGradient
 			start={{x: 0, y: 0}}
 			end={{x: 1, y: 1}}
 			colors={[colors.warning, colors.primary]}
-			style={styles.container}
+			style={StyleSheet.absoluteFillObject}
 		>
-			<View style={[styles.container]}>
+      <MapView 
+          style={StyleSheet.absoluteFillObject} 
+          region={region}
+          maxZoomLevel={zoom}
+        >
+           {locations.length ? locations.map((marker, index) => (
+              <Marker
+                key={index}
+                coordinate={marker.latlng}
+              />
+            )): null}
+        </MapView>
+      <View style={[styles.container]}>
 				<View style={styles.pageDescription}>
 					<View/>
 					<View>
@@ -166,7 +254,7 @@ function LocationSearchScreen({navigation, route}) {
 							style={[globalStyles.creationBodyFieldGroup]}>
 							<TextInput
 								style={[globalStyles.fieldFont, globalStyles.creationBodyField, styles.searchFormUserPositionText]}
-								onChangeText={onChange}
+								onChangeText={onInputChange}
 								onFocus={() => setSearchButtonVisible(false)}
 								value={query || ''}
 								placeholder={params.placeholder}
@@ -205,25 +293,27 @@ function LocationSearchScreen({navigation, route}) {
 							<FlatList
 								keyboardShouldPersistTaps="always"
 								data={searchResults ? searchResults.sort(function (a, b) {
-									if (cleanString(a.street.split(/,(.+)/)[0]).toLowerCase().length < cleanString(b.street.split(/,(.+)/)[0]).toLowerCase().length) return -1;
-									if (cleanString(a.street.split(/,(.+)/)[0]).toLowerCase().length > cleanString(b.street.split(/,(.+)/)[0]).toLowerCase().length) return 1;
+									if (cleanString(a.structured_formatting.main_text).toLowerCase().length < cleanString(b.structured_formatting.main_text).toLowerCase().length) return -1;
+									if (cleanString(a.structured_formatting.main_text).toLowerCase().length > cleanString(b.structured_formatting.main_text).toLowerCase().length) return 1;
 									return 0;
 								}) : []}
 								renderItem={({item}) =>
 									<TouchableOpacity
-										key={item.id}
+										key={item.place_id}
 										style={styles.resultItem}
 										onPress={() => setSelectedAddress(item)}>
 
 										<Text
-											style={styles.resultItemFirstText}>{cleanString(item.street.split(/,(.+)/)[0])}</Text>
+											style={styles.resultItemFirstText}>{cleanString(item.structured_formatting.main_text)}</Text>
 
 										<Text
-											style={styles.resultItemSecondText}>{cleanString(item.street.split(/,(.+)/)[1])}</Text>
+											style={styles.resultItemSecondText}>{cleanString(item.structured_formatting.secondary_text)}</Text>
 
 									</TouchableOpacity>
 								}
-								keyExtractor={(item) => item.id}
+								keyExtractor={({place_id}) => {
+                  return place_id
+                }}
 								style={styles.searchResultsContainer}
 							/>
 						) : null
@@ -254,6 +344,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'space-between'
 	},
+
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height + 43,
+  },
 	searchResultsContainer: {
 		backgroundColor: colors.white,
 	},

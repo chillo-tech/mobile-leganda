@@ -1,11 +1,13 @@
-import React from 'react';
-import {Alert, FlatList, Linking, SafeAreaView, Share, StyleSheet} from 'react-native';
+import React, { useContext } from 'react';
+import {Alert, FlatList, Linking, SafeAreaView, Share, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import ListCategoryComponent from '../../../components/more-screen/ListCategoryComponent';
 import ListHeaderComponent from '../../../components/more-screen/ListHeaderComponent';
+import { ApplicationContext } from '../../../context/ApplicationContextProvider';
 import {colors, HELP_LINK, MORESCREEN_DATA} from '../../../utils';
 
 const MoreScreen = () => {
 
+	const {signOut} = useContext<any>(ApplicationContext);
 	const askHelp = async (item) => {
 		const {name} = item;
 		const link: string = HELP_LINK[name];
@@ -46,6 +48,7 @@ const MoreScreen = () => {
 
 	return (
 		<SafeAreaView style={styles.container}>
+      <View>
 			<FlatList
 				style={styles.listStyle}
 				data={MORESCREEN_DATA}
@@ -54,6 +57,15 @@ const MoreScreen = () => {
 															   onContactPressed={handleContactPressed}/>}
 				keyExtractor={item => item.id}
 			/>
+      <TouchableOpacity
+        style={styles.logout}
+        onPress={() => signOut()}>
+
+        <Text
+          style={styles.logoutText}>Déconnexion</Text>
+
+      </TouchableOpacity>
+      </View>
 		</SafeAreaView>
 	)
 }
@@ -61,13 +73,27 @@ const MoreScreen = () => {
 export default MoreScreen;
 
 const styles = StyleSheet.create({
+  logout: {
+    paddingTop: 40,
+    marginHorizontal: 10,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center'
+  },
+  logoutText: {
+    fontWeight: '600',
+    fontSize: 18,
+		borderBottomWidth: 1,
+		borderBottomColor: colors.black,
+  },
 	container: {
-		flex: 1,
+    flex: 1,
 		justifyContent: "space-around",
-		backgroundColor: colors.warningLight,
+		backgroundColor: colors.white,
+    paddingHorizontal: 15
 	},
 	listStyle: {
-		marginHorizontal: 5
+		marginHorizontal: 5,
 	},
 	sectionTitle: {
 		marginTop: 25,

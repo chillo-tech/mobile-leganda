@@ -27,8 +27,6 @@
     ],
     "ios": {
       "supportsTablet": true
-      
-      
     },
     "android": {
       "package": "com.cs.leganda",
