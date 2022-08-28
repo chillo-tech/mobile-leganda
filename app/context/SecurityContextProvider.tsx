@@ -25,7 +25,6 @@ function SecurityContextProvider({children}) {
 			size
 		}
 	});
-
 	const publicAxios = axios.create({
 		baseURL: BACKOFFICE_URL,
 		headers: {

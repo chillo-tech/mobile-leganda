@@ -36,7 +36,7 @@ const MoreScreen = () => {
 
 
 	const handleContactPressed = async (item) => {
-		const {name, action} = item;
+		const {action} = item;
 		if (action === 'help') {
 			await askHelp(item)
 		}
@@ -78,16 +78,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center'
+		alignItems: 'center',
+    color: colors.warning
   },
   logoutText: {
     fontWeight: '600',
     fontSize: 18,
 		borderBottomWidth: 1,
-		borderBottomColor: colors.black,
+    color: colors.warning,
+		borderBottomColor: colors.warning,
   },
 	container: {
     flex: 1,
+    color: colors.warning,
 		justifyContent: "space-around",
 		backgroundColor: colors.white,
     paddingHorizontal: 15

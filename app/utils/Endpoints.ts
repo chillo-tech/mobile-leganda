@@ -9,3 +9,9 @@ export const ADDRESS_ENDPOINT = "address";
 export const CATEGORY_ENDPOINT = "category";
 export const GOOGLE_PACES_API_BASE_URL = 'https://maps.googleapis.com/maps/api/place';
 export const GOOGLE_PACES_API_KEY = 'AIzaSyBoBBvzxlRlkbfYzZcHp8ALOwBk3YjfB-I';
+export const GOOGLE_PACES_CENTER_COORDINATES = {
+  latitude: 37.78825,
+  longitude: -122.4324,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+};

@@ -11,7 +11,7 @@ import {SecurityContext} from '../../context/SecurityContextProvider';
 function UserPhoneScreen({navigation}) {
 	const image = {uri: `${IMAGES_URL}/bg-home.jpeg`};
 	const message = "Un instant nous vérifions votre compte.";
-	const {signIn, signOut} = useContext(ApplicationContext);
+	const {signIn} = useContext(ApplicationContext);
 	const {publicAxios} = useContext(SecurityContext);
 	const [isActivating, setIsActivating] = useState(false);
 	const [countryPhoneIndex, setCountryPhoneIndex] = useState('+33');

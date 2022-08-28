@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import BackButton from '../../components/buttons/BackButton';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles, GOOGLE_PACES_API_BASE_URL, GOOGLE_PACES_API_KEY} from '../../utils';
+import {ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles, GOOGLE_PACES_API_BASE_URL, GOOGLE_PACES_API_KEY, GOOGLE_PACES_CENTER_COORDINATES} from '../../utils';
 import {SecurityContext} from '../../context/SecurityContextProvider';
 import MapView, { Marker } from 'react-native-maps';
 
@@ -34,12 +34,7 @@ function LocationSearchScreen({navigation, route}) {
 	const [locations, setLocations] = useState([]);
 	const [location, setLocation] = useState({});
 	const [zoom, setZoom] = useState(10);
-	const [region, setRegion] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
+	const [region, setRegion] = useState(GOOGLE_PACES_CENTER_COORDINATES);
 	const [query, setQuery] = useState(searchCriteria?.location?.street);
 
 	const setSelectedAddress = async (selectedLocation: any) => {
@@ -88,14 +83,22 @@ function LocationSearchScreen({navigation, route}) {
 		setSearchButtonVisible(false);
 		if (queryParam.length) {
       try {
-        const params =  new URLSearchParams({
+        let queryParams = {
           input: queryParam, 
           key: GOOGLE_PACES_API_KEY, 
           types: '(cities)', 
-          origin:  `${authenticatedUserCoordinates[1]},${authenticatedUserCoordinates[0]}`,
           radius: '50',
+          lang: 'FR',
           fields: 'formatted_address'
-        });
+        }
+        queryParams = Object.keys(authenticatedUserCoordinates).length ? {
+          ...queryParams, 
+          origin: `${authenticatedUserCoordinates[1]},${authenticatedUserCoordinates[0]}`
+        }: {
+          ...queryParams, 
+          origin: `${GOOGLE_PACES_CENTER_COORDINATES['latitude']},${GOOGLE_PACES_CENTER_COORDINATES['longitude']}`
+        };
+        const params =  new URLSearchParams(queryParams);
         const response = await fetch(`${GOOGLE_PACES_API_BASE_URL}/autocomplete/json?${params}`);
         const { predictions } = await response.json();
         //const {place_id, structured_formatting: {main_text, secondary_text} } = predictions;
