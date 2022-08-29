@@ -5,8 +5,13 @@ import {IMAGES_URL, CATEGORY_BGCOLORS, colors} from "../../utils";
 import {AntDesign} from '@expo/vector-icons';
 const CategoryForm = ( {data, selectedCategory, index}) => {
     return(
-        <Card style={[styles.wrapper, { backgroundColor: CATEGORY_BGCOLORS[index]}]}>
-            {selectedCategory && selectedCategory.id === data.id ? <AntDesign style={styles.icon} name="checkcircle" size={20} color={colors.success}/> : null}
+        <Card style={
+            [ styles.wrapper, 
+              { backgroundColor: CATEGORY_BGCOLORS[index]},
+              selectedCategory && selectedCategory.id === data.id ? styles.selectedCard : null
+            ]
+          }>
+            {selectedCategory && selectedCategory.id === data.id ? <AntDesign style={styles.icon} name="checkcircle" size={20} color={colors.warning}/> : null}
             <Text style={styles.title}>{data.name}</Text>
             <Image source={{uri: `${IMAGES_URL}/${data.icon}` }} style={{width:80, height:80}}/>
         </Card>
@@ -14,6 +19,10 @@ const CategoryForm = ( {data, selectedCategory, index}) => {
 }
 export  default  CategoryForm;
 const styles = StyleSheet.create({
+    selectedCard: {
+      borderWidth: 3,
+      borderColor: colors.warning
+    },
     icon: {
       position: 'absolute',
       right: -40,

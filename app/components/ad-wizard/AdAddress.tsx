@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
-import {ADDRESS_ENDPOINT, ADS_ENDPOINT, BACKOFFICE_URL, colors, globalStyles} from '../../utils';
+import {ADDRESS_ENDPOINT, ADS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles, GOOGLE_PACES_API_BASE_URL, GOOGLE_PACES_API_KEY, GOOGLE_PACES_CENTER_COORDINATES} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
 import {SecurityContext} from '../../context/SecurityContextProvider';
 import Message from '../messages/Message';
 
 function AdAddress() {
-	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
 	const message = "Un instant nous vérifions votre annonce.";
 	const {protectedAxios} = useContext(SecurityContext);
 	const {state, updateAd, previousStep} = useContext(ApplicationContext);
@@ -18,24 +17,58 @@ function AdAddress() {
 	const {location: {coordinates: authenticatedUserCoordinates}} = authenticatedUser;
 	const [searchResults, setSearchResults] = useState([]);
 	const [query, setQuery] = useState("");
-	const [errors, setErrors] = useState({});
 	const [address, setAddress] = useState();
 	const [isActivating, setIsActivating] = useState(false);
 
 	useEffect(() => {
 		setQuery(ad?.address?.street || '');
 	}, [])
-	const setSelectedAddress = (selectedAddress: any) => {
-		delete selectedAddress["id"];
-		setAddress(selectedAddress);
-		setQuery(selectedAddress?.street);
-		setSearchResults([]);
+
+	const setSelectedAddress = async (selectedLocation: any) => {
+    const {place_id, formatted_address, geometry: {location}} = selectedLocation;
+    if (place_id.length) {
+      try {
+        setAddress({
+          street: formatted_address,
+          location: {
+            type: 'Point',
+            coordinates: [
+                location.lng,
+                location.lat
+            ]
+        }})
+        setQuery(cleanString(formatted_address));
+        setSearchResults([]);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
 	}
-	const cleanString = (entry: string) => {
-		
-		return entry ? entry.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '') : '';
-		
-	}
+
+  const onInputChange =  async (queryParam: string) => {
+    setQuery(queryParam);
+    setAddress(undefined);
+		if (queryParam.length) {
+      try {
+        const queryParams = {
+          query: queryParam, 
+          key: GOOGLE_PACES_API_KEY, 
+          radius: '50',
+          language: 'fr',
+          fields: 'formatted_address',
+          origin: `${authenticatedUserCoordinates[1]},${authenticatedUserCoordinates[0]}`
+        };
+        const params =  new URLSearchParams(queryParams);
+        const response = await fetch(`${GOOGLE_PACES_API_BASE_URL}/textsearch/json?${params}`);
+        const { results } = await response.json();
+				setSearchResults(results);
+      } catch (error) {
+        
+      }
+    }
+  }
+
 	const onChange = async (queryParam: string) => {
 		setQuery(queryParam);
 		if (queryParam.length) {
@@ -56,20 +89,6 @@ function AdAddress() {
 			}
 		}
 	}
-	const oldonSubmit = () => {
-		if (typeof address === 'undefined') {
-			setErrors({...errors, date: true});
-			return;
-		}
-
-		if (ad?.address?.street) {
-			updateAd({
-				data: {
-					address: ad?.address?.street
-				}
-			});
-		}
-	};
 
 	const onSubmit = async () => {
 		try {
@@ -114,36 +133,42 @@ function AdAddress() {
 								style={[globalStyles.creationBodyFieldGroup]}>
 								<TextInput
 									style={[globalStyles.fieldFont, globalStyles.creationBodyField]}
-									onChangeText={onChange}
+									onChangeText={onInputChange}
 									value={query || ''}
 									placeholder="Exemple: 10 rue dalby, 56000 Vannes"
 									
 								/>
 							</View>
 							{
-								searchResults.length ? (
-									<FlatList
-										keyboardShouldPersistTaps="always"
-										data={searchResults}
-										renderItem={({item}) =>
-											<TouchableOpacity
-												key={item.id}
-												style={styles.resultItem}
-												onPress={() => setSelectedAddress(item)}>
+                searchResults.length ? (
+                  <FlatList
+                    keyboardShouldPersistTaps="always"
+                    data={searchResults ? searchResults.sort(function (a, b) {
+                      if (cleanString(a.formatted_address).toLowerCase().length < cleanString(b.formatted_address).toLowerCase().length) return -1;
+                      if (cleanString(a.formatted_address).toLowerCase().length > cleanString(b.formatted_address).toLowerCase().length) return 1;
+                      return 0;
+                    }) : []}
+                    renderItem={({item}) =>
+                      <TouchableOpacity
+                        key={item.place_id}
+                        style={styles.resultItem}
+                        onPress={() => setSelectedAddress(item)}>
 
-												<Text
-													style={styles.resultItemFirstText}>{cleanString(item.street.split(/,(.+)/)[0])}</Text>
+                        <Text
+                          style={styles.resultItemFirstText}>{cleanString(item.formatted_address.substring(0, item.formatted_address.indexOf(',')))}</Text>
 
-												<Text
-													style={styles.resultItemSecondText}>{cleanString(item.street.split(/,(.+)/)[1])}</Text>
+                        <Text
+                          style={styles.resultItemSecondText}>{cleanString(item.formatted_address.substring(item.formatted_address.indexOf(',') + 1))}</Text>
 
-											</TouchableOpacity>
-										}
-										keyExtractor={(item) => item.id}
-										style={styles.searchResultsContainer}
-									/>
-								) : null
-							}
+                      </TouchableOpacity>
+                    }
+                    keyExtractor={({place_id}) => {
+                      return place_id
+                    }}
+                    style={styles.searchResultsContainer}
+                  />
+                ) : null
+              }
 						</View>
 						<BottomBar
 							nextLabel="Enregistrer"
