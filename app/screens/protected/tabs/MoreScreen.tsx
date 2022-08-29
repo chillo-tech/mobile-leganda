@@ -78,19 +78,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center',
-    color: colors.warning
+		alignItems: 'center'
   },
   logoutText: {
     fontWeight: '600',
     fontSize: 18,
 		borderBottomWidth: 1,
-    color: colors.warning,
-		borderBottomColor: colors.warning,
+		borderBottomColor: colors.black,
   },
 	container: {
     flex: 1,
-    color: colors.warning,
 		justifyContent: "space-around",
 		backgroundColor: colors.white,
     paddingHorizontal: 15

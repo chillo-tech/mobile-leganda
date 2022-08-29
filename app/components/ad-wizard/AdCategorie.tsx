@@ -11,8 +11,8 @@ import CategoryForm from "../form/CategoryForm";
 
 function AdCategorie({navigation}) {
 
-    const {state: {creationWizard: {stepIndex}}, updateAd, previousStep} = useContext(ApplicationContext);
-    const [category, setCategory] = useState();
+    const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
+    const [category, setCategory] = useState(ad.category);
     const [error, setError] = useState('');
     const {state, updateCats} = useContext(ApplicationContext);
     const {protectedAxios} = useContext(SecurityContext);

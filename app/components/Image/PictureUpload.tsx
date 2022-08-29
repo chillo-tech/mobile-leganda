@@ -25,16 +25,25 @@ const PictureUpload = ({pictures, handleSelectedImage}) => {
 	}
 
 	const handleSelectedItem = async (item) => {
-		ref.current.close();
-		const result = item === "CAMERA" ? await ImagePicker.launchCameraAsync(IMAGES_CONFIG) : await ImagePicker.launchImageLibraryAsync(IMAGES_CONFIG);
-		if (!result.cancelled) {
-			const selectedImageData = {
-				...result,
-				id: Date.now(),
-				name: Date.now()
-			}
-			handleSelectedImage(selectedImageData);
-		}
+    try {
+      ref.current.close();
+      const result = item === "CAMERA" ? await ImagePicker.launchCameraAsync(IMAGES_CONFIG) : await ImagePicker.launchImageLibraryAsync(IMAGES_CONFIG);
+      console.log({result});
+      
+      if (!result.cancelled) {
+        const selectedImageData = {
+          ...result,
+          id: Date.now(),
+          name: Date.now()
+        }
+        handleSelectedImage(selectedImageData);
+      }
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+	
 	}
 
 	return (
