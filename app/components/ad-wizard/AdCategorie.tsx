@@ -30,6 +30,7 @@ function AdCategorie({navigation}) {
           const {data: results = []} = await protectedAxios.get(CATEGORY_ENDPOINT);
           updateCats(results);
         } catch (e) {
+          console.error(e)
         }
     };
     const onCategorySelected = (category) => {

@@ -1,5 +1,15 @@
 import React, {useContext, useState} from 'react';
-import {Alert, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+	Alert,
+	KeyboardAvoidingView,
+	ImageBackground,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+	Platform
+} from 'react-native';
 import {colors, globalStyles, IMAGES_URL, isValidEmail} from '../../utils';
 import {Controller, useForm} from "react-hook-form";
 import Message from '../../components/messages/Message';
@@ -61,6 +71,10 @@ function SignUpScreen({navigation}) {
 		});
 	}, [navigation]);
 	return (
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={globalStyles.container}
+		>
 		<View style={[globalStyles.container]}>
 			<ImageBackground
 				source={image}
@@ -155,6 +169,7 @@ function SignUpScreen({navigation}) {
 				</View>
 			</ImageBackground>
 		</View>
+		</KeyboardAvoidingView>
 	)
 }
 

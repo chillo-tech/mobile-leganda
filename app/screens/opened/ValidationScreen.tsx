@@ -1,5 +1,15 @@
 import React, {useContext, useState} from 'react';
-import {Alert, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+	Alert,
+	KeyboardAvoidingView,
+	ImageBackground,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+	Platform
+} from 'react-native';
 import {colors, globalStyles, IMAGES_URL} from '../../utils';
 import {Controller, useForm} from "react-hook-form";
 import Message from '../../components/messages/Message';
@@ -57,6 +67,10 @@ function ValidationScreen({navigation}) {
 		});
 	}, [navigation]);
 	return (
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={styles.container}
+		>
 		<View style={[globalStyles.container]}>
 			<ImageBackground
 				source={image}
@@ -126,6 +140,7 @@ function ValidationScreen({navigation}) {
 				</View>
 			</ImageBackground>
 		</View>
+		</KeyboardAvoidingView>
 	)
 }
 

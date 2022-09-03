@@ -18,8 +18,7 @@ import BackButton from '../../components/buttons/BackButton';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {ADDRESS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles, GOOGLE_PACES_API_BASE_URL, GOOGLE_PACES_API_KEY, GOOGLE_PACES_CENTER_COORDINATES} from '../../utils';
 import {SecurityContext} from '../../context/SecurityContextProvider';
-import MapView, { Marker } from 'react-native-maps';
-
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 function LocationSearchScreen({navigation, route}) {
 	const url = `${BACKOFFICE_URL}/${ADDRESS_ENDPOINT}`;
@@ -233,6 +232,7 @@ function LocationSearchScreen({navigation, route}) {
           style={StyleSheet.absoluteFillObject} 
           region={region}
           maxZoomLevel={zoom}
+          provider={PROVIDER_GOOGLE}
         >
            {locations.length ? locations.map((marker, index) => (
               <Marker

@@ -6,6 +6,7 @@ import PictureDisplay from '../Image/PictureDisplay';
 import PictureUpload from '../Image/PictureUpload';
 import BottomBar from '../tabs/BottomBar';
 
+
 function AdPictures() {
 	const {state: {creationWizard: {stepIndex, ad}}, updateAd, previousStep} = useContext(ApplicationContext);
 	const [pictures, setPictures] = useState(ad.pictures);
@@ -18,7 +19,7 @@ function AdPictures() {
 		}
 	}
 	const onImageSelected = (picture) => {
-		
+
 		setPictures(current => ([...current, picture]));
 	}
 	const deleteAdImage = (id: number) => {

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Alert, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Platform,KeyboardAvoidingView,Alert, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {colors, globalStyles, IMAGES_URL} from '../../utils';
 import BackButton from '../../components/buttons/BackButton';
 import {Controller, useForm} from 'react-hook-form';
@@ -63,6 +63,10 @@ function UserPhoneScreen({navigation}) {
 		});
 	}, [navigation]);
 	return (
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={globalStyles.container}
+		>
 		<View style={[globalStyles.container]}>
 			<ImageBackground
 				source={image}
@@ -131,10 +135,12 @@ function UserPhoneScreen({navigation}) {
 				</View>
 			</ImageBackground>
 		</View>
+		</KeyboardAvoidingView>
 	);
 }
 
 const styles = StyleSheet.create({
+
 	bottom: {
 		marginTop: 15
 	},
@@ -182,5 +188,6 @@ const styles = StyleSheet.create({
 	},
 
 })
+
 
 export default UserPhoneScreen;

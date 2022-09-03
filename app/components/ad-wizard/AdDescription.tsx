@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {Text, TextInput, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, Text, TextInput, View} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
@@ -10,6 +10,10 @@ function AdDescription() {
 	const {control, handleSubmit, formState: {errors, isValid}} = useForm({mode: 'onChange',});
 	const onSubmit = infos => updateAd({infos});
 	return (
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : ""}
+			style={globalStyles.creationContainer}
+		>
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
 				<Text style={globalStyles.creationTitle}>Quelques mots</Text>
@@ -54,6 +58,8 @@ function AdDescription() {
 				/>
 			</View>
 		</View>
+		</KeyboardAvoidingView>
+
 	);
 }
 

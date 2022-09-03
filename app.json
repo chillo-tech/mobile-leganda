@@ -2,6 +2,10 @@
   "expo": {
     "name": "Le GANDA",
     "slug": "leganda",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -26,9 +30,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cs.leganda",
+      "config": {
+        "googleMapsApiKey": "AIzaSyCaLoZk5uf3Prv3xIiuQgI2GO8AyaWoZGE"
+      }
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCaLoZk5uf3Prv3xIiuQgI2GO8AyaWoZGE"
+        }
+      },
       "package": "com.cs.leganda",
       "versionCode": 35,
       "adaptiveIcon": {
@@ -37,6 +50,8 @@
       },
       "permissions": [
         "CAMERA",
+        "CAMERA_ROLE",
+        "WRITE_EXTERNAL_STORAGE",
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
         "READ_CONTACTS"

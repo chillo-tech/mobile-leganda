@@ -6,6 +6,7 @@ import ApplicationContextProvider from './app/context/ApplicationContextProvider
 import RootStack from './app/stacks/RootStack';
 import SecurityContextProvider from './app/context/SecurityContextProvider';
 
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 export default function App() {
 	useEffect(() => {
 		(async () => {
@@ -21,12 +22,14 @@ export default function App() {
 		})();
 	}, []);
 	return (
-		<NavigationContainer>
-			<ApplicationContextProvider>
-				<SecurityContextProvider>
-					<RootStack/>
-				</SecurityContextProvider>
-			</ApplicationContextProvider>
-		</NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <ApplicationContextProvider>
+          <SecurityContextProvider>
+            <RootStack/>
+          </SecurityContextProvider>
+        </ApplicationContextProvider>
+      </NavigationContainer>
+    </SafeAreaProvider>
 	);
 }

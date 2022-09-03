@@ -1,5 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+	Alert,
+	FlatList,
+	KeyboardAvoidingView,
+	Platform,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
+} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {ADDRESS_ENDPOINT, ADS_ENDPOINT, BACKOFFICE_URL, cleanString, colors, globalStyles, GOOGLE_PACES_API_BASE_URL, GOOGLE_PACES_API_KEY, GOOGLE_PACES_CENTER_COORDINATES} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
@@ -52,8 +62,8 @@ function AdAddress() {
 		if (queryParam.length) {
       try {
         const queryParams = {
-          query: queryParam, 
-          key: GOOGLE_PACES_API_KEY, 
+          query: queryParam,
+          key: GOOGLE_PACES_API_KEY,
           radius: '50',
           language: 'fr',
           fields: 'formatted_address',
@@ -64,7 +74,7 @@ function AdAddress() {
         const { results } = await response.json();
 				setSearchResults(results);
       } catch (error) {
-        
+
       }
     }
   }
@@ -82,10 +92,10 @@ function AdAddress() {
 						}
 					}
 				);
-				
+
 				setSearchResults(data);
 			} catch (error) {
-				
+
 			}
 		}
 	}
@@ -116,8 +126,11 @@ function AdAddress() {
 		}
 	}
 
-	return ( 
-		
+	return (
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={globalStyles.creationContainer}
+		>
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
 				<Text style={globalStyles.creationTitle}>Quelle est</Text>
@@ -125,7 +138,7 @@ function AdAddress() {
 			</View>
 			<View style={globalStyles.creationBody}>
 				{isActivating ? (<Message firstText={message}/>) : (
-					
+
 					<>
 						<View
 							style={[globalStyles.creationBodyContent]}>
@@ -136,7 +149,7 @@ function AdAddress() {
 									onChangeText={onInputChange}
 									value={query || ''}
 									placeholder="Exemple: 10 rue dalby, 56000 Vannes"
-									
+
 								/>
 							</View>
 							{
@@ -181,6 +194,7 @@ function AdAddress() {
 				)}
 			</View>
 		</View>
+		</KeyboardAvoidingView>
 	)
 }
 

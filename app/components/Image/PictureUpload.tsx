@@ -12,7 +12,7 @@ const PictureUpload = ({pictures, handleSelectedImage}) => {
 	useEffect(() => {
 		(async () => {
 			if (Platform.OS !== 'web') {
-				const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+				const {status} = await ImagePicker.requestCameraPermissionsAsync();
 				if (status !== 'granted') {
 					alert('Sorry, we need camera roll permissions to make this work!');
 				}
@@ -27,9 +27,7 @@ const PictureUpload = ({pictures, handleSelectedImage}) => {
 	const handleSelectedItem = async (item) => {
     try {
       ref.current.close();
-      const result = item === "CAMERA" ? await ImagePicker.launchCameraAsync(IMAGES_CONFIG) : await ImagePicker.launchImageLibraryAsync(IMAGES_CONFIG);
-      console.log({result});
-      
+      const result = item === "CAMERA" ? await ImagePicker.launchCameraAsync(IMAGES_CONFIG) : await ImagePicker.launchImageLibraryAsync(IMAGES_CONFIG);      
       if (!result.cancelled) {
         const selectedImageData = {
           ...result,

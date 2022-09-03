@@ -1,6 +1,14 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, {useContext, useEffect, useState} from 'react';
-import {Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import {
+	KeyboardAvoidingView,
+	Platform,
+	StyleSheet,
+	Text,
+	TouchableHighlight,
+	TouchableOpacity,
+	View
+} from 'react-native';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {colors, getFormattedDate, getFormattedTime, globalStyles} from '../../utils';
 import BottomBar from '../tabs/BottomBar';
@@ -75,6 +83,10 @@ function AdDates() {
 	}, []);
 
 	return (
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={globalStyles.creationContainer}
+		>
 		<View style={globalStyles.creationContainer}>
 			<View style={globalStyles.creationHeader}>
 				<Text style={globalStyles.creationTitle}>Quelles sont</Text>
@@ -180,6 +192,7 @@ function AdDates() {
 				/>
 			</View>
 		</View>
+		</KeyboardAvoidingView>
 	);
 }
 

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet, Platform, StatusBar } from "react-native";
 
 export const BGCOLORS = ["#6CD5C6", "#F1A68A", "#9BBEF4", "##EC9ED6", "#BCA1F2", "#BCDDE4", "#CFEACB", "#F4E169"];
 export const CATEGORY_BGCOLORS = [ "#BCA1F2", "#BCDDE4", "#CFEACB", "#F4E169"];
@@ -38,6 +38,7 @@ export const globalStyles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignContent: 'center'
+
 	},
 	error: {
 		color: colors.error,

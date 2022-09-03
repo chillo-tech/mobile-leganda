@@ -119,7 +119,7 @@ const AdDetail = ({route, navigation}) => {
 		<SafeAreaView style={globalStyles.container}>
 			{
 				ad ? (
-					<SafeAreaView style={styles.container}>
+					<View style={styles.container}>
 						<ScrollView style={styles.informations}>
 							<View style={styles.gallery}>
 								<PictureDisplay picture={ad.pictures[0]}/>
@@ -204,7 +204,7 @@ const AdDetail = ({route, navigation}) => {
 								</TouchableHighlight>
 							</View>
 						</View>
-					</SafeAreaView>
+					</View>
 				) : null
 			}
 			<FlashMessage

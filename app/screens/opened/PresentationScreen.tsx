@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground,KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, globalStyles, IMAGES_URL} from '../../utils';
 import {SecurityContext} from "../../context/SecurityContextProvider";
 import {ApplicationContext} from "../../context/ApplicationContextProvider";

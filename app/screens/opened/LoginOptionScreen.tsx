@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, globalStyles, IMAGES_URL} from '../../utils';
 import {Feather} from '@expo/vector-icons';
 import BackButton from '../../components/buttons/BackButton';
@@ -19,6 +19,10 @@ function LoginOptionScreen({navigation}) {
 		});
 	}, [navigation]);
 	return (
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={globalStyles.container}
+		>
 		<View style={[globalStyles.container]}>
 			<ImageBackground
 				source={image}
@@ -44,6 +48,7 @@ function LoginOptionScreen({navigation}) {
 				</View>
 			</ImageBackground>
 		</View>
+		</KeyboardAvoidingView>
 	);
 }
 
