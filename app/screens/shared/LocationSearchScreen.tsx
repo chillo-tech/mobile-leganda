@@ -82,6 +82,7 @@ function LocationSearchScreen({navigation, route}: any) {
 	}
 
   const onInputChange =  async (queryParam: string) => {
+    
     setQuery(queryParam);
 		setSearchButtonVisible(false);
 		if (queryParam.length) {
@@ -229,7 +230,7 @@ function LocationSearchScreen({navigation, route}: any) {
 	}, [authenticatedUserCoordinates]);
 
 	return (
-    <BaseScreen>
+    <BaseScreen isSafe={false}>
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}

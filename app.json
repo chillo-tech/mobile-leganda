@@ -33,13 +33,13 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.ams.leganda",
       "config": {
-        "googleMapsApiKey": "AIzaSyCaLoZk5uf3Prv3xIiuQgI2GO8AyaWoZGE"
+        "googleMapsApiKey": "AIzaSyDO8jbdTf30mE9Bg4bknk19JV2k90O4C-w"
       }
     },
     "android": {
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyCaLoZk5uf3Prv3xIiuQgI2GO8AyaWoZGE"
+          "apiKey": "AIzaSyDO8jbdTf30mE9Bg4bknk19JV2k90O4C-w"
         }
       },
       "package": "com.ams.leganda",
