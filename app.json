@@ -31,7 +31,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cs.leganda",
+      "bundleIdentifier": "com.ams.leganda",
       "config": {
         "googleMapsApiKey": "AIzaSyCaLoZk5uf3Prv3xIiuQgI2GO8AyaWoZGE"
       }
@@ -42,8 +42,8 @@
           "apiKey": "AIzaSyCaLoZk5uf3Prv3xIiuQgI2GO8AyaWoZGE"
         }
       },
-      "package": "com.cs.leganda",
-      "versionCode": 35,
+      "package": "com.ams.leganda",
+      "versionCode": 43,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#30698C"
@@ -54,11 +54,17 @@
         "WRITE_EXTERNAL_STORAGE",
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "READ_CONTACTS"
+        "READ_CONTACTS",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a7451418-911b-4985-ace0-b6d38c311abe"
+      }
     }
   }
 }

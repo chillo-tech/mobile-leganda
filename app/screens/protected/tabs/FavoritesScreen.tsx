@@ -7,6 +7,8 @@ import {colors, globalStyles} from '../../../utils';
 import AdItem from '../../../components/ad-item/adItem';
 import {SecurityContext} from '../../../context/SecurityContextProvider';
 import SearchEmpty from '../ads/SearchEmpty';
+import BaseScreen from '../../shared/BaseScreen';
+import FavoritesEmpty from '../favorites/FavoritesEmpty';
 
 function SearchScreen({route, navigation}) {
 	const [favorites, setFavorites] = useState([]);
@@ -38,7 +40,7 @@ function SearchScreen({route, navigation}) {
 			}, [])
 	);
 	return (
-		<SafeAreaView style={{flex: 1}}>
+		<BaseScreen isSafe={true}>
 			{isLoading ?
 				(
 					<View style={[globalStyles.container, {justifyContent: 'center'}]}>
@@ -48,7 +50,7 @@ function SearchScreen({route, navigation}) {
 				: (
 					<View style={{flex: 1}}>
 						<Text style={styles.title}>Vos favoris</Text>
-						<SafeAreaView style={[globalStyles.container]}>
+						<SafeAreaView style={[globalStyles.container, {justifyContent: 'center'}]}>
 							<FlatList
 								contentContainerStyle={styles.searchResultsContainer}
 								scrollEventThrottle={150}
@@ -58,12 +60,12 @@ function SearchScreen({route, navigation}) {
 								renderItem={({item}) => (
 									<AdItem ad={item} displayAd={displayAd}/>
 								)}
-								ListEmptyComponent={<SearchEmpty/>}
+								ListEmptyComponent={<FavoritesEmpty navigation={navigation} />}
 							/>
 						</SafeAreaView>
 					</View>
 				)}
-		</SafeAreaView>);
+		</BaseScreen>);
 }
 
 const styles = StyleSheet.create({
@@ -75,13 +77,12 @@ const styles = StyleSheet.create({
 		paddingVertical: 10
 	},
 	title: {
-		backgroundColor: colors.warningLight,
 		color: colors.primary,
 		fontWeight: 'bold',
-		fontSize: 20,
-		paddingTop: 50,
-		paddingHorizontal: 10,
-		paddingBottom: 0
+		fontSize: 30,
+		paddingTop: 2,
+		paddingBottom: 10,
+		paddingHorizontal: 10
 	}
 });
 export default SearchScreen;

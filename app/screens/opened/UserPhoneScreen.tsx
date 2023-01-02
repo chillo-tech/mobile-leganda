@@ -7,6 +7,7 @@ import CountryPicker, {Country, CountryCode} from 'react-native-country-picker-m
 import Message from '../../components/messages/Message';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {SecurityContext} from '../../context/SecurityContextProvider';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function UserPhoneScreen({navigation}) {
 	const image = {uri: `${IMAGES_URL}/bg-home.jpeg`};
@@ -63,11 +64,6 @@ function UserPhoneScreen({navigation}) {
 		});
 	}, [navigation]);
 	return (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-			style={globalStyles.container}
-		>
-		<View style={[globalStyles.container]}>
 			<ImageBackground
 				source={image}
 				resizeMode="cover"
@@ -134,8 +130,6 @@ function UserPhoneScreen({navigation}) {
 					</View>
 				</View>
 			</ImageBackground>
-		</View>
-		</KeyboardAvoidingView>
 	);
 }
 

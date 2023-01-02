@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {colors} from '../../../utils';
 
-function FavoritesEmpty({navigation}) {
+function FavoritesEmpty({navigation}: any) {
 
 	const startSearch = () => {
 		navigation.navigate({
@@ -12,7 +12,7 @@ function FavoritesEmpty({navigation}) {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container]}>
 			<Text style={styles.title}>Pas encore de favoris</Text>
 			<View style={styles.descriptionWrapper}>
 				<Text style={styles.description}>
@@ -52,8 +52,16 @@ const styles = StyleSheet.create({
 		paddingVertical: 10
 	},
 	container: {
-		backgroundColor: colors.warningLight,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
 		flex: 1,
+    paddingVertical: 30,
 		justifyContent: 'center'
 	},
 	description: {

@@ -103,7 +103,7 @@ function SearchScreen({route, navigation}) {
 					</View>
 				)
 				: (
-					<BaseScreen>
+					<BaseScreen isSafe={false}>
 						<SearchForm navigation={navigation} route={route}/>
 						<SafeAreaView style={[globalStyles.container]}>
 							<FlatList

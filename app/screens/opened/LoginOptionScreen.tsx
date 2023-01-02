@@ -1,10 +1,11 @@
 import React from 'react';
-import {ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, globalStyles, IMAGES_URL} from '../../utils';
 import {Feather} from '@expo/vector-icons';
 import BackButton from '../../components/buttons/BackButton';
+import BaseScreen from '../shared/BaseScreen';
 
-function LoginOptionScreen({navigation}) {
+function LoginOptionScreen({navigation}:any) {
 	const image = {uri: `${IMAGES_URL}/bg-home.jpeg`};
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
@@ -19,36 +20,38 @@ function LoginOptionScreen({navigation}) {
 		});
 	}, [navigation]);
 	return (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-			style={globalStyles.container}
-		>
-		<View style={[globalStyles.container]}>
-			<ImageBackground
-				source={image}
-				resizeMode="cover"
-				style={styles.image}
-			>
-				<View style={[globalStyles.wrapper, {
-					justifyContent: 'center'
-				}]}>
-					<>
-						<Text style={styles.logo}>Connectez vous avec</Text>
-						<View style={styles.bottom}>
-							<TouchableOpacity
-								style={[styles.button]}
-								onPress={() => navigation.navigate('phonescreen')}
-								activeOpacity={1}
-							>
-								<Feather name="phone" size={24} color={colors.white} style={styles.icon}/>
-								<Text style={[styles.buttonText]}>Votre nunéro</Text>
-							</TouchableOpacity>
-						</View>
-					</>
-				</View>
-			</ImageBackground>
-		</View>
-		</KeyboardAvoidingView>
+    <BaseScreen isSafe={true}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={globalStyles.container}
+      >
+      <View style={[globalStyles.container]}>
+        <ImageBackground
+          source={image}
+          resizeMode="cover"
+          style={styles.image}
+        >
+          <View style={[globalStyles.wrapper, {
+            justifyContent: 'center'
+          }]}>
+            <>
+              <Text style={styles.logo}>Connectez vous avec</Text>
+              <View style={styles.bottom}>
+                <TouchableOpacity
+                  style={[styles.button]}
+                  onPress={() => navigation.navigate('phonescreen')}
+                  activeOpacity={1}
+                >
+                  <Feather name="phone" size={24} color={colors.white} style={styles.icon}/>
+                  <Text style={[styles.buttonText]}>Votre nunéro</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          </View>
+        </ImageBackground>
+      </View>
+      </KeyboardAvoidingView>
+    </BaseScreen>
 	);
 }
 

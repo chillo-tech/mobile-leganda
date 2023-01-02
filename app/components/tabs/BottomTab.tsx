@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../utils';
+import {colors, globalStyles} from '../../utils';
 import React from 'react';
 import {ICON, LABELS} from '../../utils/Labels';
 import {Feather} from '@expo/vector-icons';
@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 
 function BottomTab({state, descriptors, navigation}) {
 	return (
-		<View style={{flexDirection: 'row'}}>
+		<View style={{flexDirection: 'row', backgroundColor: colors.white}}>
 			{state.routes.map((route, index) => {
 				const {options} = descriptors[route.key];
 				const isFocused = state.index === index;

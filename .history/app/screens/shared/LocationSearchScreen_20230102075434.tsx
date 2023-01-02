@@ -229,7 +229,7 @@ function LocationSearchScreen({navigation, route}: any) {
 	}, [authenticatedUserCoordinates]);
 
 	return (
-    <BaseScreen>
+    <BaseScreen isSafe={false}>
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}

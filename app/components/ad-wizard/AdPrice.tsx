@@ -30,12 +30,16 @@ function AdPrice() {
 							defaultValue={ad["price"]}
 							rules={{
 								required: true,
+								pattern: /[1-9]{1,8}(?:[.]\d{1,2})?/g
 							}}
 							render={({field: {onChange, onBlur, value}}) => (
 								<TextInput
 									style={[globalStyles.fieldFont, globalStyles.creationBodyField]}
 									onBlur={onBlur}
-									onChangeText={onChange}
+									onChangeText={(entry) => {
+										entry = entry.replace(/[^\d.-]/g, '');
+										onChange(entry);
+									}}
 									value={value}
 									keyboardType="numeric"
 									placeholder="Exemple 30"
@@ -44,7 +48,7 @@ function AdPrice() {
 						/>
 						<Text style={[globalStyles.fieldIcon]}>€</Text>
 					</View>
-					{errors.price && <Text style={globalStyles.error}>Cette donnée est requise</Text>}
+					{errors.price && <Text style={globalStyles.error}>Cette donnée est invalide</Text>}
 				</View>
 				<BottomBar
 					stepIndex={stepIndex}

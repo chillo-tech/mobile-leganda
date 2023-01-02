@@ -17,6 +17,7 @@ import BackButton from '../../components/buttons/BackButton';
 import jwt_decode from 'jwt-decode';
 import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import {SecurityContext} from '../../context/SecurityContextProvider';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SignUpScreen({navigation}) {
 	const image = {uri: `${IMAGES_URL}/bg-home.jpeg`};
@@ -75,7 +76,7 @@ function SignUpScreen({navigation}) {
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 			style={globalStyles.container}
 		>
-		<View style={[globalStyles.container]}>
+		<SafeAreaView style={[globalStyles.container]} edges={['bottom', 'left', 'right']}>
 			<ImageBackground
 				source={image}
 				resizeMode="cover"
@@ -168,7 +169,7 @@ function SignUpScreen({navigation}) {
 					</View>
 				</View>
 			</ImageBackground>
-		</View>
+		</SafeAreaView>
 		</KeyboardAvoidingView>
 	)
 }

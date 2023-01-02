@@ -33,12 +33,9 @@ export const globalStyles = StyleSheet.create({
 		paddingVertical: 10
 	},
 	container: {
-		marginTop: 0,
-		backgroundColor: colors.warningLight,
 		flex: 1,
-		justifyContent: 'center',
-		alignContent: 'center'
-
+    padding: 0,
+    margin: 0
 	},
 	error: {
 		color: colors.error,

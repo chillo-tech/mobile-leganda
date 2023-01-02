@@ -1,13 +1,14 @@
 import React, {useContext, useState} from 'react';
 import FlashMessage, {showMessage} from "react-native-flash-message";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
 	Alert,
 	Linking,
 	Platform,
-	SafeAreaView,
 	ScrollView,
 	Share,
+	StatusBar,
 	StyleSheet,
 	Text,
 	TouchableHighlight,
@@ -23,8 +24,9 @@ import BackButton from '../../../components/buttons/BackButton';
 import {SecurityContext} from '../../../context/SecurityContextProvider';
 import IconButton from '../../../components/buttons/IconButton';
 import FavoriteButton from '../../../components/buttons/FavoriteButton';
+import BaseScreen from '../../shared/BaseScreen';
 
-const AdDetail = ({route, navigation}) => {
+const AdDetail = ({route, navigation}:any) => {
 	const selectedId = route.params?.selectedId;
 	const {protectedAxios} = useContext(SecurityContext);
 	const {state: {ads}, selectedAd} = useContext(ApplicationContext);
@@ -116,95 +118,97 @@ const AdDetail = ({route, navigation}) => {
 		});
 	}, [navigation]);
 	return (
-		<SafeAreaView style={globalStyles.container}>
+		<BaseScreen isSafe={true}>
 			{
 				ad ? (
-					<View style={styles.container}>
-						<ScrollView style={styles.informations}>
-							<View style={styles.gallery}>
-								<PictureDisplay picture={ad.pictures[0]}/>
-							</View>
-							<View style={styles.row}>
-								<Text style={styles.profile}>
-									{ad?.profile?.firstName.trim()} {ad?.profile?.lastName[0]}.
-								</Text>
-								<View style={styles.iconLabel}>
-									<View style={styles.label}>
-										<AntDesign name="eye" size={20} color={colors.darkgray}/>
-										<Text>&nbsp;{ad.views ? ad.views : 0}</Text>
-									</View>
-								</View>
-							</View>
-							<View style={styles.row}>
-								<Text style={styles.name}>{ad.name}</Text>
-								<Text style={styles.price}>{ad.price} €</Text>
-							</View>
-							{/*
-								ad?.validity?.date ?
-									(
-										<View style={styles.row}>
-											<Text
-												style={styles.profile}>
-												<FontAwesome5 name="clock" color={colors.darkgray}
-															  size={14}/>
-												&nbsp;
-												{getDisplayedDate(ad?.validity?.date)}
-											</Text>
-											<Text
-												style={styles.profile}>
-												{getFormattedTime(new Date(ad?.validity?.start))}
-											</Text>
-										</View>
-									) : null
-							*/}
-							<View style={styles.description}>
-								<Text style={styles.descriptionBody}>{ad?.description}</Text>
-							</View>
-						</ScrollView>
-						<TouchableHighlight underlayColor={'transparent'} onPress={goTo}>
-							<View style={styles.address}>
-								<View style={styles.addressmarker}>
-									<FontAwesome name="map-marker" size={18} color={colors.primary}
-												 style={styles.addressicon}/>
-									<Text style={styles.addresslabel}>
-										{ad?.address?.street.length > 50
-											? `${ad?.address?.street.substring(0, 50)}...`
-											: ad?.address?.street
-										}
-									</Text>
-								</View>
-								<AntDesign name="right" size={16} color={colors.primary}/>
-							</View>
-						</TouchableHighlight>
+          <>
+            <View style={styles.container}>
+              <ScrollView style={styles.informations}>
+                <View style={styles.gallery}>
+                  <PictureDisplay picture={ad.pictures[0]}/>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.profile}>
+                    {ad?.profile?.firstName.trim()} {ad?.profile?.lastName[0]}.
+                  </Text>
+                  <View style={styles.iconLabel}>
+                    <View style={styles.label}>
+                      <AntDesign name="eye" size={20} color={colors.darkgray}/>
+                      <Text>&nbsp;{ad.views ? ad.views : 0}</Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.name}>{ad.name}</Text>
+                  <Text style={styles.price}>{ad.price} €</Text>
+                </View>
+                {/*
+                  ad?.validity?.date ?
+                    (
+                      <View style={styles.row}>
+                        <Text
+                          style={styles.profile}>
+                          <FontAwesome5 name="clock" color={colors.darkgray}
+                                  size={14}/>
+                          &nbsp;
+                          {getDisplayedDate(ad?.validity?.date)}
+                        </Text>
+                        <Text
+                          style={styles.profile}>
+                          {getFormattedTime(new Date(ad?.validity?.start))}
+                        </Text>
+                      </View>
+                    ) : null
+                */}
+                <View style={styles.description}>
+                  <Text style={styles.descriptionBody}>{ad?.description}</Text>
+                </View>
+              </ScrollView>
+              <TouchableHighlight underlayColor={'transparent'} onPress={goTo}>
+                <View style={styles.address}>
+                  <View style={styles.addressmarker}>
+                    <FontAwesome name="map-marker" size={18} color={colors.primary}
+                          style={styles.addressicon}/>
+                    <Text style={styles.addresslabel}>
+                      {ad?.address?.street.length > 50
+                        ? `${ad?.address?.street.substring(0, 50)}...`
+                        : ad?.address?.street
+                      }
+                    </Text>
+                  </View>
+                  <AntDesign name="right" size={16} color={colors.primary}/>
+                </View>
+              </TouchableHighlight>
 
-						<View style={styles.contact}>
-							<View style={[styles.contactItem]}>
-								<TouchableHighlight underlayColor={'transparent'}
-													onPress={() => handleContactPressed({
-														name: 'phone',
-														phone: ad?.profile?.phone
-													})}>
-									<Feather name="phone" size={32} color={colors.warning}/>
-								</TouchableHighlight>
+              <View style={styles.contact}>
+                <View style={[styles.contactItem]}>
+                  <TouchableHighlight underlayColor={'transparent'}
+                            onPress={() => handleContactPressed({
+                              name: 'phone',
+                              phone: ad?.profile?.phone
+                            })}>
+                    <Feather name="phone" size={32} color={colors.warning}/>
+                  </TouchableHighlight>
 
-							</View>
-							<View style={[styles.contactItem]}>
-								<TouchableHighlight underlayColor={'transparent'}
-													onPress={() => handleContactPressed({
-														name: 'sms',
-														phone: ad?.profile?.phone
-													})}>
-									<FontAwesome5 name="sms" size={32} color={colors.primary}/>
-								</TouchableHighlight>
-							</View>
-							<View style={[styles.contactItem]}>
-								<TouchableHighlight underlayColor={'transparent'}
-													onPress={goTo}>
-									<FontAwesome name="map-marker" size={32} color={colors.success}/>
-								</TouchableHighlight>
-							</View>
-						</View>
-					</View>
+                </View>
+                <View style={[styles.contactItem]}>
+                  <TouchableHighlight underlayColor={'transparent'}
+                            onPress={() => handleContactPressed({
+                              name: 'sms',
+                              phone: ad?.profile?.phone
+                            })}>
+                    <FontAwesome5 name="sms" size={32} color={colors.primary}/>
+                  </TouchableHighlight>
+                </View>
+                <View style={[styles.contactItem]}>
+                  <TouchableHighlight underlayColor={'transparent'}
+                            onPress={goTo}>
+                    <FontAwesome name="map-marker" size={32} color={colors.success}/>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </View>
+          </>
 				) : null
 			}
 			<FlashMessage
@@ -213,7 +217,7 @@ const AdDetail = ({route, navigation}) => {
 				backgroundColor={colors.primary}
 				color={colors.white}
 			/>
-		</SafeAreaView>
+		</BaseScreen>
 	)
 }
 
@@ -259,7 +263,7 @@ const styles = StyleSheet.create({
 	},
 	gallery: {
 		backgroundColor: colors.primary,
-		height: 370,
+		height: 470,
 		marginBottom: 20
 	},
 	container: {

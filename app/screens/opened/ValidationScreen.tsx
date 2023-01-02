@@ -7,8 +7,7 @@ import {
 	Text,
 	TextInput,
 	TouchableOpacity,
-	View,
-	Platform
+	View
 } from 'react-native';
 import {colors, globalStyles, IMAGES_URL} from '../../utils';
 import {Controller, useForm} from "react-hook-form";
@@ -17,8 +16,9 @@ import {ApplicationContext} from '../../context/ApplicationContextProvider';
 import BackButton from '../../components/buttons/BackButton';
 import jwt_decode from "jwt-decode";
 import {SecurityContext} from '../../context/SecurityContextProvider';
+import BaseScreen from '../shared/BaseScreen';
 
-function ValidationScreen({navigation}) {
+function ValidationScreen({navigation}:any) {
 	const image = {uri: `${IMAGES_URL}/bg-home.jpeg`};
 	const message = "Un instant nous vérifions votre compte.";
 	const [isActivating, setIsActivating] = useState(false);
@@ -67,11 +67,7 @@ function ValidationScreen({navigation}) {
 		});
 	}, [navigation]);
 	return (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-			style={styles.container}
-		>
-		<View style={[globalStyles.container]}>
+      <BaseScreen isSafe={true}>
 			<ImageBackground
 				source={image}
 				resizeMode="cover"
@@ -139,8 +135,7 @@ function ValidationScreen({navigation}) {
 					</View>
 				</View>
 			</ImageBackground>
-		</View>
-		</KeyboardAvoidingView>
+    </BaseScreen>
 	)
 }
 

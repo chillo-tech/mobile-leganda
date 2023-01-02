@@ -152,8 +152,7 @@ const styles = StyleSheet.create({
 	},
 
 	cityContainer: {
-		marginVertical: 5,
-		paddingVertical: 5,
+    marginBottom: 5,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center'
@@ -176,13 +175,17 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		backgroundColor: colors.white,
-		paddingTop: 40,
+		paddingTop: 0,
 		paddingBottom: 5,
 		paddingHorizontal: 10,
 	},
 	title: {
+		color: colors.primary,
 		fontWeight: 'bold',
-		fontSize: 18
+		fontSize: 30,
+		paddingTop: 0,
+		paddingBottom: 0,
+		paddingHorizontal: 10
 	}
 })
 export default SearchForm;

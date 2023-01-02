@@ -1,15 +1,16 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {colors} from '../../../utils/Styles';
 import Message from '../../../components/messages/Message';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SearchEmpty() {
 	return (
-		<View style={styles.container}>
+		<SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
 			<Message
 				firstText="Désolé, aucune publication ne correspond à vos critères de recherche."
 			/>
-		</View>
+		</SafeAreaView>
 	);
 }
 

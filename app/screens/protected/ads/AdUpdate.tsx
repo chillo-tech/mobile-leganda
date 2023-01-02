@@ -12,6 +12,7 @@ import AdAddress from '../../../components/ad-wizard/AdAddress';
 import AdDates from '../../../components/ad-wizard/AdDates';
 import AdName from '../../../components/ad-wizard/AdName';
 import AdCategorie from "../../../components/ad-wizard/AdCategorie";
+import BaseScreen from '../../shared/BaseScreen';
 
 function AdUpdate({navigation}) {
 	React.useLayoutEffect(() => {
@@ -27,23 +28,25 @@ function AdUpdate({navigation}) {
 		});
 	}, [navigation]);
 	return (
-		<LinearGradient
-			start={{x: 0, y: 0}}
-			end={{x: 1, y: 1}}
-			colors={[colors.warning, colors.primary]}
-			style={styles.container}
-		>
-			<AdWizard>
-				<AdCategorie navigation={navigation}/>
-				<AdName/>
-				<AdDescription/>
-				<AdPictures/>
-				<AdPrice/>
-				<AdDates/>
-				<AdAddress/>
-				<AdRecap navigation={navigation}/>
-			</AdWizard>
-		</LinearGradient>
+    <BaseScreen isSafe={true}>
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+        colors={[colors.warning, colors.primary]}
+        style={styles.container}
+      >
+        <AdWizard>
+          <AdCategorie navigation={navigation}/>
+          <AdName/>
+          <AdDescription/>
+          <AdPictures/>
+          <AdPrice/>
+          <AdDates/>
+          <AdAddress/>
+          <AdRecap navigation={navigation}/>
+        </AdWizard>
+      </LinearGradient>
+    </BaseScreen>
 	);
 }
 

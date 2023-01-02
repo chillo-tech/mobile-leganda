@@ -12,7 +12,7 @@ function RootStack() {
 	React.useLayoutEffect(() => {
 	});
 	return (
-		<Stack.Navigator>
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			{accessToken && location ? (
 				<Stack.Screen name="Protected" component={ProtectedStack}
 							  options={{headerShown: false}}/>

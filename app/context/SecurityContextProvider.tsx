@@ -7,7 +7,7 @@ import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 export const SecurityContext = createContext(null);
 
-function SecurityContextProvider({children}) {
+function SecurityContextProvider({children}: any) {
 	const {state, signIn, signOut} = React.useContext(ApplicationContext);
 	const {authenticatedUser = {}} = state;
 	const {accessToken, refreshToken, location} = authenticatedUser;
